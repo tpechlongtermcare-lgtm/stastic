@@ -1,0 +1,1910 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#F4F7F6">
+<title>統計方法互動手冊｜長照情境版</title>
+<style>
+:root{--paper:#F4F7F6;--ink:#1D2B3A;--mute:#5B6B78;--grid:#DCE4E1;--teal:#0F6E66;--tealL:#D5EAE6;--sat:#C98A12;--satL:#F7E6BF;--red:#B9412F;--redL:#F3D6CF;
+--sans:"Noto Sans TC","Noto Sans CJK TC","PingFang TC","Microsoft JhengHei","Heiti TC",sans-serif;
+--serif:"Noto Serif TC","Noto Serif CJK TC","Songti TC","PMingLiU",serif;}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion:reduce){html{scroll-behavior:auto}}
+html{-webkit-text-size-adjust:100%}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);font-size:16px;line-height:1.75;font-variant-numeric:tabular-nums}
+.top{position:sticky;top:0;z-index:5;background:var(--paper);border-bottom:1px solid var(--grid)}
+.brand{max-width:1080px;margin:0 auto;padding:14px 20px 4px;display:flex;align-items:baseline;gap:14px;flex-wrap:wrap}
+.brand h1{font-family:var(--serif);font-size:20px;margin:0;font-weight:700;letter-spacing:.02em}
+.brand p{margin:0;color:var(--mute);font-size:13px}
+.strip-wrap{overflow-x:auto;padding:0 20px 8px;scrollbar-width:thin}
+.strip{display:grid;grid-template-columns:repeat(18,minmax(54px,1fr));max-width:1040px;margin:0 auto;min-width:972px}
+.phase{grid-row:1;font-size:12px;color:var(--mute);border-bottom:2px solid var(--ink);padding:0 4px 2px;margin:0 3px;white-space:nowrap}
+.wkbtn{grid-row:2;appearance:none;border:0;border-right:1px solid var(--grid);background:transparent;padding:6px 2px 7px;font:inherit;cursor:pointer;color:var(--ink);text-align:center;line-height:1.25}
+.wkbtn:first-of-type{border-left:1px solid var(--grid)}
+.wkbtn .n{display:block;font-size:15px;font-weight:700}
+.wkbtn .s{display:block;font-size:11px;color:var(--mute);white-space:nowrap}
+.wkbtn:disabled{cursor:default;opacity:.35}
+.wkbtn:not(:disabled):not([aria-current="true"]):hover{background:#E6EDEA}
+.wkbtn[aria-current="true"]{background:var(--ink);color:#fff}
+.wkbtn[aria-current="true"] .s{color:#C9D3DB}
+button:focus-visible,input:focus-visible,select:focus-visible,[tabindex]:focus-visible{outline:2px solid var(--sat);outline-offset:2px}
+main{max-width:880px;margin:0 auto;padding:26px 20px 90px}
+.topic{display:none}.topic.on{display:block}
+.wk{font-size:14px;color:var(--mute);margin:0}
+.topic h2{font-family:var(--serif);font-size:32px;line-height:1.3;margin:2px 0 10px;font-weight:700}
+.lede{font-size:18px;margin:0 0 8px;max-width:38em}
+h3{font-size:18px;margin:38px 0 12px;padding-top:16px;border-top:1px solid var(--grid)}
+h4{font-size:15px;margin:22px 0 8px}
+p{margin:0 0 12px;max-width:42em}
+.flow{display:flex;align-items:stretch;margin:6px 0 12px}
+.st{flex:1 1 0;background:#fff;border:1px solid #C5D1CC;border-radius:6px;padding:10px 12px;min-width:0}
+.st b{display:block;font-size:15px;line-height:1.4}
+.st span{display:block;font-size:13px;color:var(--mute);line-height:1.55;margin-top:3px}
+.st.key{border:1.5px solid var(--teal);background:#F3FAF8}
+.ar{flex:0 0 26px;position:relative}
+.ar::before{content:"";position:absolute;left:5px;right:8px;top:50%;border-top:1.5px solid var(--ink)}
+.ar::after{content:"";position:absolute;right:7px;top:calc(50% - 4px);width:7px;height:7px;border-top:1.5px solid var(--ink);border-right:1.5px solid var(--ink);transform:rotate(45deg)}
+.sub{display:flex;gap:8px;flex-wrap:wrap;margin-top:8px}
+.sub i{font-style:normal;font-size:12px;border:1px solid #C5D1CC;border-radius:4px;padding:1px 7px;background:#fff;color:var(--ink)}
+@media (max-width:640px){.flow{flex-direction:column}.ar{flex-basis:24px}.ar::before{left:50%;right:auto;top:3px;bottom:7px;border-top:0;border-left:1.5px solid var(--ink)}.ar::after{left:calc(50% - 3px);right:auto;top:auto;bottom:6px;transform:rotate(135deg)}.topic h2{font-size:26px}.lede{font-size:16px}}
+.lab{border:1px solid #C5D1CC;border-radius:10px;padding:16px;margin:8px 0 10px;background-color:#fff;background-image:linear-gradient(rgba(15,110,102,.06) 1px,transparent 1px),linear-gradient(90deg,rgba(15,110,102,.06) 1px,transparent 1px);background-size:16px 16px}
+.ctl{display:flex;flex-wrap:wrap;gap:10px 18px;align-items:center;margin-bottom:12px;font-size:14px}
+.ctl label{display:flex;align-items:center;gap:8px;white-space:nowrap}
+.ctl input[type=range]{width:150px;accent-color:var(--teal)}
+.ctl output{min-width:3.2em;font-weight:700}
+.btn{appearance:none;font:inherit;font-size:14px;border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:6px;padding:5px 12px;cursor:pointer;line-height:1.5}
+.btn:hover{background:#EEF3F1}
+.btn.pri{background:var(--teal);border-color:var(--teal);color:#fff}
+.btn.pri:hover{background:#0B5A53}
+.btn:disabled{opacity:.45;cursor:default}
+.btn[aria-pressed="true"]{background:var(--ink);color:#fff}
+.seg{display:inline-flex;border:1px solid var(--ink);border-radius:6px;overflow:hidden}
+.seg .btn{border:0;border-radius:0;border-right:1px solid var(--ink)}
+.seg .btn:last-child{border-right:0}
+.ctl.seg{gap:0;display:inline-flex;margin-bottom:4px}
+.read{display:flex;flex-wrap:wrap;gap:6px 26px;margin-top:10px;font-size:14px}
+.read div{line-height:1.35}
+.read small{display:block;color:var(--mute);font-size:12px}
+.read strong{font-size:20px}
+.say{margin-top:10px;padding:10px 12px;background:var(--paper);border-radius:6px;font-size:15px;max-width:none}
+.legend{display:flex;flex-wrap:wrap;gap:4px 16px;font-size:13px;color:var(--mute);margin:6px 0 0}
+.legend span::before{content:"";display:inline-block;width:11px;height:11px;border-radius:2px;margin-right:6px;vertical-align:-1px;background:var(--c);border:1px solid var(--b,transparent)}
+.case{border-left:3px solid var(--sat);padding:2px 0 2px 16px;margin:6px 0}
+.case p b{color:var(--ink)}
+.pit p{padding-left:0}
+.hint{font-size:14px;color:var(--mute)}
+.tbl{border-collapse:collapse;font-size:14px;margin:6px 0 10px;background:#fff}
+.tbl th,.tbl td{border:1px solid #C5D1CC;padding:6px 10px;text-align:center;line-height:1.45}
+.tbl th{background:#EEF3F1;font-weight:700}
+.tbl td.l,.tbl th.l{text-align:left}
+.scroll{overflow-x:auto}
+.chips{display:flex;flex-wrap:wrap;gap:8px;margin:4px 0 12px}
+.chip{appearance:none;font:inherit;font-size:14px;border:1px solid #9FB1AA;background:#fff;border-radius:999px;padding:3px 12px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--teal);color:#fff;border-color:var(--teal)}
+.types{display:grid;grid-template-columns:repeat(3,1fr);gap:10px}
+.types .col{background:#fff;border:1px solid #C5D1CC;border-radius:6px;padding:10px 12px;font-size:14px;line-height:1.6;transition:border-color .2s,background .2s}
+.types .col.hit{border:1.5px solid var(--teal);background:#F3FAF8}
+.types .col h5{margin:0 0 4px;font-size:15px}
+.types .col .grp{font-size:12px;color:var(--mute)}
+@media (max-width:640px){.types{grid-template-columns:1fr}}
+svg text{font-family:var(--sans)}
+.tk{font-size:12px;fill:var(--mute)}.al{font-size:12px;fill:var(--ink)}.gl{stroke:#E4EBE8;stroke-width:1}.ax{stroke:var(--ink);stroke-width:1}
+.err{color:var(--red);font-size:13px;margin-top:6px}
+.map{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin:10px 0}
+.map .ph{border-top:3px solid var(--ink);padding-top:8px}
+.map .ph h4{margin:0 0 6px}
+.map .ph button{display:block;width:100%;text-align:left;appearance:none;background:none;border:0;border-bottom:1px solid var(--grid);font:inherit;font-size:15px;padding:7px 0;cursor:pointer;color:var(--ink)}
+.map .ph button span{color:var(--mute);font-size:13px;margin-right:8px}
+.map .ph button:hover{color:var(--teal)}
+@media (max-width:640px){.map{grid-template-columns:1fr}}
+.tree{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:8px}
+.tree .q{background:#fff;border:1px solid #C5D1CC;border-radius:6px;padding:10px 12px}
+.tree .q b{display:block}
+.tree .q span{display:block;font-size:13px;color:var(--mute)}
+.tree .q a{display:block;margin-top:8px;padding-top:8px;border-top:1px dashed #C5D1CC;color:var(--teal);font-size:14px;text-decoration:none;cursor:pointer}
+.tree .q a:hover{text-decoration:underline}
+@media (max-width:640px){.tree{grid-template-columns:1fr}}
+.fig{width:100%}
+.note{font-size:13px;color:var(--mute);margin-top:6px}
+footer{max-width:880px;margin:0 auto;padding:0 20px 40px;font-size:13px;color:var(--mute)}
+
+.tools{margin-left:auto;display:flex;gap:8px}
+.tools .btn[aria-current="true"]{background:var(--ink);color:#fff}
+.term{appearance:none;background:none;border:0;padding:0;margin:0;font:inherit;color:inherit;cursor:pointer;border-bottom:1.5px dotted var(--teal);line-height:inherit}
+.term:hover{color:var(--teal);background:#EAF4F2}
+#pop{position:absolute;z-index:20;width:min(340px,calc(100vw - 24px));background:#fff;border:1px solid var(--ink);border-radius:8px;padding:12px 14px;font-size:14px;line-height:1.65;box-shadow:0 6px 18px rgba(29,43,58,.18)}
+#pop h5{margin:0 0 4px;font-size:16px}
+#pop h5 small{font-weight:400;color:var(--mute);font-size:12px;margin-left:6px}
+#pop p{margin:0 0 6px}
+#pop .x{position:absolute;top:6px;right:8px;appearance:none;border:0;background:none;font-size:18px;cursor:pointer;color:var(--mute);line-height:1}
+#pop .more{appearance:none;border:0;background:none;padding:0;font:inherit;color:var(--teal);cursor:pointer;text-decoration:underline}
+details.how{margin-top:12px;background:#fff;border:1px solid #C5D1CC;border-radius:6px;padding:8px 12px;font-size:14px}
+details.how summary{cursor:pointer;font-weight:700;color:var(--teal)}
+details.how ol{margin:8px 0 2px;padding-left:22px}
+details.how li{margin-bottom:4px}
+.gsearch{display:flex;flex-wrap:wrap;gap:10px;align-items:center;margin:8px 0 6px}
+.gsearch input{font:inherit;font-size:15px;padding:6px 10px;border:1px solid #9FB1AA;border-radius:6px;width:min(340px,100%);background:#fff}
+.quick{display:flex;flex-wrap:wrap;gap:8px;align-items:center;font-size:14px;color:var(--mute);margin:6px 0 14px}
+.ent{padding:14px 0 12px;border-bottom:1px solid var(--grid)}
+.ent.key{border-left:3px solid var(--teal);padding-left:14px;border-radius:0}
+.ent.flash{animation:flash 1.6s ease-out}
+@keyframes flash{from{background:var(--satL)}to{background:transparent}}
+@media (prefers-reduced-motion:reduce){.ent.flash{animation:none;background:var(--satL)}}
+.ent{scroll-margin-top:calc(var(--hh,130px) + 12px)}
+.ent h4{margin:0 0 6px;font-size:18px}
+.ent h4 .en{font-weight:400;color:var(--mute);font-size:13px;margin-left:8px}
+.ent dl{display:grid;grid-template-columns:4.5em 1fr;gap:4px 12px;margin:0;font-size:15px;max-width:44em}
+.ent dt{color:var(--mute);font-size:13px;padding-top:2px}
+.ent dd{margin:0}
+.ent .wks{font-size:13px;color:var(--mute);margin:6px 0 0}
+.ent .wks button{appearance:none;border:0;background:none;padding:0 4px;font:inherit;color:var(--teal);cursor:pointer;text-decoration:underline}
+.anno{background:#fff;border:1px solid #C5D1CC;border-radius:10px;padding:16px;margin:10px 0 16px}
+.anno .sent{font-size:17px;line-height:2.1;margin-bottom:10px}
+.anno .sent span{border-bottom:3px solid var(--c);padding-bottom:1px}
+.anno .sent sup{font-size:11px;color:var(--c);font-weight:700;margin-left:1px}
+.anno ol{margin:0;padding-left:22px;font-size:15px}
+.anno li{margin-bottom:6px}
+.rule{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin:10px 0}
+.rule div{background:#fff;border:1px solid #C5D1CC;border-radius:6px;padding:10px 12px;font-size:15px}
+.rule b{display:block;font-size:16px;margin-bottom:2px}
+@media (max-width:640px){.rule{grid-template-columns:1fr}.ent dl{grid-template-columns:1fr}.ent dt{padding-top:6px}}
+ol.steps{padding-left:0;list-style:none;margin:8px 0 10px;max-width:44em}
+ol.steps li{position:relative;padding-left:30px;margin-bottom:6px}
+ol.steps li i{position:absolute;left:0;top:3px;width:20px;height:20px;border-radius:50%;background:var(--sat);color:#fff;font-style:normal;font-size:12px;font-weight:700;display:flex;align-items:center;justify-content:center}
+
+
+.hero{background:#fff;border:1.5px solid var(--ink);border-radius:12px;padding:18px 20px 16px;margin:8px 0 12px}
+.hero .hlab{font-size:13px;color:var(--mute);margin:0 0 2px}
+.hero .hq{font-family:var(--serif);font-size:25px;line-height:1.45;margin:0 0 12px;font-weight:700;max-width:none}
+.hero .ha{border-top:1px dashed #C5D1CC;padding-top:10px;margin:0 0 10px}
+.hero .lede{font-size:16px;margin:0}
+.hero .learn{font-size:15px;margin:0 0 12px}
+@media (max-width:640px){.hero .hq{font-size:21px}.hero{padding:14px 14px}}
+.stages{display:flex;flex-wrap:wrap;gap:6px 8px;align-items:center;font-size:13px;color:var(--mute);margin:0 0 4px}
+.stages button{appearance:none;font:inherit;font-size:13px;border:1px solid #C5D1CC;background:#fff;border-radius:999px;padding:2px 10px 2px 3px;cursor:pointer;color:var(--ink);display:inline-flex;align-items:center}
+.stages button:hover{border-color:var(--teal)}
+.stages button i{font-style:normal;display:inline-flex;width:18px;height:18px;border-radius:50%;background:var(--ink);color:#fff;font-size:11px;align-items:center;justify-content:center;margin-right:5px}
+h3{scroll-margin-top:calc(var(--hh,130px) + 12px)}
+.flow{counter-reset:st}
+.flow:not(.nonum) .st > b::before{counter-increment:st;content:counter(st);display:inline-flex;width:20px;height:20px;border-radius:50%;background:var(--ink);color:#fff;font-size:12px;align-items:center;justify-content:center;margin-right:7px;vertical-align:1px}
+.startc{display:flex;flex-wrap:wrap;gap:10px 16px;align-items:center;justify-content:space-between;background:var(--ink);color:#fff;border-radius:10px;padding:12px 16px;margin:10px 0 10px}
+.startc b{display:block;font-size:16px}
+.startc span{font-size:14px;color:#C9D3DB}
+.startc .btn.pri{background:var(--sat);border-color:var(--sat)}
+.startc .btn.pri:hover{background:#A87310}
+.say{font-size:16px;background:#EAF4F2;border:1px solid #BFDDD7}
+.say::before{content:"這代表什麼";display:block;font-size:12px;font-weight:700;color:var(--teal);margin-bottom:2px}
+.lab .read{border-top:1px dashed #C5D1CC;padding-top:8px;margin-top:12px}
+.lab .read::before{content:"數字細節";flex-basis:100%;font-size:12px;color:var(--mute);margin-bottom:-2px}
+.read:empty{display:none}
+#guide{position:fixed;left:50%;transform:translateX(-50%);bottom:12px;z-index:30;width:min(720px,calc(100vw - 20px));background:var(--ink);color:#fff;border-radius:12px;padding:12px 16px 14px;box-shadow:0 10px 30px rgba(0,0,0,.28);max-height:46vh;overflow:auto}
+#guide .gtop{display:flex;align-items:center;gap:12px;font-size:14px}
+#guide .gtop span{color:#C9D3DB}
+#guide #gx{margin-left:auto;appearance:none;background:none;border:1px solid #6B7B88;color:#fff;border-radius:6px;font:inherit;font-size:13px;padding:2px 10px;cursor:pointer}
+#guide .gbar{height:4px;background:#3A4B5C;border-radius:2px;margin:8px 0 10px;overflow:hidden}
+#guide .gbar i{display:block;height:100%;background:var(--sat);transition:width .3s}
+#guide #gtext{font-size:16px;margin:0 0 8px;max-width:none}
+#guide #gtext b{color:#F3C76A}
+#guide #gwait{font-size:13px;color:#F3C76A;margin:0 0 8px}
+#guide #gafter{background:#EAF4F2;color:var(--ink);border-radius:8px;padding:8px 12px;font-size:15px;margin:0 0 10px;max-width:none}
+#guide #gafter b{color:var(--teal)}
+#guide .gbtns{display:flex;gap:8px;justify-content:flex-end}
+#guide .btn{background:transparent;color:#fff;border-color:#8797A4}
+#guide .btn.pri{background:var(--sat);border-color:var(--sat);color:#fff}
+#guide .btn:disabled{opacity:.4;cursor:not-allowed}
+body.touring main{padding-bottom:300px}
+.spot{outline:3px solid var(--sat)!important;outline-offset:4px;border-radius:6px;animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{outline-color:rgba(201,138,18,1)}50%{outline-color:rgba(201,138,18,.3)}}
+@media (prefers-reduced-motion:reduce){.spot{animation:none}#guide .gbar i{transition:none}}
+.qz{border:1px solid #C5D1CC;border-radius:10px;background:#fff;padding:10px 16px 14px;margin:0 0 12px}
+.qz legend{font-weight:700;padding:0 6px;font-size:16px;line-height:1.6}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:7px 10px;border:1px solid transparent;border-radius:6px;cursor:pointer;font-size:15px;line-height:1.6}
+.opt:hover{background:var(--paper)}
+.opt input{margin-top:6px;accent-color:var(--teal)}
+.opt.right{border-color:var(--teal);background:#EAF4F2}
+.opt.wrong{border-color:var(--red);background:#FBEDEA}
+.qact{margin-top:8px}
+.qfb{margin:10px 0 0;font-size:15px;max-width:none}
+.qfb.bad{color:var(--red);font-size:13px}
+.qfb.good b{color:var(--teal)}.qfb.miss b{color:var(--red)}
+.qsum{display:flex;flex-wrap:wrap;gap:10px;align-items:center;justify-content:space-between;font-size:15px}
+.qscore{font-weight:700}
+
+
+
+.mnav{display:none}
+.scroll{position:relative}
+.scroll.scrollable{box-shadow:inset -14px 0 12px -12px rgba(29,43,58,.35)}
+.shint{display:none;font-size:13px;color:var(--mute);margin:0 0 4px}
+@media (max-width:720px){.shint{display:block}}
+.tbl input{font-size:16px;padding:4px 6px;border:1px solid #9FB1AA;border-radius:4px}
+input[type=range]{height:30px}
+#totop{position:fixed;right:14px;bottom:calc(14px + env(safe-area-inset-bottom));z-index:18;display:none;opacity:0;pointer-events:none;transition:opacity .2s;width:46px;height:46px;border-radius:50%;border:1px solid var(--grid);background:#fff;color:var(--ink);font-size:19px;line-height:1;box-shadow:0 3px 12px rgba(29,43,58,.2);cursor:pointer}
+#guide .gmin{appearance:none;background:none;border:1px solid #6B7B88;color:#fff;border-radius:6px;font:inherit;font-size:13px;padding:2px 9px;cursor:pointer;margin-left:8px}
+#guide.min #gtext,#guide.min #gwait,#guide.min #gafter,#guide.min .gbtns,#guide.min .gbar{display:none}
+@media (max-width:720px){
+  .strip-wrap{display:none}
+  .mnav{display:flex;gap:8px;align-items:center;padding:0 14px 10px}
+  .mnav select{flex:1;min-width:0;font:inherit;font-size:16px;padding:8px 10px;border:1px solid var(--ink);border-radius:8px;background:#fff;color:var(--ink);-webkit-appearance:none;appearance:none;background-image:linear-gradient(45deg,transparent 50%,var(--ink) 50%),linear-gradient(135deg,var(--ink) 50%,transparent 50%);background-position:calc(100% - 17px) 55%,calc(100% - 12px) 55%;background-size:5px 5px,5px 5px;background-repeat:no-repeat;padding-right:32px}
+  .mstep{appearance:none;width:42px;height:42px;flex:none;border:1px solid var(--ink);background:#fff;color:var(--ink);border-radius:8px;font-size:22px;line-height:1;cursor:pointer}
+  .mstep:disabled{opacity:.3}
+  main{padding:18px 14px 90px}
+  .lab{padding:12px 10px}
+  .ctl{gap:8px 12px}
+  .ctl label{flex:1 1 100%;justify-content:space-between;gap:8px;white-space:normal;flex-wrap:wrap}
+  .ctl input[type=range]{flex:1 1 auto;width:auto;min-width:90px}
+  .ctl output{min-width:0;text-align:right}
+  .btn{padding:7px 14px}
+  .seg .btn{padding:7px 9px;font-size:13px}
+  .chip{padding:6px 14px}
+  .opt{padding:10px}
+  .qz{padding:8px 12px 12px}
+  .qsum{padding-right:54px}
+  .tbl th,.tbl td{padding:6px 8px}
+  #totop{display:block}
+  #totop.on{opacity:1;pointer-events:auto}
+  body.touring #totop{display:none}
+  #guide{bottom:0;left:0;transform:none;width:100%;border-radius:14px 14px 0 0;max-height:44vh;padding:10px 14px calc(12px + env(safe-area-inset-bottom));overscroll-behavior:contain}
+  #guide #gtext{font-size:15px}
+  #guide #gafter{font-size:14px}
+  #guide .gbtns{gap:10px}
+  #guide .gbtns .btn{flex:1;padding:9px 0;font-size:15px}
+  body.touring main{padding-bottom:60vh}
+}
+
+@media (max-width:400px){.tools .btn{font-size:12px;padding:3px 7px}.brand h1{font-size:16px}}
+@media (max-width:640px){.brand{padding:10px 14px 4px;gap:8px;flex-wrap:nowrap;align-items:center}.brand p{display:none}.brand h1{font-size:17px;white-space:nowrap}.tools{gap:6px}.tools .btn{font-size:13px;padding:3px 9px}.strip-wrap{padding:0 14px 6px}main{padding:20px 16px 80px}}
+</style>
+</head>
+<body>
+<header class="top">
+  <div class="brand"><h1>統計方法互動手冊</h1><p>每週一個方法：架構、動手操作、長照例子、容易踩的坑</p><div class="tools"><button class="btn" data-page="terms">名詞解釋</button><button class="btn" data-page="charts">圖表怎麼看</button></div></div>
+  <div class="strip-wrap"><nav class="strip" id="strip" aria-label="週次"></nav></div>
+  <nav class="mnav" aria-label="章節切換"><button class="mstep" id="mprev" aria-label="上一週">‹</button><select id="msel" aria-label="選擇章節"></select><button class="mstep" id="mnext" aria-label="下一週">›</button></nav>
+</header>
+<main id="main">
+<noscript><div style="max-width:880px;margin:0 auto;padding:16px 20px;border:1px solid #B9412F;border-radius:8px;background:#F3D6CF;color:#1D2B3A;font-size:15px;line-height:1.7">這份手冊需要瀏覽器的 JavaScript 才能顯示互動圖表。請把檔案下載後，用 Safari 或 Chrome 開啟，並確認沒有關閉 JavaScript。</div></noscript>
+<section class="topic on" id="t-intro">
+  <p class="wk">第 2 週　緒論</p>
+  <h2>整門課在回答一個問題</h2>
+  <p class="lede">我只看得到一部分住民，要怎麼有把握地說出「全部住民」的情況？前半段教你怎麼推論，後半段給你一整套依資料型態挑選的工具。</p>
+
+  <h3>第一次來？先看這裡</h3>
+  <p>完全沒學過統計也沒關係。每一週都照同樣的順序安排，照著往下讀就好：</p>
+  <div class="flow">
+    <div class="st"><b>先想一個問題</b><span>用一句白話說明這週要解決什麼</span></div><div class="ar"></div>
+    <div class="st"><b>跟著做</b><span>一步一步帶你操作圖表，看數字怎麼變</span></div><div class="ar"></div>
+    <div class="st"><b>整理流程</b><span>把看到的東西整理成方法的步驟</span></div><div class="ar"></div>
+    <div class="st"><b>長照例子</b><span>在機構裡怎麼用、報告怎麼寫</span></div><div class="ar"></div>
+    <div class="st"><b>小測驗</b><span>三題確認自己真的懂了</span></div>
+  </div>
+  <p>內文裡底下有綠色虛線的名詞，例如 <button class="term" type="button" data-term="pvalue">p 值</button>，點一下就會跳出白話解釋。每張圖下方也都有「怎麼看這張圖」可以展開。</p>
+
+  <h4>先學會看一張圖</h4>
+  <p>統計圖看起來複雜，其實都由同樣四個部分組成。依序按下面的按鈕，或直接點圖上的黃色數字。</p>
+  <div class="lab" id="labA">
+    <div class="ctl" id="anaBtns"><button class="btn" data-p="0">1 橫軸</button><button class="btn" data-p="1">2 縱軸</button><button class="btn" data-p="2">3 一個點</button><button class="btn" data-p="3">4 整體趨勢</button></div>
+    <div id="anaFig" class="fig"></div>
+    <div class="say" id="anaSay"></div>
+  </div>
+
+  <h4>建議的閱讀順序</h4>
+  <p>第一次讀，從第 3 週開始照順序往後最順。第 3–8 週是所有方法的基礎，尤其是第 7–8 週的 p 值；第 10–14 週每週一個方法，可以依需要挑著看；最後兩週教你讀文獻和挑選方法。</p>
+
+  <h3>課程地圖</h3>
+  <p class="hint">點任一項直接跳到該週。</p>
+  <div class="map">
+    <div class="ph"><h4>地基：從樣本推論母體</h4>
+      <button data-go="3"><span>W3</span>母體與樣本</button>
+      <button data-go="4"><span>W4</span>資料的整理與呈現</button>
+      <button data-go="5"><span>W5</span>機率</button>
+      <button data-go="6"><span>W6</span>抽樣分配</button>
+      <button data-go="7"><span>W7–8</span>假設檢定</button>
+    </div>
+    <div class="ph"><h4>工具箱：依資料型態選方法</h4>
+      <button data-go="10"><span>W10</span>變異數分析 ANOVA</button>
+      <button data-go="11"><span>W11</span>卡方檢定</button>
+      <button data-go="12"><span>W12</span>線性迴歸</button>
+      <button data-go="13"><span>W13</span>邏輯斯迴歸</button>
+      <button data-go="14"><span>W14</span>存活分析</button>
+    </div>
+    <div class="ph"><h4>應用：讀文獻、選對方法</h4>
+      <button data-go="17"><span>W17</span>實證醫學</button>
+      <button data-go="18"><span>W18</span>雙樣本統計方法綜論</button>
+    </div>
+  </div>
+
+  <h3>選方法的第一個問題：你的「結果」是什麼資料？</h3>
+  <div class="tree">
+    <div class="q"><b>連續數值</b><span>Barthel 分數、照護時數、血壓</span>
+      <a data-go="18">比較 2 組：t 檢定</a>
+      <a data-go="10">比較 3 組以上：ANOVA</a>
+      <a data-go="12">多個因素一起看：線性迴歸</a></div>
+    <div class="q"><b>二分類別</b><span>跌倒有／無、感染有／無</span>
+      <a data-go="11">兩個類別有沒有關聯：卡方檢定</a>
+      <a data-go="13">多個因素一起看：邏輯斯迴歸</a></div>
+    <div class="q"><b>時間到事件</b><span>入住到第一次跌倒的天數</span>
+      <a data-go="14">比較兩條曲線：Kaplan-Meier＋log-rank</a>
+      <a data-go="14">多個因素一起看：Cox 迴歸</a></div>
+  </div>
+
+</section>
+
+<section class="topic" id="t-3">
+  <p class="wk">第 3 週</p>
+  <h2>母體與樣本</h2>
+  <p class="lede">母體是你真正想知道答案的全部對象，樣本是你實際量到的那一部分。統計做的事，就是用樣本的數字去猜母體的數字，而猜得準不準，取決於樣本怎麼抽。</p>
+
+  <h3>架構：照編號順序看流程</h3>
+  <div class="flow">
+    <div class="st"><b>母體</b><span>想研究的全部對象<br>數字叫「參數」μ、p（通常未知）</span></div><div class="ar"></div>
+    <div class="st key"><b>抽樣方法</b><span>決定樣本有沒有代表性</span><div class="sub"><i>簡單隨機</i><i>分層</i><i>系統</i><i>叢集</i><i>便利</i></div></div><div class="ar"></div>
+    <div class="st"><b>樣本</b><span>實際收集資料的人<br>人數記作 n</span></div><div class="ar"></div>
+    <div class="st"><b>統計量</b><span>從樣本算出的 x̄、p̂</span></div><div class="ar"></div>
+    <div class="st"><b>推論</b><span>用統計量估計參數<br>（信賴區間、假設檢定）</span></div>
+  </div>
+
+  <h3>動手看看：抽樣方法會不會騙人？</h3>
+  <p>下面是某區 4 家機構共 400 位住民，紅點代表今年曾跌倒。A、B、C 三家各有 16 人跌倒，D 家是失智專區，有 40 人跌倒，所以母體跌倒率是 88 ÷ 400 = <b>22%</b>。試著用不同方法抽樣，看看估計值落在哪裡。</p>
+  <div class="lab" id="lab3">
+    <div class="ctl">
+      <label>樣本人數 n <input type="range" id="w3n" min="10" max="100" step="10" value="40"><output id="w3nv">40</output></label>
+    </div>
+    <div class="ctl">
+      <button class="btn pri" data-m="srs">簡單隨機抽樣</button>
+      <button class="btn pri" data-m="strat">分層抽樣（每家各抽 1/4）</button>
+      <button class="btn pri" data-m="conv">便利抽樣（只抽最近的 D 家）</button>
+      <button class="btn" id="w3rep">用上一個方法連抽 20 次</button>
+      <button class="btn" id="w3clr">清除紀錄</button>
+    </div>
+    <div id="w3pop" class="fig"></div>
+    <div class="legend"><span style="--c:#B9412F">曾跌倒</span><span style="--c:#fff;--b:#9FB1AA">未跌倒</span><span style="--c:#fff;--b:#C98A12">被抽中（黃框）</span></div>
+    <h4>每次抽樣得到的跌倒率（虛線是母體真值 22%）</h4>
+    <div id="w3strip" class="fig"></div>
+    <div class="say" id="w3say">按上面任一個抽樣按鈕開始。</div>
+    <details class="how"><summary>怎麼看這張圖</summary><ol><li>上圖每個圓點是一位住民：紅色實心＝今年曾跌倒，白色＝沒跌倒，黃色粗框＝這一次被抽中的人。</li><li>看黃框分布在哪裡：簡單隨機和分層抽樣會散在四家機構，便利抽樣只集中在 D 家。</li><li>下圖每個小點是一次抽樣算出的跌倒率；橫軸是估計值，垂直虛線是母體真值 22%，黃圈是最近一次。</li><li>判讀重點：點「散在虛線兩側」代表只有隨機誤差；點「整群偏到虛線一邊」代表有偏差。散得越窄，估計越穩定。</li></ol></details>
+  </div>
+  <p class="hint">多按幾次會發現：隨機和分層抽樣的點散在 22% 兩側（有誤差但沒偏），分層還更集中；便利抽樣的點全擠在 40% 附近，抽再多次都一樣偏。這就是「偏差」和「隨機誤差」的差別。</p>
+
+  <h3>長照例子</h3>
+  <div class="case">
+    <p><b>情境：</b>長照智能組想了解「北市聯醫各長照機構住民的跌倒率」，但人力只夠詳查 80 位住民的紀錄。</p>
+    <p><b>怎麼用：</b>母體是所有院區長照機構的住民，樣本是被抽中的 80 人。如果只查自己單位最方便的那一區，就是便利抽樣，結果會被該區的住民特性綁住。較好的做法是依院區分層，每個院區按住民人數比例隨機抽樣。</p>
+    <p><b>怎麼解讀：</b>報告寫「樣本跌倒率 23%（95% 信賴區間 14%–32%）」時，23% 是統計量，真正想知道的母體跌倒率可能落在 14%–32% 之間。</p>
+  </div>
+
+  <h3>容易踩的坑</h3>
+  <div class="pit">
+    <p>樣本大不等於樣本好。便利抽樣抽 1,000 人，偏差一樣存在，只是「很精準地偏掉」。代表性比人數更重要。</p>
+    <p>參數和統計量的符號要分清楚：母體平均數寫 μ、標準差寫 σ；樣本平均數寫 x̄、標準差寫 s。考試常考這個。</p>
+  </div>
+</section>
+
+<section class="topic" id="t-4">
+  <p class="wk">第 4 週</p>
+  <h2>資料的整理與呈現</h2>
+  <p class="lede">拿到資料的第一步不是算，而是先判斷每個變項是哪一種類型。類型決定你用什麼數字描述、畫什麼圖，也決定後面能用哪個檢定。</p>
+
+  <h3>架構：先分類型，再決定描述方式和圖表</h3>
+  <p class="hint">點一個變項，看看它屬於哪一類。</p>
+  <div class="chips" id="w4chips">
+    <button class="chip" data-t="0">性別</button>
+    <button class="chip" data-t="0">入住前居住地</button>
+    <button class="chip" data-t="1">失能等級（輕／中／重）</button>
+    <button class="chip" data-t="1">壓傷分級 1–4 級</button>
+    <button class="chip" data-t="2">年齡</button>
+    <button class="chip" data-t="2">Barthel 分數</button>
+    <button class="chip" data-t="2">年度住院天數</button>
+  </div>
+  <div class="types" id="w4types">
+    <div class="col"><span class="grp">類別變項</span><h5>名目尺度</h5>分組沒有高低順序<br><b>怎麼描述：</b>人數、百分比<br><b>用什麼圖：</b>長條圖、圓餅圖<br><b>後續檢定：</b>卡方檢定</div>
+    <div class="col"><span class="grp">類別變項</span><h5>順序尺度</h5>有高低順序，但間距不一定相等<br><b>怎麼描述：</b>人數、百分比、中位數<br><b>用什麼圖：</b>長條圖（依順序排）<br><b>後續檢定：</b>卡方或無母數檢定</div>
+    <div class="col"><span class="grp">連續變項</span><h5>等距／比率尺度</h5>可以量測、可以加減的數值<br><b>怎麼描述：</b>平均數±標準差；偏態時用中位數（四分位距）<br><b>用什麼圖：</b>直方圖、盒鬚圖、散佈圖<br><b>後續檢定：</b>t 檢定、ANOVA、迴歸</div>
+  </div>
+
+  <h3>動手看看：平均數什麼時候會騙人？</h3>
+  <p>40 位住民的年度住院天數，其中 14 位整年都沒住院。這種右偏的資料，平均數會被少數住很久的人拉高。</p>
+  <div class="lab" id="lab4">
+    <div class="ctl"><button class="btn" id="w4out" aria-pressed="false">加入一位住院 120 天的住民</button></div>
+    <div id="w4hist" class="fig"></div>
+    <div id="w4box" class="fig"></div>
+    <div class="legend"><span style="--c:#C98A12">平均數</span><span style="--c:#0F6E66">中位數</span></div>
+    <div class="read" id="w4read"></div>
+    <details class="how"><summary>怎麼看這張圖</summary><ol><li>直方圖的橫軸是住院天數，每一根柱子涵蓋 5 天；柱子高度是落在這個區間的人數。</li><li>看形狀：左邊很高、右邊拖出長長的尾巴，就是右偏。</li><li>綠色實線是中位數，黃色虛線是平均數。右偏時平均數會被尾巴拉到中位數右邊。</li><li>盒鬚圖：箱子左緣是 Q1、右緣是 Q3，箱子寬度就是四分位距；箱中粗線是中位數；兩側細線（鬍鬚）延伸到 1.5 倍四分位距內最遠的值；外面的紅色圓圈是離群值。</li></ol></details>
+  </div>
+  <p class="hint">加入那位 120 天的住民後，平均數跳了將近 3 天，中位數卻一動也不動。所以偏態資料要報告「中位數（四分位距）」，才能代表一般住民的狀況。</p>
+
+  <h3>長照例子</h3>
+  <div class="case">
+    <p><b>情境：</b>寫年度品質報告，要描述住民基本資料。</p>
+    <p><b>怎麼用：</b>性別、失能等級用「人數（百分比）」；年齡接近常態，用「平均數 ± 標準差」，例如 82.4 ± 7.9 歲；住院天數、約束天數這類右偏資料用「中位數（四分位距）」，例如 5（0–13）天。</p>
+    <p><b>怎麼解讀：</b>盒鬚圖的箱子是中間 50% 住民的範圍，箱中線是中位數，箱外的點是離群值，值得個別回頭看病歷。</p>
+  </div>
+
+  <h3>容易踩的坑</h3>
+  <div class="pit">
+    <p>用數字編碼的類別變項（例如 1＝男、2＝女）不能算平均數。「平均性別 1.6」沒有意義。</p>
+    <p>順序尺度的間距不一定相等：壓傷 2 級到 3 級，和 3 級到 4 級的嚴重度差距不一樣，所以不適合直接算平均。</p>
+  </div>
+</section>
+
+<section class="topic" id="t-5">
+  <p class="wk">第 5 週</p>
+  <h2>機率</h2>
+  <p class="lede">機率是描述不確定性的語言。臨床上最實用的是「條件機率」：在某個條件成立下，另一件事發生的機會，例如快篩陽性時，真的感染的機率有多高。</p>
+
+  <h3>架構：篩檢的四格表</h3>
+  <p>所有篩檢問題都能放進這張表。敏感度和特異度是篩檢工具本身的特性；陽性預測值（PPV）則會隨盛行率改變，這是最常被忽略的一點。表中人數會跟著下面的滑桿更新。</p>
+  <div class="scroll"><table class="tbl" id="w5tbl"></table></div>
+  <div class="flow nonum">
+    <div class="st"><b>敏感度</b><span>真的有病的人中，驗出陽性的比例<br>＝ 真陽性 ÷ 有病</span></div><div class="ar"></div>
+    <div class="st"><b>特異度</b><span>真的沒病的人中，驗出陰性的比例<br>＝ 真陰性 ÷ 沒病</span></div><div class="ar"></div>
+    <div class="st key"><b>陽性預測值 PPV</b><span>驗出陽性的人中，真的有病的比例<br>＝ 真陽性 ÷ 所有陽性</span></div>
+  </div>
+
+  <h3>動手看看：同一支快篩，可信度會變嗎？</h3>
+  <p>1,000 位住民做流感快篩，每一格代表一個人。調整盛行率，看看「陽性的人裡面，真的感染的有幾個」。</p>
+  <div class="lab" id="lab5">
+    <div class="ctl">
+      <label>盛行率 <input type="range" id="w5p" min="1" max="40" value="2"><output id="w5pv"></output></label>
+      <label>敏感度 <input type="range" id="w5se" min="50" max="99" value="70"><output id="w5sev"></output></label>
+      <label>特異度 <input type="range" id="w5sp" min="80" max="99" value="95"><output id="w5spv"></output></label>
+    </div>
+    <div class="ctl"><button class="btn" data-pre="2">平時（盛行率 2%）</button><button class="btn" data-pre="30">群聚期（盛行率 30%）</button></div>
+    <div id="w5grid" class="fig"></div>
+    <div class="legend"><span style="--c:#B9412F">真陽性</span><span style="--c:#F3D6CF;--b:#B9412F">偽陰性（漏掉）</span><span style="--c:#C98A12">偽陽性（誤報）</span><span style="--c:#E4EBE8">真陰性</span></div>
+    <div class="read" id="w5read"></div>
+    <div class="say" id="w5say"></div>
+    <details class="how"><summary>怎麼看這張圖</summary><ol><li>每一小格代表 1 位住民，共 1,000 格，由左上往右排。</li><li>深紅＝真的感染而且驗出陽性（真陽性）；淺紅框＝真的感染卻驗成陰性（偽陰性）；黃色＝沒感染卻驗出陽性（偽陽性）；灰色＝沒感染也驗成陰性（真陰性）。</li><li>陽性預測值 PPV 就是「深紅格 ÷（深紅格＋黃格）」。拉低盛行率時，深紅格變少，黃格卻幾乎不變，所以 PPV 下降。</li><li>上方的四格表是同一組數字的表格版，可以對照看。</li></ol></details>
+  </div>
+
+  <h3>長照例子</h3>
+  <div class="case">
+    <p><b>情境：</b>非流感季，一位住民發燒，流感快篩陽性。</p>
+    <p><b>怎麼用：</b>盛行率只有 2% 時，陽性結果中有一大半是偽陽性，應搭配臨床症狀、接觸史，必要時送 PCR 確認，再決定是否啟動群聚處置。群聚期間盛行率高，陽性的可信度就高很多，可以更快啟動隔離。</p>
+    <p><b>怎麼解讀：</b>陰性結果也要小心。敏感度 70% 代表每 10 位真的感染者會漏掉 3 位，群聚期間快篩陰性但症狀明顯的住民，仍應先採取防護措施。</p>
+  </div>
+
+  <h3>容易踩的坑</h3>
+  <div class="pit">
+    <p>把敏感度當成「陽性就一定有病的機率」。敏感度是從「有病的人」出發，PPV 才是從「陽性的人」出發，兩者方向相反。</p>
+    <p>常態分配是另一個重點：約 68% 的數值落在平均數 ±1 個標準差、95% 落在 ±1.96 個標準差內。這個 1.96 在第 6 週的信賴區間會再出現。</p>
+  </div>
+</section>
+
+<section class="topic" id="t-6">
+  <p class="wk">第 6 週</p>
+  <h2>抽樣分配</h2>
+  <p class="lede">每次抽樣算出來的平均數都不一樣。把「很多次抽樣的平均數」收集起來畫成分布，就是抽樣分配。它告訴你：用一次樣本估計母體，大概會差多少。</p>
+
+  <h3>架構：照編號順序看流程</h3>
+  <div class="flow">
+    <div class="st"><b>母體</b><span>形狀可能是偏的<br>平均 μ、標準差 σ</span></div><div class="ar"></div>
+    <div class="st"><b>抽 n 人算平均</b><span>得到一個 x̄</span></div><div class="ar"></div>
+    <div class="st"><b>重複很多次</b><span>很多個 x̄ 形成抽樣分配</span></div><div class="ar"></div>
+    <div class="st key"><b>中央極限定理</b><span>n 夠大時，x̄ 的分配接近常態</span></div><div class="ar"></div>
+    <div class="st"><b>標準誤與信賴區間</b><span>SE ＝ σ ÷ √n<br>95% CI ≈ x̄ ± 1.96 × SE</span></div>
+  </div>
+
+  <h3>動手看看：中央極限定理</h3>
+  <p>上圖是 5,000 次住院的「住院天數」，大多數只住幾天、少數住很久，明顯右偏（平均 8 天）。選一個樣本人數，反覆抽樣，看下圖的平均數分布長什麼樣子。</p>
+  <div class="lab" id="lab6">
+    <div class="ctl"><span>每次抽</span><span class="seg" id="w6n"><button class="btn" data-n="2">2 人</button><button class="btn" data-n="5">5 人</button><button class="btn" data-n="10">10 人</button><button class="btn" data-n="30">30 人</button><button class="btn" data-n="100">100 人</button></span></div>
+    <div class="ctl"><button class="btn pri" data-k="1">抽 1 次</button><button class="btn pri" data-k="100">抽 100 次</button><button class="btn pri" data-k="1000">抽 1,000 次</button><button class="btn" id="w6clr">清除</button></div>
+    <h4>母體：住院天數（黃色刻度是最近一次抽到的人）</h4>
+    <div id="w6pop" class="fig"></div>
+    <h4>抽樣分配：每次樣本的平均天數</h4>
+    <div id="w6samp" class="fig"></div>
+    <div class="read" id="w6read"></div>
+    <details class="how"><summary>怎麼看這張圖</summary><ol><li>上圖灰色柱子是母體 5,000 次住院的天數分布，明顯右偏；虛線是母體平均 μ；黃色刻度是最近一次抽到的那些人。</li><li>下圖每根柱子代表「樣本平均數落在這個區間」的次數，也就是抽樣分配。</li><li>抽超過 50 次後會出現黑色曲線，那是中央極限定理預測的常態分配；柱子和曲線越吻合，代表平均數的分布越接近常態。</li><li>柱子分布的寬度就是標準誤：切換到 100 人時明顯變窄，代表估計越精準。</li></ol></details>
+  </div>
+  <p class="hint">n＝2 時平均數分布還是歪的而且很寬；n＝30 以上幾乎是對稱的鐘形，而且越來越窄。變窄的程度就是標準誤：人數變 4 倍，標準誤減半。</p>
+
+  <h4>信賴區間到底是什麼意思？</h4>
+  <p>每條橫線是一次抽樣算出的 95% 信賴區間，直線是真正的母體平均。大約每 20 條會有 1 條沒蓋到真值（紅色），這就是「95%」的意思：不是真值有 95% 機率在這條區間裡，而是用這個方法做很多次，約 95% 的區間會抓到真值。</p>
+  <div class="lab">
+    <div class="ctl"><button class="btn pri" id="w6ci">用目前的樣本人數抽 20 次</button></div>
+    <div id="w6cifig" class="fig"></div>
+    <div class="read" id="w6ciread"></div>
+    <details class="how"><summary>怎麼看這張圖</summary><ol><li>每一條橫線是一次抽樣算出的 95% 信賴區間，線上的點是那次的樣本平均數。</li><li>垂直黑線是母體真正的平均數。</li><li>綠色＝這條區間有蓋到真值；紅色＝沒蓋到。</li><li>人數越多，每條線越短（估計越精準），但蓋到真值的比例仍維持在約 95%。</li></ol></details>
+  </div>
+
+  <h3>長照例子</h3>
+  <div class="case">
+    <p><b>情境：</b>抽 36 位住民，平均每日照護時數 190 分鐘，標準差 42 分鐘。</p>
+    <p><b>怎麼用：</b>標準誤 ＝ 42 ÷ √36 ＝ 7 分鐘；95% 信賴區間 ≈ 190 ± 1.96 × 7 ＝ 176–204 分鐘。</p>
+    <p><b>怎麼解讀：</b>標準差 42 描述「住民之間差很多」；標準誤 7 描述「這個平均數估得有多準」。想把區間縮小一半，樣本要增加到 4 倍（144 人）。</p>
+  </div>
+
+  <h3>容易踩的坑</h3>
+  <div class="pit">
+    <p>標準差（SD）和標準誤（SE）混用。描述住民特性用 SD，描述估計的精準度用 SE 或信賴區間。有些論文用 SE 讓誤差棒看起來比較短，讀文獻時要看清楚。</p>
+    <p>中央極限定理講的是「平均數」的分布會接近常態，不是說原始資料會變成常態。住院天數本身永遠是偏的。</p>
+  </div>
+</section>
+<section class="topic" id="t-7">
+  <p class="wk">第 7–8 週</p>
+  <h2>假設檢定</h2>
+  <p class="lede">假設檢定就像法庭的無罪推定：先假設「沒有差異」，再看證據有多不符合這個假設。證據夠強，才推翻它。</p>
+
+  <h3>架構：六個步驟</h3>
+  <div class="flow">
+    <div class="st"><b>提出問題</b><span>新方案有效嗎？</span></div><div class="ar"></div>
+    <div class="st"><b>設立假設</b><span>H0：沒有差異<br>H1：有差異</span></div><div class="ar"></div>
+    <div class="st"><b>設定 α</b><span>通常 0.05<br>願意承擔的誤判風險</span></div><div class="ar"></div>
+    <div class="st"><b>算檢定統計量</b><span>依資料型態選檢定</span><div class="sub"><i>t</i><i>F</i><i>χ²</i></div></div><div class="ar"></div>
+    <div class="st key"><b>得到 p 值</b><span>若 H0 為真，出現這種結果的機率</span></div><div class="ar"></div>
+    <div class="st"><b>下結論</b><span>p &lt; α 拒絕 H0<br>再看效果大小與 CI</span></div>
+  </div>
+  <h4>兩種錯誤</h4>
+  <div class="scroll"><table class="tbl">
+    <tr><th></th><th>真相：沒有差異（H0 對）</th><th>真相：有差異（H1 對）</th></tr>
+    <tr><th class="l">判定：有差異</th><td style="background:#F3D6CF">型一錯誤 α<br>冤枉好人（偽陽性）</td><td style="background:#D5EAE6">正確<br>機率＝檢定力 1−β</td></tr>
+    <tr><th class="l">判定：沒差異</th><td>正確</td><td style="background:#F7E6BF">型二錯誤 β<br>放走壞人（漏掉效果）</td></tr>
+  </table></div>
+  <h4>t 檢定三兄弟（這兩週的主角）</h4>
+  <div class="scroll"><table class="tbl">
+    <tr><th>檢定</th><th class="l">問的問題</th><th class="l">長照例子</th></tr>
+    <tr><td>單一樣本 t</td><td class="l">一組的平均數和某個標準值有沒有差？</td><td class="l">本單位平均照護時數是否不同於評鑑建議的 180 分鐘</td></tr>
+    <tr><td>獨立樣本 t</td><td class="l">兩群不同的人，平均數有沒有差？</td><td class="l">參加與未參加復健團體的住民，Barthel 分數有沒有差</td></tr>
+    <tr><td>成對樣本 t</td><td class="l">同一群人前後測，有沒有改變？</td><td class="l">同一批住民介入前後的 Barthel 分數</td></tr>
+  </table></div>
+
+  <h3>動手看看：p 值長什麼樣子</h3>
+  <p>假設新方案<b>完全無效</b>，重做很多次「每組 20 人」的研究，兩組的平均差會落在灰色曲線的範圍裡，大多在 0 附近。拖動滑桿，假裝你的研究觀察到某個差距，紅色面積就是 p 值。</p>
+  <div class="lab" id="lab7p">
+    <div class="ctl"><label>你的研究觀察到的差距 <input type="range" id="w7obs" min="0" max="15" step="0.5" value="4"><output id="w7obsv"></output></label></div>
+    <div id="w7pfig" class="fig"></div>
+    <div class="legend"><span style="--c:#F3D6CF;--b:#B9412F">p 值（兩側紅色面積加起來）</span></div>
+    <div class="say" id="w7psay"></div>
+    <div class="read" id="w7pread"></div>
+    <details class="how"><summary>怎麼看這張圖</summary><ol><li>橫軸是兩組平均分數的差距，0 代表兩組一樣。</li><li>灰色鐘形曲線是「方案無效」時，重做很多次研究可能看到的差距：大多靠近 0，偶爾因為巧合差很多。</li><li>紅色實線是你觀察到的差距。另一側的紅色虛線是同樣大小、方向相反的差距，因為「變好」和「變差」都算意外，所以兩側都要算進去。</li><li>兩側紅色面積加起來就是 p 值：面積越小，代表「無效卻看到這種結果」越罕見。</li><li>灰色虛線是 p ＝ 0.05 的界線，差距超過它，p 值就小於 0.05。</li></ol></details>
+  </div>
+
+  <h3>再動手：人數太少為什麼會「看不到」效果？</h3>
+  <p>假設新復健方案真的讓 Barthel 分數平均多 <b id="w7dtxt">8</b> 分（住民間標準差 15 分）。灰色曲線是「方案無效」時兩組平均差的分布，綠色曲線是「方案真的有效」時的分布。紅色區域是 α，綠色實心是檢定力。</p>
+  <div class="lab" id="lab7">
+    <div class="ctl">
+      <label>真實效果（分） <input type="range" id="w7d" min="0" max="15" value="8"><output id="w7dv"></output></label>
+      <label>每組人數 <input type="range" id="w7n" min="5" max="120" step="5" value="20"><output id="w7nv"></output></label>
+      <span>α</span><span class="seg" id="w7a"><button class="btn" data-a="0.01">0.01</button><button class="btn" data-a="0.05" aria-pressed="true">0.05</button><button class="btn" data-a="0.10">0.10</button></span>
+    </div>
+    <div id="w7fig" class="fig"></div>
+    <div class="legend"><span style="--c:#F3D6CF;--b:#B9412F">型一錯誤 α</span><span style="--c:#F7E6BF;--b:#C98A12">型二錯誤 β</span><span style="--c:#9CCFC6;--b:#0F6E66">檢定力 1−β</span></div>
+    <div class="read" id="w7read"></div>
+    <div class="say" id="w7say"></div>
+    <details class="how"><summary>怎麼看這張圖</summary><ol><li>橫軸是兩組平均分數的差距。每條曲線表示「重做很多次研究，觀察到的差距會怎麼分布」。</li><li>灰色曲線：方案其實無效（H0 為真）時的分布，中心在 0。綠色曲線：方案真的有效時的分布，中心在真實效果。</li><li>紅色垂直虛線是臨界值：觀察到的差距超過它，就判定顯著。</li><li>三種面積：灰曲線超過臨界值的紅色區域＝型一錯誤 α；綠曲線超過臨界值的綠色區域＝檢定力；綠曲線沒超過臨界值的黃色區域＝型二錯誤 β。</li><li>兩條曲線分得越開（效果大）或越瘦（人數多、標準誤小），重疊越少，檢定力就越高。</li></ol></details>
+  </div>
+  <p class="hint">把每組人數拉到 5，檢定力只剩一成多：方案明明有效，將近九成的研究卻會得到 p &gt; 0.05。所以「沒有顯著差異」不等於「證明沒效」，可能只是人數太少。研究設計時會先做樣本數估算，通常要求檢定力至少 80%。</p>
+
+  <h3>長照例子</h3>
+  <div class="case">
+    <p><b>情境：</b>單位試辦口腔照護新流程，比較試辦組 25 人與對照組 25 人三個月的吸入性肺炎相關指標，或比較同一批住民試辦前後的口腔評估分數。</p>
+    <p><b>怎麼用：</b>不同的兩群人用獨立樣本 t 檢定；同一群人前後比較用成對樣本 t 檢定。資料明顯偏態或人數很少時，改用無母數檢定（見第 18 週）。</p>
+    <p><b>怎麼解讀：</b>報告寫法範例：「試辦後口腔評估分數平均改善 2.3 分（95% CI 1.1–3.5，p &lt; 0.001）」。p 值告訴你差異不太可能是巧合，信賴區間告訴你效果大概多大。</p>
+  </div>
+
+  <h3>容易踩的坑</h3>
+  <div class="pit">
+    <p>p 值不是「H0 為真的機率」，也不是效果大小。p ＝ 0.001 不代表效果比 p ＝ 0.04 大十倍，只代表證據比較強。</p>
+    <p>統計顯著不等於臨床有意義。樣本很大時，Barthel 只差 1 分也可能 p &lt; 0.05，但這 1 分對照護幾乎沒有影響。</p>
+  </div>
+</section>
+
+<section class="topic" id="t-10">
+  <p class="wk">第 10 週</p>
+  <h2>變異數分析 ANOVA</h2>
+  <p class="lede">結果是連續數值、要比較三組以上的平均數時用 ANOVA。它看的是：組和組之間的差異，有沒有明顯大過每組內部個人之間的差異。</p>
+
+  <h3>架構：照編號順序看流程</h3>
+  <div class="flow">
+    <div class="st"><b>三組以上</b><span>結果為連續數值</span></div><div class="ar"></div>
+    <div class="st"><b>H0</b><span>所有組平均相同</span></div><div class="ar"></div>
+    <div class="st key"><b>F ＝ 組間變異 ÷ 組內變異</b><span>F 越大，組別影響越明顯</span></div><div class="ar"></div>
+    <div class="st"><b>p &lt; 0.05</b><span>至少有一組不同</span></div><div class="ar"></div>
+    <div class="st"><b>事後檢定</b><span>找出是哪幾組不同</span><div class="sub"><i>Tukey</i><i>Bonferroni</i><i>Scheffé</i></div></div>
+  </div>
+  <h4>為什麼不做很多次 t 檢定就好？</h4>
+  <p>每做一次檢定就有 5% 誤判的機會，比較次數一多，至少誤判一次的機率會快速上升。ANOVA 用一次檢定把整體誤判率控制在 5%。</p>
+  <div id="w10fwer" class="fig"></div>
+    <details class="how"><summary>怎麼看這張圖</summary><ol><li>每一列是「組數」和「兩兩比較需要做幾次 t 檢定」。</li><li>長條長度是至少誤判一次的機率，公式是 1 − 0.95 的比較次數次方。</li><li>綠色直線是 5%，也就是 ANOVA 一次檢定所控制的誤判率。長條超過它越多，多次 t 檢定越不可靠。</li></ol></details>
+
+  <h3>動手看看：F 值是怎麼來的</h3>
+  <p>三個照護區各 15 位住民的每日照護時數（分鐘）。調整「組間差距」和「組內分散程度」，觀察 F 值和 p 值怎麼變。</p>
+  <div class="lab" id="lab10">
+    <div class="ctl">
+      <label>組間差距 <input type="range" id="w10g" min="0" max="40" value="20"><output id="w10gv"></output></label>
+      <label>組內分散（標準差） <input type="range" id="w10s" min="10" max="60" value="35"><output id="w10sv"></output></label>
+    </div>
+    <div id="w10fig" class="fig"></div>
+    <div id="w10bar" class="fig"></div>
+    <div class="read" id="w10read"></div>
+    <div class="say" id="w10say"></div>
+    <details class="how"><summary>怎麼看這張圖</summary><ol><li>每個灰點是一位住民；橫向排三組，縱軸是每日照護時數。</li><li>綠色粗橫線是各組平均，灰色虛線是三組合起來的總平均。</li><li>組間差異：看三條綠線離虛線多遠。組內差異：看每組的點上下散得多開。</li><li>下方兩條長條把兩種差異換成相同單位（標準差）並排比較：上面那條相對越長，F 值越大、越容易顯著。</li></ol></details>
+  </div>
+  <p class="hint">組間差距不變、把組內分散拉大，三組的點會互相重疊，F 值下降；反過來，組內越整齊，同樣的平均差就越容易顯著。</p>
+
+  <h3>長照例子</h3>
+  <div class="case">
+    <p><b>情境：</b>比較一般照護區、重度失能區、失智專區的每日照護時數，作為人力配置的依據。</p>
+    <p><b>怎麼用：</b>自變項是照護區（3 組），依變項是照護時數（連續），用單因子 ANOVA。顯著後再做事後檢定。</p>
+    <p><b>怎麼解讀：</b>範例寫法：「三區照護時數有顯著差異（F(2, 42) ＝ 6.8，p ＝ 0.003）；Tukey 事後檢定顯示重度失能區高於一般照護區，失智專區與其他兩區無顯著差異。」括號裡的 2 和 42 是自由度（組數−1、總人數−組數）。</p>
+  </div>
+
+  <h3>容易踩的坑</h3>
+  <div class="pit">
+    <p>ANOVA 顯著只說明「至少一組不同」，沒做事後檢定就寫「三組都不同」是錯的。</p>
+    <p>使用前提有三個：各組資料近似常態、各組變異數相近（Levene 檢定）、觀察值彼此獨立。同一群人測三次要用重複量數 ANOVA，不是單因子 ANOVA。</p>
+  </div>
+</section>
+
+<section class="topic" id="t-11">
+  <p class="wk">第 11 週</p>
+  <h2>卡方檢定</h2>
+  <p class="lede">兩個變項都是類別時，用卡方檢定看它們有沒有關聯。原理是比較「實際觀察到的人數」和「如果兩者無關，應該出現的人數」差多少。</p>
+
+  <h3>架構：照編號順序看流程</h3>
+  <div class="flow">
+    <div class="st"><b>兩個類別變項</b><span>例：導尿管 有／無 × 泌尿道感染 有／無</span></div><div class="ar"></div>
+    <div class="st"><b>交叉表</b><span>實際觀察人數 O</span></div><div class="ar"></div>
+    <div class="st"><b>期望人數 E</b><span>假設無關時應有的人數<br>＝ 列合計 × 欄合計 ÷ 總數</span></div><div class="ar"></div>
+    <div class="st key"><b>χ² ＝ Σ (O − E)² ÷ E</b><span>差距越大 χ² 越大</span></div><div class="ar"></div>
+    <div class="st"><b>判讀</b><span>p &lt; 0.05 有關聯<br>E &lt; 5 太多 → Fisher</span></div>
+  </div>
+
+  <h3>動手看看：自己填交叉表</h3>
+  <p>直接修改表中的人數。每格下方的小字是期望人數。</p>
+  <div class="lab" id="lab11">
+    <div class="ctl"><button class="btn" data-pre="a">典型例子</button><button class="btn" data-pre="b">人數太少</button><button class="btn" data-pre="c">兩組差不多</button></div>
+    <div class="scroll"><table class="tbl" id="w11tbl">
+      <tr><th></th><th>有泌尿道感染</th><th>無泌尿道感染</th><th>合計</th></tr>
+      <tr><th class="l">有留置導尿管</th><td><input type="number" min="0" id="w11a" style="width:70px"><div class="note" id="w11ea"></div></td><td><input type="number" min="0" id="w11b" style="width:70px"><div class="note" id="w11eb"></div></td><td id="w11r1"></td></tr>
+      <tr><th class="l">無留置導尿管</th><td><input type="number" min="0" id="w11c" style="width:70px"><div class="note" id="w11ec"></div></td><td><input type="number" min="0" id="w11d" style="width:70px"><div class="note" id="w11ed"></div></td><td id="w11r2"></td></tr>
+      <tr><th class="l">合計</th><td id="w11c1"></td><td id="w11c2"></td><td id="w11n"></td></tr>
+    </table></div>
+    <div class="err" id="w11err" hidden></div>
+    <div id="w11fig" class="fig"></div>
+    <div class="read" id="w11read"></div>
+    <div class="say" id="w11say"></div>
+    <details class="how"><summary>怎麼看這張圖</summary><ol><li>每條長條是一組住民，紅色長度是泌尿道感染的比例，括號是「感染人數／該組總人數」。</li><li>垂直虛線是全部 90 人的整體感染比例，也就是「如果導尿管和感染無關」時，兩組都應該接近的比例。</li><li>兩條紅色都貼近虛線＝沒有關聯；一條明顯在右、一條明顯在左＝可能有關聯，再看 p 值判斷是不是巧合。</li><li>表格裡「期望」的小字若變紅，代表期望人數小於 5，要改看 Fisher 精確檢定。</li></ol></details>
+  </div>
+
+  <h3>長照例子</h3>
+  <div class="case">
+    <p><b>情境：</b>感管年度分析，想知道留置導尿管與泌尿道感染是否有關，或約束與否和跌倒是否有關。</p>
+    <p><b>怎麼用：</b>兩個變項都是「有／無」，排成 2×2 交叉表做卡方檢定。任一格期望人數小於 5（長照機構很常見），改用 Fisher's exact test。同一群人前後比較（例如介入前後有無約束）則用 McNemar 檢定。</p>
+    <p><b>怎麼解讀：</b>範例寫法：「有導尿管住民的泌尿道感染比例為 30.0%，無導尿管者為 10.0%，兩者達顯著差異（χ² ＝ 5.76，p ＝ 0.016）」。卡方只告訴你有沒有關聯；想知道風險高幾倍，看勝算比 OR 或相對風險 RR。</p>
+  </div>
+
+  <h3>容易踩的坑</h3>
+  <div class="pit">
+    <p>表格裡要放「人數」，不能放百分比或平均數。把百分比直接丟進卡方會算出錯誤結果。</p>
+    <p>卡方顯著代表有關聯，不代表因果。導尿管和感染有關，也可能是因為放導尿管的住民本來就比較衰弱；要控制其他因素，就要進到第 13 週的邏輯斯迴歸。</p>
+  </div>
+</section>
+
+<section class="topic" id="t-12">
+  <p class="wk">第 12 週</p>
+  <h2>線性迴歸分析</h2>
+  <p class="lede">結果是連續數值，想知道「哪些因素影響它、影響多大」時用線性迴歸。它在散佈圖上找一條最貼近所有點的直線，並把關係寫成方程式。</p>
+
+  <h3>架構：照編號順序看流程</h3>
+  <div class="flow">
+    <div class="st"><b>自變項 X</b><span>一個或多個可能的影響因素</span><div class="sub"><i>Barthel</i><i>年齡</i><i>失智</i></div></div><div class="ar"></div>
+    <div class="st key"><b>模型</b><span>Y ＝ b₀ ＋ b₁X₁ ＋ b₂X₂ ＋ …</span></div><div class="ar"></div>
+    <div class="st"><b>依變項 Y</b><span>連續數值<br>例：每日照護時數</span></div><div class="ar"></div>
+    <div class="st"><b>看三個數字</b><span>係數 b：X 增加 1，Y 變多少<br>p 值：這個關係是否顯著<br>R²：模型解釋幾成差異</span></div>
+  </div>
+
+  <h3>動手看看：點圖就能加一個住民</h3>
+  <p>30 位住民的 Barthel 分數與每日照護時數。直接點圖上任何位置可以新增一位住民，觀察一個極端值能把線拉偏多少。</p>
+  <div class="lab" id="lab12">
+    <div class="ctl">
+      <label>真實關係強度 <input type="range" id="w12b" min="0" max="25" value="18"><output id="w12bv"></output></label>
+      <label>雜訊（個別差異） <input type="range" id="w12e" min="10" max="80" value="35"><output id="w12ev"></output></label>
+    </div>
+    <div class="ctl"><button class="btn" id="w12res" aria-pressed="false">顯示殘差</button><button class="btn" id="w12rst">移除新增的點</button></div>
+    <div id="w12fig" class="fig" style="cursor:crosshair"></div>
+    <div class="legend"><span style="--c:#1D2B3A">原始住民</span><span style="--c:#C98A12">你新增的住民</span><span style="--c:#0F6E66">迴歸線</span></div>
+    <div class="read" id="w12read"></div>
+    <div class="say" id="w12say"></div>
+    <details class="how"><summary>怎麼看這張圖</summary><ol><li>每個點是一位住民：橫軸是 Barthel 分數，縱軸是每日照護時數。</li><li>點雲從左上往右下＝負相關：越獨立的住民照護時數越少。</li><li>綠線是迴歸線，它的斜率就是係數 b；線與縱軸（Barthel＝0）的交點是截距。</li><li>點越貼近綠線，R² 越高。按「顯示殘差」時，每條紅色短線就是一位住民的殘差（實際值減預測值）。</li><li>你新增的黃點若離點群很遠，會把線拉歪；虛線是加點之前的原始迴歸線，可以對照差了多少。</li></ol></details>
+  </div>
+  <p class="hint">雜訊調大時，斜率可能差不多，但 R² 會掉很多：關係還在，只是 Barthel 能解釋的比例變少了，其他因素（失智行為、管路）影響更大。</p>
+
+  <h3>長照例子</h3>
+  <div class="case">
+    <p><b>情境：</b>想建立照護人力估算模型，找出影響每日照護時數的因素。</p>
+    <p><b>怎麼用：</b>依變項放照護時數，自變項同時放 Barthel 分數、是否失智、管路數。多元迴歸的好處是可以「控制」其他變項，看到每個因素各自的影響。</p>
+    <p><b>怎麼解讀：</b>範例：「Barthel 每增加 10 分，照護時數平均減少 18 分鐘（b ＝ −1.8，p &lt; 0.001）；在相同 Barthel 下，失智住民多 32 分鐘；模型 R² ＝ 0.61。」</p>
+  </div>
+
+  <h3>容易踩的坑</h3>
+  <div class="pit">
+    <p>相關不等於因果。迴歸能說 Barthel 和照護時數有關，不能說「提高 Barthel 就會減少照護時數」，除非研究設計支持因果推論。</p>
+    <p>不要外推。資料的 Barthel 只有 0–100 分，用模型去預測範圍以外的情況沒有意義。另外記得先畫散佈圖，關係如果是彎的，直線模型會誤導。</p>
+  </div>
+</section>
+<section class="topic" id="t-13">
+  <p class="wk">第 13 週</p>
+  <h2>邏輯斯迴歸分析</h2>
+  <p class="lede">結果只有「有／無」兩種時用邏輯斯迴歸，是護理研究最常見的方法之一。它預測的是事件發生的機率，結果用勝算比 OR 呈現。</p>
+
+  <h3>架構：照編號順序看流程</h3>
+  <div class="flow">
+    <div class="st"><b>依變項二分</b><span>跌倒 有／無<br>感染 有／無</span></div><div class="ar"></div>
+    <div class="st"><b>自變項</b><span>可連續可類別</span><div class="sub"><i>年齡</i><i>鎮靜安眠藥</i><i>認知</i></div></div><div class="ar"></div>
+    <div class="st"><b>logit 轉換</b><span>把機率轉成可以用直線處理的形式，預測值永遠在 0–1 之間</span></div><div class="ar"></div>
+    <div class="st key"><b>勝算比 OR（95% CI）</b><span>OR &gt; 1 危險因子<br>OR &lt; 1 保護因子<br>CI 跨過 1 ＝ 不顯著</span></div>
+  </div>
+
+  <h3>動手看看：S 形曲線與勝算比</h3>
+  <p>預測住民一年內跌倒的機率。橫軸是年齡，兩條曲線分別是有、無使用鎮靜安眠藥。拖動年齡，觀察兩組的「機率差」和「勝算比」。</p>
+  <div class="lab" id="lab13">
+    <div class="ctl">
+      <label>鎮靜安眠藥的 OR <input type="range" id="w13or" min="5" max="50" value="25"><output id="w13orv"></output></label>
+      <label>看幾歲的住民 <input type="range" id="w13age" min="65" max="100" value="80"><output id="w13agev"></output></label>
+    </div>
+    <div id="w13fig" class="fig"></div>
+    <div class="legend"><span style="--c:#B9412F">有使用鎮靜安眠藥</span><span style="--c:#0F6E66">未使用</span></div>
+    <div class="read" id="w13read"></div>
+    <div class="say" id="w13say"></div>
+    <details class="how"><summary>怎麼看這張圖</summary><ol><li>橫軸是年齡，縱軸是一年內跌倒的機率；兩條曲線都被限制在 0–100% 之間，所以呈現 S 形（這個範圍內只看到 S 的下半段）。</li><li>紅線（有使用鎮靜安眠藥）一直在綠線上方，代表同年齡下跌倒機率較高。</li><li>垂直虛線對應你選的年齡，兩個圓點的高度差就是機率差。</li><li>勝算比 OR 在圖上看不到，但會顯示在下方數字：不管虛線移到哪裡，OR 都一樣。</li></ol></details>
+  </div>
+  <p class="hint">拖動年齡會發現：兩組的機率差一直在變，但 OR 始終不變。這就是為什麼邏輯斯迴歸用 OR 報告結果，因為它是一個不隨基準風險變動的比值。</p>
+
+  <h4>讀懂論文裡的森林圖</h4>
+  <p>多變項邏輯斯迴歸的結果常畫成這樣（示意數據）。點是 adjusted OR，橫線是 95% 信賴區間，直線是 OR ＝ 1。點一列看解讀。</p>
+  <div class="lab">
+    <div id="w13forest" class="fig"></div>
+    <div class="say" id="w13fsay">點上方任一個因素。</div>
+    <details class="how"><summary>怎麼看這張圖</summary><ol><li>每一列是一個因素：方塊是 adjusted OR，橫線是 95% 信賴區間。</li><li>中間黑色直線是 OR＝1，代表沒有關聯。</li><li>橫線整條在直線右邊＝顯著的危險因子（紅色）；整條在左邊＝顯著的保護因子（綠色）；跨過直線＝不顯著（灰色）。</li><li>橫軸是對數刻度：0.5 和 2 距離 1 一樣遠，因為「減半」和「加倍」是同樣強度的效果。</li><li>橫線越長，代表估計越不精準，通常是事件數太少。</li></ol></details>
+  </div>
+
+  <h3>長照例子</h3>
+  <div class="case">
+    <p><b>情境：</b>分析住民跌倒的危險因子，作為防跌計畫的高危險群篩選依據。</p>
+    <p><b>怎麼用：</b>依變項是「一年內是否跌倒」，自變項同時放入年齡、鎮靜安眠藥、認知功能、步態、規律復健。多變項模型的 adjusted OR 已經控制其他因素的影響。</p>
+    <p><b>怎麼解讀：</b>範例：「在控制年齡、認知功能後，使用鎮靜安眠藥者跌倒的勝算為未使用者的 2.3 倍（aOR ＝ 2.3，95% CI 1.4–3.8）。」這可以直接支持「用藥評估納入防跌措施」的提案。</p>
+  </div>
+
+  <h3>容易踩的坑</h3>
+  <div class="pit">
+    <p>OR 不等於「風險是幾倍」。事件很常見時（例如跌倒率 30%），OR 會比相對風險 RR 誇大，寫報告時用「勝算」而不是「機率」或「風險」比較精確。</p>
+    <p>事件數太少時模型不穩。常用經驗法則是每放一個自變項，至少要有 10 個事件，如果一年只有 12 次跌倒事件，大概只能放 1 個變項。</p>
+  </div>
+</section>
+
+<section class="topic" id="t-14">
+  <p class="wk">第 14 週</p>
+  <h2>存活分析</h2>
+  <p class="lede">當你關心的不只是「有沒有發生」，還有「多久之後發生」時，用存活分析。事件不一定是死亡，也可以是入住到第一次跌倒、第一次送急診、管路再置入的時間。</p>
+
+  <h3>架構：照編號順序看流程</h3>
+  <div class="flow">
+    <div class="st"><b>起點</b><span>例：入住日</span></div><div class="ar"></div>
+    <div class="st"><b>追蹤</b><span>記錄每位住民的時間</span></div><div class="ar"></div>
+    <div class="st"><b>結局</b><span>✕ 發生事件<br>○ 設限：研究結束仍未發生、轉院、失聯</span></div><div class="ar"></div>
+    <div class="st key"><b>Kaplan-Meier 曲線</b><span>隨時間「還沒發生事件」的比例</span></div><div class="ar"></div>
+    <div class="st"><b>比較與建模</b><span>log-rank：兩條曲線有沒有差<br>Cox 迴歸：多因素，得到 HR</span></div>
+  </div>
+
+  <h3>動手看看：設限怎麼影響曲線</h3>
+  <p>16 位住民入住後追蹤 12 個月，分成「入住前有跌倒史」與「無跌倒史」兩組。點每位住民線尾的記號，可以在 ✕（發生跌倒）和 ○（設限）之間切換，下方的 Kaplan-Meier 曲線會即時重算。</p>
+  <div class="lab" id="lab14">
+    <div class="ctl"><button class="btn" id="w14rst">還原資料</button></div>
+    <div id="w14sw" class="fig"></div>
+    <div id="w14km" class="fig"></div>
+    <div class="legend"><span style="--c:#B9412F">有跌倒史</span><span style="--c:#0F6E66">無跌倒史</span></div>
+    <div class="read" id="w14read"></div>
+    <div class="say" id="w14say"></div>
+    <details class="how"><summary>怎麼看這張圖</summary><ol><li>上圖每一列是一位住民：橫線從入住（0 月）畫到追蹤結束；✕＝在那個時間跌倒，○＝設限（還沒跌倒就結束追蹤）。</li><li>下圖是 Kaplan-Meier 曲線，縱軸是「還沒跌倒的比例」，從 100% 開始。</li><li>每往下掉一階＝有人跌倒；曲線上的短直線＝有人設限，曲線不會因此下降。</li><li>看曲線和 50% 虛線的交點，對應的月數就是中位跌倒時間；沒有交點就是「未達」。</li><li>紅線掉得比綠線早又陡，代表有跌倒史的住民較快發生跌倒；兩條線分得越開，差異越大，是否顯著看 log-rank 的 p 值。</li></ol></details>
+  </div>
+  <p class="hint">曲線每往下掉一階，就是有人跌倒；設限的人不會讓曲線下降，但會從「還在追蹤的人數」中退出，所以後面每一階會掉得比較多。這就是 Kaplan-Meier 能正確使用「只追蹤到一半」資料的方式。</p>
+
+  <h3>長照例子</h3>
+  <div class="case">
+    <p><b>情境：</b>想知道有跌倒史的新住民，是不是比較快發生第一次跌倒，以決定新入住者的防跌介入要多早開始。</p>
+    <p><b>怎麼用：</b>時間是入住到第一次跌倒的月數；追蹤期間轉院、過世或研究結束仍未跌倒者都算設限。先畫兩組 Kaplan-Meier 曲線、用 log-rank 比較，再用 Cox 迴歸控制年齡與失能程度。</p>
+    <p><b>怎麼解讀：</b>範例：「有跌倒史者發生跌倒的風險為無跌倒史者的 2.8 倍（HR ＝ 2.8，95% CI 1.3–6.0）；有跌倒史組的中位跌倒時間為 5 個月。」曲線在前三個月掉最快，表示入住初期是介入的關鍵期。</p>
+  </div>
+
+  <h3>容易踩的坑</h3>
+  <div class="pit">
+    <p>把設限的人直接刪掉，或當成「沒發生事件」丟進邏輯斯迴歸，都會扭曲結果。追蹤兩週就轉院的人和追蹤滿一年都沒跌倒的人，資訊量完全不同。</p>
+    <p>Cox 迴歸有「比例風險」前提：兩組的風險比要在整段期間大致固定。如果兩條 Kaplan-Meier 曲線交叉，就要小心這個前提不成立。</p>
+  </div>
+</section>
+
+<section class="topic" id="t-17">
+  <p class="wk">第 17 週　自主學習</p>
+  <h2>實證醫學簡介</h2>
+  <p class="lede">實證醫學是把研究證據、臨床專業和病人意願結合起來做決策的方法。前面所有統計工具，都是為了讓你在「評讀證據」這一步看得懂、判斷得準。</p>
+
+  <h3>架構：5A 流程</h3>
+  <div class="flow">
+    <div class="st"><b>Ask 提問</b><span>用 PICO 寫成可搜尋的問題</span></div><div class="ar"></div>
+    <div class="st"><b>Acquire 檢索</b><span>PubMed、Cochrane、華藝</span></div><div class="ar"></div>
+    <div class="st key"><b>Appraise 評讀</b><span>研究設計、偏差、統計結果</span></div><div class="ar"></div>
+    <div class="st"><b>Apply 應用</b><span>結合臨床情境與住民意願</span></div><div class="ar"></div>
+    <div class="st"><b>Assess 評估</b><span>追蹤成效，回到品管</span></div>
+  </div>
+  <h4>PICO 範例</h4>
+  <div class="scroll"><table class="tbl">
+    <tr><th>P 對象</th><th>I 介入</th><th>C 對照</th><th>O 結果</th></tr>
+    <tr><td>住宿式機構長者</td><td>平衡與肌力訓練</td><td>常規活動</td><td>跌倒發生率</td></tr>
+  </table></div>
+  <p>問題寫成：「對住宿式機構長者而言，平衡與肌力訓練相較於常規活動，能否降低跌倒發生率？」</p>
+
+  <h3>動手看看：證據等級金字塔</h3>
+  <p>點每一層看說明。越上層，偏差越少、證據越強。</p>
+  <div class="lab">
+    <div id="w17pyr" class="fig"></div>
+    <div class="say" id="w17psay">點金字塔的任一層。</div>
+  </div>
+
+  <h4>NNT：最直觀的療效指標</h4>
+  <p>NNT（需治療人數）回答的是：「要讓幾位住民接受介入，才能多避免一件事件？」調整兩組的跌倒率看看。</p>
+  <div class="lab" id="lab17">
+    <div class="ctl">
+      <label>對照組跌倒率 <input type="range" id="w17c" min="5" max="60" value="30"><output id="w17cv"></output></label>
+      <label>介入組跌倒率 <input type="range" id="w17t" min="1" max="60" value="20"><output id="w17tv"></output></label>
+    </div>
+    <div id="w17fig" class="fig"></div>
+    <div class="legend"><span style="--c:#B9412F">跌倒的人</span><span style="--c:#C98A12">因介入而避免跌倒的人</span><span style="--c:#E4EBE8">沒有跌倒的人</span></div>
+    <div class="read" id="w17read"></div>
+    <div class="say" id="w17say"></div>
+    <details class="how"><summary>怎麼看這張圖</summary><ol><li>左右各代表 100 位住民：左邊是對照組，右邊是介入組。</li><li>紅點是跌倒的人；右邊的黃點是「如果沒有介入就會跌倒、但因為介入而沒跌倒」的人。</li><li>黃點的數量就是每 100 人的絕對風險減少（ARR）。</li><li>NNT＝100 ÷ 黃點數：黃點越多，NNT 越小，介入越有效率。</li></ol></details>
+  </div>
+
+  <h3>長照例子</h3>
+  <div class="case">
+    <p><b>情境：</b>護理長想在單位推行防跌運動，需要向主管提出實證依據。</p>
+    <p><b>怎麼用：</b>用 PICO 找系統性回顧或統合分析；評讀時看研究對象是否像你的住民、介入強度是否做得到，再看結果的 RR 或 NNT 與信賴區間。</p>
+    <p><b>怎麼解讀：</b>「相對風險減少 33%」聽起來很大，但換成 NNT ＝ 10 更具體：每 10 位住民參加，一年約可少 1 位跌倒。這種說法最適合向主管或家屬溝通。</p>
+  </div>
+
+  <h3>容易踩的坑</h3>
+  <div class="pit">
+    <p>只看相對風險減少（RRR）會高估效益。基準風險很低時，RRR 50% 可能只對應到絕對風險減少 1%，NNT 高達 100。</p>
+    <p>證據等級高不代表可以直接套用。國外醫院的研究結果，要評估是否適用於本國住宿型機構的住民與人力條件。</p>
+  </div>
+</section>
+
+<section class="topic" id="t-18">
+  <p class="wk">第 18 週　自主學習</p>
+  <h2>雙樣本統計方法綜論</h2>
+  <p class="lede">兩組比較是最常用的情境。選對方法只要回答三個問題：結果是什麼資料？兩組是不是同一群人？資料符不符合常態？</p>
+
+  <h3>架構：回答三個問題選方法</h3>
+  <div class="lab" id="lab18q">
+    <h4 style="margin-top:0">1. 結果是什麼資料？</h4>
+    <div class="ctl seg" data-q="type"><button class="btn" data-v="cont">連續數值</button><button class="btn" data-v="cat">類別（有／無）</button></div>
+    <h4>2. 兩組是什麼關係？</h4>
+    <div class="ctl seg" data-q="pair"><button class="btn" data-v="ind">不同的兩群人</button><button class="btn" data-v="pair">同一群人前後測</button></div>
+    <div id="w18q3"><h4>3. 資料近似常態、人數夠嗎？</h4>
+    <div class="ctl seg" data-q="norm"><button class="btn" data-v="yes">是</button><button class="btn" data-v="no">否（偏態或人數很少）</button></div></div>
+    <div class="say" id="w18ans">依序回答上面的問題。</div>
+  </div>
+  <div class="scroll"><table class="tbl" id="w18mat">
+    <tr><th></th><th>不同的兩群人（獨立）</th><th>同一群人（成對）</th></tr>
+    <tr><th class="l">連續，符合常態</th><td data-k="cont-ind-yes">獨立樣本 t 檢定</td><td data-k="cont-pair-yes">成對樣本 t 檢定</td></tr>
+    <tr><th class="l">連續或順序，不符合常態</th><td data-k="cont-ind-no">Mann-Whitney U 檢定</td><td data-k="cont-pair-no">Wilcoxon 符號等級檢定</td></tr>
+    <tr><th class="l">類別</th><td data-k="cat-ind">卡方檢定／Fisher 精確檢定</td><td data-k="cat-pair">McNemar 檢定</td></tr>
+  </table></div>
+
+  <h3>動手看看：同一份資料，成對和獨立差很多</h3>
+  <p>10 位住民參加 8 週復健前後的 Barthel 分數。每個人都進步了 2–7 分，但住民之間的起點差很大（25 到 80 分）。</p>
+  <div class="lab" id="lab18">
+    <div class="ctl"><span class="seg" id="w18mode"><button class="btn" data-m="pair" aria-pressed="true">成對分析（正確）</button><button class="btn" data-m="ind">當成兩群不同的人（錯誤）</button></span></div>
+    <div id="w18fig" class="fig"></div>
+    <div class="read" id="w18read"></div>
+    <div class="say" id="w18say"></div>
+    <details class="how"><summary>怎麼看這張圖</summary><ol><li>縱軸是 Barthel 分數；左邊一排是介入前，右邊一排是介入後，每個點是一位住民。</li><li>成對模式：每條線連接同一位住民的前後分數。10 條線幾乎平行往上，代表每個人都一致進步。</li><li>獨立模式：線被拿掉，黃色是各組平均 ± 1 個標準差。兩組範圍大量重疊，所以看不出差異。</li><li>同樣的點，分析方式不同，結論就完全不同。</li></ol></details>
+  </div>
+  <p class="hint">成對分析只看每個人自己的變化，住民之間的起點差異被抵消掉了；錯用獨立樣本 t 檢定時，這些巨大的個別差異全部變成雜訊，明明很一致的進步就被淹沒。</p>
+
+  <h3>長照例子</h3>
+  <div class="case">
+    <p><b>情境：</b>單位做了一年的品管專案，要分析成效。</p>
+    <p><b>怎麼用：</b>同一批住民介入前後的疼痛分數 → 成對 t 檢定（人數少或偏態改用 Wilcoxon）；A、B 兩樓層的照護時數 → 獨立樣本 t 檢定；同一批住民介入前後「是否約束」→ McNemar 檢定；兩樓層「是否跌倒」→ 卡方或 Fisher。</p>
+    <p><b>怎麼解讀：</b>無母數檢定的結果用中位數描述，例如「介入後疼痛分數中位數由 4 降至 2（Wilcoxon 檢定，p ＝ 0.008）」。</p>
+  </div>
+
+  <h3>容易踩的坑</h3>
+  <div class="pit">
+    <p>前後測資料用獨立樣本 t 檢定，是期末報告最常見的錯誤，會嚴重低估效果。</p>
+    <p>長照單位樣本常常只有十幾二十人，別只因為 t 檢定比較熟就直接用。先畫直方圖或做常態檢定，不符合就換無母數方法。</p>
+  </div>
+</section>
+<section class="topic" id="t-terms">
+  <p class="wk">隨時查</p>
+  <h2>名詞解釋</h2>
+  <p class="lede">每個名詞都有定義、白話說法、長照例子和判讀方式。在任何一週的內文裡，底下有綠色虛線的名詞都可以直接點開看簡短解釋。</p>
+
+  <h3>先學會讀一句研究結果</h3>
+  <p>論文和報告最常出現的數字是 p 值、信賴區間、OR 和 HR，它們通常擠在同一句話的括號裡。拆開來看，每個數字各自回答一個問題。</p>
+
+  <h4>例一：邏輯斯迴歸的結果（OR）</h4>
+  <div class="anno">
+    <div class="sent"><span style="--c:#5B6B78">控制年齡與認知功能後<sup>1</sup></span>，使用鎮靜安眠藥者跌倒的勝算為未使用者的 2.3 倍（<span style="--c:#B9412F">aOR ＝ 2.3<sup>2</sup></span>，<span style="--c:#0F6E66">95% CI 1.4–3.8<sup>3</sup></span>，<span style="--c:#C98A12">p ＝ 0.001<sup>4</sup></span>）。</div>
+    <ol class="steps">
+      <li><i>1</i>「控制……後」表示用的是多變項模型，已經把年齡和認知功能的影響排除，所以 OR 前面加上 a（adjusted，校正後）。</li>
+      <li><i>2</i>aOR 2.3 是點估計，也就是最可能的數值：有用藥者「跌倒對不跌倒」的勝算，是沒用藥者的 2.3 倍。大於 1 代表危險因子，小於 1 代表保護因子。</li>
+      <li><i>3</i>95% 信賴區間 1.4–3.8：真正的 OR 合理地落在 1.4 到 3.8 之間。整段都大於 1，所以顯著；區間越窄，代表估計越精準。</li>
+      <li><i>4</i>p ＝ 0.001：如果鎮靜安眠藥其實和跌倒無關，只有 0.1% 的機會看到這麼強的關聯，所以很難用巧合解釋。</li>
+    </ol>
+  </div>
+
+  <h4>例二：存活分析的結果（HR）</h4>
+  <div class="anno">
+    <div class="sent">在控制年齡與失能程度後，<span style="--c:#B9412F">有跌倒史者發生跌倒的風險為無跌倒史者的 2.8 倍<sup>1</sup></span>（<span style="--c:#B9412F">HR ＝ 2.8<sup>2</sup></span>，<span style="--c:#0F6E66">95% CI 1.3–6.0<sup>3</sup></span>，<span style="--c:#C98A12">p ＝ 0.008<sup>4</sup></span>）。</div>
+    <ol class="steps">
+      <li><i>1</i>存活分析比較的是「事件發生得多快」，所以這裡的「風險」指的是追蹤期間任一時刻發生跌倒的速率。</li>
+      <li><i>2</i>HR 2.8 是 Cox 迴歸算出的風險比：有跌倒史者在任何時間點跌倒的速率約為 2.8 倍。它不代表「跌倒時間提早 2.8 倍」，也不是「一年內跌倒機率 2.8 倍」。</li>
+      <li><i>3</i>95% CI 1.3–6.0 不包含 1，所以顯著。但區間很寬（上限約是下限的 5 倍），表示事件數不多：真實效果可能只高 30%，也可能高到 6 倍。</li>
+      <li><i>4</i>p ＝ 0.008：若兩組其實一樣，只有 0.8% 的機會看到這麼大的差距。</li>
+    </ol>
+  </div>
+
+  <h4>例三：兩組平均差（t 檢定）</h4>
+  <div class="anno">
+    <div class="sent">試辦後口腔評估分數<span style="--c:#B9412F">平均改善 2.3 分<sup>1</sup></span>（<span style="--c:#0F6E66">95% CI 1.1–3.5<sup>2</sup></span>，<span style="--c:#C98A12">p &lt; 0.001<sup>3</sup></span>）。</div>
+    <ol class="steps">
+      <li><i>1</i>平均差是「差值」，單位就是原本的分數。</li>
+      <li><i>2</i>差值的信賴區間要看有沒有包含 0，而不是 1。1.1–3.5 整段大於 0，所以改善是顯著的。</li>
+      <li><i>3</i>p &lt; 0.001 表示小於千分之一。軟體顯示「0.000」時，報告要寫成 p &lt; 0.001，不能寫 p ＝ 0。</li>
+      <li><i>4</i>最後問自己：平均改善 2.3 分在臨床上有沒有意義？統計只能告訴你「不太可能是巧合」，值不值得推行要靠專業判斷。</li>
+    </ol>
+  </div>
+
+  <h4>判讀信賴區間的一條規則</h4>
+  <div class="rule">
+    <div><b>差值看 0</b>平均差、率差、迴歸係數：區間包含 0 → 不顯著。</div>
+    <div><b>比值看 1</b>OR、RR、HR：區間包含 1 → 不顯著。</div>
+  </div>
+
+  <h3>全部名詞</h3>
+  <div class="quick">最常用：<button class="btn" data-term-go="pvalue">p 值</button><button class="btn" data-term-go="ci">信賴區間</button><button class="btn" data-term-go="or">勝算比 OR</button><button class="btn" data-term-go="hr">風險比 HR</button><button class="btn" data-term-go="se">標準誤</button><button class="btn" data-term-go="power">檢定力</button></div>
+  <div class="gsearch"><input id="gq" type="search" placeholder="搜尋，例如：p 值、OR、設限" aria-label="搜尋名詞"></div>
+  <div class="chips" id="gcat"></div>
+  <div id="glist"></div>
+  <p class="hint" id="gempty" hidden>找不到符合的名詞。換個關鍵字，或清除搜尋框再試一次。</p>
+</section>
+
+<section class="topic" id="t-charts">
+  <p class="wk">隨時查</p>
+  <h2>圖表怎麼看</h2>
+  <p class="lede">看任何統計圖都用同一套順序：先看座標軸代表什麼，再看每個點、線、方塊代表誰，最後才看形狀和差異。下面是論文和報告最常見的七種圖。</p>
+  <p class="hint">每一週「動手看看」的圖下方，也都有「怎麼看這張圖」可以展開。</p>
+
+  <h3>直方圖</h3>
+  <p class="hint">什麼時候會看到：描述一個連續變項的分布，例如年齡、住院天數、照護時數。</p>
+  <div class="lab"><div id="g1" class="fig"></div></div>
+  <ol class="steps">
+    <li><i>1</i>橫軸：數值的區間，這張圖每 5 天一格。</li>
+    <li><i>2</i>縱軸：落在這個區間的人數（有時是百分比）。</li>
+    <li><i>3</i>最高的柱子：最常見的數值範圍。</li>
+    <li><i>4</i>整體形狀：左右對稱，還是一邊拖著長尾巴？尾巴在右邊叫右偏，這時平均數會大於中位數，描述時要改用中位數。</li>
+  </ol>
+  <p><b>常見誤讀：</b>直方圖和長條圖不一樣。直方圖的橫軸是連續數值，柱子相連；長條圖的橫軸是類別，柱子分開。</p>
+
+  <h3>盒鬚圖</h3>
+  <p class="hint">什麼時候會看到：比較兩組以上連續資料的分布，例如各樓層的照護時數。</p>
+  <div class="lab"><div id="g2" class="fig"></div></div>
+  <ol class="steps">
+    <li><i>1</i>箱子：中間 50% 的人落在這裡。下緣是第 25 百分位數（Q1），上緣是第 75 百分位數（Q3），箱子高度就是四分位距。</li>
+    <li><i>2</i>箱中的橫線：中位數。</li>
+    <li><i>3</i>鬍鬚：延伸到 1.5 倍四分位距內最遠的數值，代表大部分資料的範圍。</li>
+    <li><i>4</i>鬍鬚外的單獨點：離群值，值得回頭看是登打錯誤還是特殊個案。</li>
+    <li><i>5</i>比較兩組：先比中位數高低，再看箱子重疊多少。箱子幾乎不重疊，兩組差異通常很明顯。</li>
+  </ol>
+  <p><b>常見誤讀：</b>箱中線是中位數，不是平均數。</p>
+
+  <h3>比例長條圖</h3>
+  <p class="hint">什麼時候會看到：比較各組某件事的發生比例，例如各樓層的跌倒率、有無導尿管的感染率。</p>
+  <div class="lab"><div id="g3" class="fig"></div></div>
+  <ol class="steps">
+    <li><i>1</i>每根長條是一個類別，高度是比例。</li>
+    <li><i>2</i>先看縱軸是不是從 0 開始。從 20% 開始的長條圖會讓 25% 和 30% 看起來差兩倍。</li>
+    <li><i>3</i>看分母：「2/5 ＝ 40%」和「40/100 ＝ 40%」的可信度差很多，好的圖會標出人數。</li>
+    <li><i>4</i>差異算不算數，要用卡方檢定或 Fisher 精確檢定判斷，不能只用眼睛看高低。</li>
+  </ol>
+  <p><b>常見誤讀：</b>人數很少的組別比例跳動很大，最高的那根長條可能只是巧合。</p>
+
+  <h3>散佈圖與迴歸線</h3>
+  <p class="hint">什麼時候會看到：兩個連續變項的關係，例如 Barthel 分數與照護時數。</p>
+  <div class="lab"><div id="g4" class="fig"></div></div>
+  <ol class="steps">
+    <li><i>1</i>每個點是一個人，橫軸是自變項 X，縱軸是依變項 Y。</li>
+    <li><i>2</i>點雲的方向：由左下往右上是正相關，由左上往右下是負相關，看不出方向就是無相關。</li>
+    <li><i>3</i>迴歸線的斜率就是迴歸係數 b，越陡代表 X 對 Y 的影響越大。</li>
+    <li><i>4</i>點離線的遠近：點越貼近線，R² 越高，模型解釋力越好。</li>
+    <li><i>5</i>遠離點群的點是離群值，會把迴歸線拉偏，分析前要先檢查。</li>
+  </ol>
+  <p><b>常見誤讀：</b>散佈圖只能看出關聯，不能證明因果。另外要注意點雲是不是彎的，彎曲的關係不適合用直線描述。</p>
+
+  <h3>信賴區間圖（誤差棒）</h3>
+  <p class="hint">什麼時候會看到：報告估計值和它的精準度，是森林圖的基本元素。</p>
+  <div class="lab"><div id="g5" class="fig"></div></div>
+  <ol class="steps">
+    <li><i>1</i>點：研究得到的最佳估計值。</li>
+    <li><i>2</i>橫線：95% 信賴區間。越短代表越精準，通常人數越多越短。</li>
+    <li><i>3</i>參考線：差值（平均差、率差、迴歸係數）看 0；比值（OR、RR、HR）看 1。</li>
+    <li><i>4</i>橫線沒有碰到參考線＝統計上顯著；跨過參考線＝不顯著。</li>
+    <li><i>5</i>整條橫線落在參考線哪一側，決定效果的方向。</li>
+  </ol>
+  <p><b>常見誤讀：</b>兩組各自畫誤差棒時，誤差棒互相重疊不一定代表不顯著，要看「兩組差值」的信賴區間。另外要確認誤差棒畫的是標準差、標準誤還是信賴區間，三者長度差很多。</p>
+
+  <h3>森林圖</h3>
+  <p class="hint">什麼時候會看到：統合分析（整合多篇研究），或多變項迴歸列出每個因素的 OR、HR。</p>
+  <div class="lab"><div id="g6" class="fig"></div></div>
+  <ol class="steps">
+    <li><i>1</i>每一列是一篇研究（或一個變項），右邊通常列出數值。</li>
+    <li><i>2</i>方塊：該研究的估計值。方塊越大，代表人數越多、在合併時權重越大。</li>
+    <li><i>3</i>橫線：該研究的 95% 信賴區間。</li>
+    <li><i>4</i>中間直線：無效線，比值為 1（差值則為 0）。先看圖下方標示哪一側「有利介入」。</li>
+    <li><i>5</i>菱形：合併後的整體結果。菱形中心是合併估計值，左右兩端是信賴區間；菱形沒碰到直線＝整體顯著。</li>
+    <li><i>6</i>橫軸是對數刻度：0.5 和 2 與 1 的距離相同，因為減半和加倍是同樣強度的效果。</li>
+  </ol>
+  <p><b>常見誤讀：</b>個別研究不顯著、合併後卻顯著很常見，這正是統合分析的價值：把多個小研究的證據加起來。</p>
+
+  <h3>Kaplan-Meier 存活曲線</h3>
+  <p class="hint">什麼時候會看到：比較兩組以上「事件多快發生」，例如入住到跌倒、出院到再入院、診斷到死亡。</p>
+  <div class="lab"><div id="g7" class="fig"></div></div>
+  <ol class="steps">
+    <li><i>1</i>縱軸：還沒發生事件的比例，從 100% 開始。研究死亡時就是存活率。</li>
+    <li><i>2</i>每往下掉一階＝有人發生事件。越早、越陡往下，事件發生越快。</li>
+    <li><i>3</i>曲線上的小直線（有時是 + 號）＝設限，曲線不會因此下降。</li>
+    <li><i>4</i>從 50% 畫一條橫線，與曲線交點對應的時間就是中位時間；曲線沒掉到 50% 就寫「未達」。</li>
+    <li><i>5</i>兩條曲線分得越開，差異越大。是否顯著看 log-rank 的 p 值，差多少看 HR。</li>
+    <li><i>6</i>圖下方的表格是各時間點「還在追蹤的人數」（number at risk）。越到後面人越少，曲線尾端越不可靠。</li>
+  </ol>
+  <p><b>常見誤讀：</b>曲線尾端突然大幅下降，常常只是剩下兩三個人裡有一個發生事件，要搭配下方的人數一起看。</p>
+</section>
+</main>
+<footer>本手冊數據皆為教學示意，用來呈現方法邏輯，不代表任何機構的實際資料。</footer>
+<script>
+const C={ink:'#1D2B3A',mute:'#5B6B78',teal:'#0F6E66',tealL:'#D5EAE6',tealM:'#9CCFC6',sat:'#C98A12',satL:'#F7E6BF',red:'#B9412F',redL:'#F3D6CF',grid:'#E4EBE8',line:'#9FB1AA'};
+const $=id=>document.getElementById(id);
+const fx=(v,d=1)=>Number(v).toFixed(d);
+const fp=p=>p<0.001?'< 0.001':p.toFixed(3);
+const fpe=p=>p<0.001?'&lt; 0.001':'＝ '+p.toFixed(3);
+const sum=a=>a.reduce((s,v)=>s+v,0);
+const mean=a=>sum(a)/a.length;
+const sd=a=>{const m=mean(a);return Math.sqrt(sum(a.map(v=>(v-m)**2))/(a.length-1));};
+const quant=(a,q)=>{const s=[...a].sort((x,y)=>x-y);const p=(s.length-1)*q;const lo=Math.floor(p),hi=Math.ceil(p);return s[lo]+(s[hi]-s[lo])*(p-lo);};
+function rng(seed){return function(){seed|=0;seed=seed+0x6D2B79F5|0;let t=Math.imul(seed^seed>>>15,1|seed);t=t+Math.imul(t^t>>>7,61|t)^t;return((t^t>>>14)>>>0)/4294967296;};}
+function randn(r){let u=0,v=0;while(!u)u=r();while(!v)v=r();return Math.sqrt(-2*Math.log(u))*Math.cos(2*Math.PI*v);}
+function gammaln(x){const c=[76.18009172947146,-86.50532032941677,24.01409824083091,-1.231739572450155,0.1208650973866179e-2,-0.5395239384953e-5];let y=x,t=x+5.5;t-=(x+0.5)*Math.log(t);let s=1.000000000190015;for(let j=0;j<6;j++)s+=c[j]/++y;return -t+Math.log(2.5066282746310005*s/x);}
+function betacf(a,b,x){const F=1e-300;let qab=a+b,qap=a+1,qam=a-1,c=1,d=1-qab*x/qap;if(Math.abs(d)<F)d=F;d=1/d;let h=d;for(let m=1;m<=300;m++){const m2=2*m;let aa=m*(b-m)*x/((qam+m2)*(a+m2));d=1+aa*d;if(Math.abs(d)<F)d=F;c=1+aa/c;if(Math.abs(c)<F)c=F;d=1/d;h*=d*c;aa=-(a+m)*(qab+m)*x/((a+m2)*(qap+m2));d=1+aa*d;if(Math.abs(d)<F)d=F;c=1+aa/c;if(Math.abs(c)<F)c=F;d=1/d;const del=d*c;h*=del;if(Math.abs(del-1)<1e-12)break;}return h;}
+function ibeta(a,b,x){if(x<=0)return 0;if(x>=1)return 1;const bt=Math.exp(gammaln(a+b)-gammaln(a)-gammaln(b)+a*Math.log(x)+b*Math.log(1-x));return x<(a+1)/(a+b+2)?bt*betacf(a,b,x)/a:1-bt*betacf(b,a,1-x)/b;}
+const tP=(t,df)=>ibeta(df/2,0.5,df/(df+t*t));
+const fP=(f,d1,d2)=>f<=0?1:ibeta(d2/2,d1/2,d2/(d2+d1*f));
+function gammp(a,x){if(x<=0)return 0;if(x<a+1){let ap=a,s=1/a,del=s;for(let n=0;n<300;n++){ap++;del*=x/ap;s+=del;if(Math.abs(del)<Math.abs(s)*1e-13)break;}return s*Math.exp(-x+a*Math.log(x)-gammaln(a));}let b=x+1-a,c=1e300,d=1/b,h=d;for(let i=1;i<300;i++){const an=-i*(i-a);b+=2;d=an*d+b;if(Math.abs(d)<1e-300)d=1e-300;c=b+an/c;if(Math.abs(c)<1e-300)c=1e-300;d=1/d;const del=d*c;h*=del;if(Math.abs(del-1)<1e-13)break;}return 1-Math.exp(-x+a*Math.log(x)-gammaln(a))*h;}
+const chiP=(x,df)=>1-gammp(df/2,x/2);
+function phi(z){const t=1/(1+0.3275911*Math.abs(z)/Math.SQRT2);const y=1-(((((1.061405429*t-1.453152027)*t)+1.421413741)*t-0.284496736)*t+0.254829592)*t*Math.exp(-z*z/2);return z>=0?(1+y)/2:(1-y)/2;}
+const dnorm=(x,m,s)=>Math.exp(-0.5*((x-m)/s)**2)/(s*Math.sqrt(2*Math.PI));
+const lfact=n=>gammaln(n+1);
+function fisher(a,b,c,d){const r1=a+b,r2=c+d,c1=a+c,n=r1+r2;const lp=x=>lfact(r1)+lfact(r2)+lfact(c1)+lfact(n-c1)-lfact(n)-lfact(x)-lfact(r1-x)-lfact(c1-x)-lfact(r2-c1+x);const p0=lp(a);let p=0;for(let x=Math.max(0,c1-r2);x<=Math.min(r1,c1);x++){const v=lp(x);if(v<=p0+1e-7)p+=Math.exp(v);}return Math.min(1,p);}
+function ticks(a,b,n=5){const st0=(b-a)/n,mag=Math.pow(10,Math.floor(Math.log10(st0))),e=st0/mag,st=(e>=7.5?10:e>=3.5?5:e>=1.5?2:1)*mag,o=[];for(let v=Math.ceil(a/st)*st;v<=b+1e-9;v+=st)o.push(+v.toFixed(10));return o;}
+class Plot{constructor(w,h,m,xd,yd){Object.assign(this,{w,h,m,xd,yd});}
+ x(v){const{m,w,xd}=this;return m.l+(v-xd[0])/(xd[1]-xd[0])*(w-m.l-m.r);}
+ y(v){const{m,h,yd}=this;return h-m.b-(v-yd[0])/(yd[1]-yd[0])*(h-m.t-m.b);}
+ get x0(){return this.m.l}get x1(){return this.w-this.m.r}get y0(){return this.h-this.m.b}get y1(){return this.m.t}
+ axes({xt=[],yt=[],xl='',yl='',xf=v=>v,yf=v=>v,noXgrid=false}={}){let s='';
+  yt.forEach(v=>{const y=this.y(v);s+=`<line x1="${this.x0}" x2="${this.x1}" y1="${y}" y2="${y}" class="gl"/><text x="${this.x0-6}" y="${y+4}" class="tk" text-anchor="end">${yf(v)}</text>`;});
+  xt.forEach(v=>{const x=this.x(v);if(!noXgrid)s+=`<line y1="${this.y1}" y2="${this.y0}" x1="${x}" x2="${x}" class="gl"/>`;s+=`<text x="${x}" y="${this.y0+16}" class="tk" text-anchor="middle">${xf(v)}</text>`;});
+  s+=`<line x1="${this.x0}" x2="${this.x1}" y1="${this.y0}" y2="${this.y0}" class="ax"/>`;
+  if(xl)s+=`<text x="${(this.x0+this.x1)/2}" y="${this.h-3}" class="al" text-anchor="middle">${xl}</text>`;
+  if(yl)s+=`<text x="4" y="${this.y1-10}" class="al">${yl}</text>`;return s;}}
+function W(el){return Math.max(300,Math.min(840,el.clientWidth||600));}
+function put(el,w,h,inner,label){el.innerHTML=`<svg viewBox="0 0 ${w} ${h}" width="${w}" height="${h}" style="max-width:100%;height:auto;display:block" role="img" aria-label="${label||''}">${inner}</svg>`;return el.firstChild;}
+function hist(vals,lo,hi,bw){const n=Math.ceil((hi-lo)/bw-1e-9),c=new Array(n).fill(0);vals.forEach(v=>{let i=Math.floor((v-lo)/bw);if(i<0)i=0;if(i>=n)i=n-1;c[i]++;});return c;}
+function pressOne(group,btn){group.querySelectorAll('.btn').forEach(b=>b.setAttribute('aria-pressed',b===btn?'true':'false'));}
+const Draw={};
+</script>
+<script>
+/* ---------- W3 母體與樣本 ---------- */
+(function(){
+  const r=rng(7),pop=[],nf=[16,16,16,40],names=['A 機構','B 機構','C 機構','D 機構（失智專區）'];
+  for(let f=0;f<4;f++){const idx=[...Array(100).keys()];for(let i=99;i>0;i--){const j=Math.floor(r()*(i+1));[idx[i],idx[j]]=[idx[j],idx[i]];}const fs=new Set(idx.slice(0,nf[f]));for(let k=0;k<100;k++)pop.push({f,k,fall:fs.has(k)});}
+  const sr=rng(11);let sel=new Set(),last='srs',recs=[];
+  const lab={srs:'簡單隨機',strat:'分層',conv:'便利'};
+  function choose(pool,k){const a=[...pool];for(let i=a.length-1;i>0;i--){const j=Math.floor(sr()*(i+1));[a[i],a[j]]=[a[j],a[i]];}return a.slice(0,k);}
+  const ids=f=>pop.map((p,i)=>i).filter(i=>f===undefined||pop[i].f===f);
+  function sample(m,n){if(m==='conv')return choose(ids(3),Math.min(n,100));if(m==='strat'){let o=[];for(let f=0;f<4;f++)o=o.concat(choose(ids(f),Math.round(n/4)));return o;}return choose(ids(),n);}
+  function run(m){const n=+$('w3n').value,s=sample(m,n);sel=new Set(s);const k=s.filter(i=>pop[i].fall).length,est=k/s.length;recs.push({m,est});last=m;return{n:s.length,k,est};}
+  function say(m,o){const why={srs:'每位住民被抽中的機會都一樣，估計值會在 22% 上下跳動，但不會固定偏向某一邊。',strat:'每家機構都按比例抽到，D 家不會被抽太多或太少，所以估計值通常比簡單隨機更接近 22%。',conv:'只抽 D 家，等於在估計「失智專區」的跌倒率，不管抽幾次都落在 40% 附近，這就是抽樣偏差。'};
+    $('w3say').innerHTML=`<b>${lab[m]}抽樣：</b>抽 ${o.n} 人，其中 ${o.k} 人跌倒，估計跌倒率 <b>${fx(o.est*100)}%</b>（母體真值 22%）。${why[m]}`;}
+  document.querySelectorAll('#lab3 [data-m]').forEach(b=>b.onclick=()=>{const o=run(b.dataset.m);say(b.dataset.m,o);Draw[3]();});
+  $('w3rep').onclick=()=>{let o;for(let i=0;i<20;i++)o=run(last);say(last,o);Draw[3]();};
+  $('w3clr').onclick=()=>{recs=[];sel=new Set();$('w3say').textContent='紀錄已清除，按任一個抽樣按鈕重新開始。';Draw[3]();};
+  $('w3n').oninput=e=>{$('w3nv').textContent=e.target.value;};
+  function drawPop(){const el=$('w3pop'),w=W(el),cell=Math.min(17,(w-20)/21.6),gap=cell*1.6,gw=cell*10,L=22,H=L*2+gw*2+gap+6,ox=(w-(gw*2+gap))/2;let s='';
+    for(let f=0;f<4;f++){const qx=ox+(f%2)*(gw+gap),qy=L+(f<2?0:gw+gap+L);s+=`<text x="${qx}" y="${qy-6}" class="al">${names[f]}</text>`;
+      pop.forEach((p,i)=>{if(p.f!==f)return;const cx=qx+(p.k%10+0.5)*cell,cy=qy+(Math.floor(p.k/10)+0.5)*cell,on=sel.has(i);
+        s+=`<circle cx="${cx}" cy="${cy}" r="${cell*(on?0.4:0.32)}" fill="${p.fall?C.red:'#fff'}" stroke="${on?C.sat:(p.fall?C.red:C.line)}" stroke-width="${on?2.4:1}"/>`;});}
+    put(el,w,H,s,'400 位住民的點陣圖');}
+  function drawStrip(){const el=$('w3strip'),w=W(el),H=150,P=new Plot(w,H,{l:86,r:16,t:10,b:34},[0,0.6],[0,3]);let s=P.axes({xt:ticks(0,0.6,6),xf:v=>Math.round(v*100)+'%',xl:'樣本跌倒率'});
+    ['srs','strat','conv'].forEach((m,j)=>{const y=P.y(2.5-j);s+=`<text x="${P.x0-8}" y="${y+4}" class="al" text-anchor="end">${lab[m]}</text>`;
+      recs.forEach((q,i)=>{if(q.m!==m)return;const jit=((i*37)%11-5)*1.6;s+=`<circle cx="${P.x(q.est)}" cy="${y+jit}" r="4" fill="${m==='conv'?C.red:C.teal}" fill-opacity=".55"/>`;});});
+    s+=`<line x1="${P.x(0.22)}" x2="${P.x(0.22)}" y1="${P.y1}" y2="${P.y0}" stroke="${C.ink}" stroke-dasharray="4 3" stroke-width="1.5"/>`;
+    const last3=recs.length?recs[recs.length-1]:null;if(last3){const j=['srs','strat','conv'].indexOf(last3.m);s+=`<circle cx="${P.x(last3.est)}" cy="${P.y(2.5-j)}" r="7" fill="none" stroke="${C.sat}" stroke-width="2.5"/>`;}
+    put(el,w,H,s,'每次抽樣的估計值');}
+  Draw[3]=()=>{drawPop();drawStrip();};
+})();
+
+/* ---------- W4 資料整理 ---------- */
+(function(){
+  document.querySelectorAll('#w4chips .chip').forEach(c=>c.onclick=()=>{const on=c.getAttribute('aria-pressed')!=='true';document.querySelectorAll('#w4chips .chip').forEach(x=>x.setAttribute('aria-pressed','false'));c.setAttribute('aria-pressed',on?'true':'false');document.querySelectorAll('#w4types .col').forEach((col,i)=>col.classList.toggle('hit',on&&i===+c.dataset.t));});
+  const base=[...Array(14).fill(0),2,3,3,4,4,5,5,6,6,7,7,8,9,10,11,12,13,14,16,18,21,24,28,35,42,55];let out=false;
+  $('w4out').onclick=()=>{out=!out;$('w4out').setAttribute('aria-pressed',out);$('w4out').textContent=out?'移除那位住院 120 天的住民':'加入一位住院 120 天的住民';Draw[4]();};
+  Draw[4]=function(){const d=out?[...base,120]:base,hi=out?125:60,m=mean(d),md=quant(d,.5),q1=quant(d,.25),q3=quant(d,.75),c=hist(d,0,hi,5);
+    const el=$('w4hist'),w=W(el),H=230,P=new Plot(w,H,{l:48,r:16,t:44,b:40},[0,hi],[0,Math.max(...c)+2]);
+    let s=P.axes({xt:ticks(0,hi,out?6:6),yt:ticks(0,Math.max(...c)+2,4),xl:'年度住院天數',yl:'人數'});
+    c.forEach((v,i)=>{if(!v)return;s+=`<rect x="${P.x(i*5)+1}" y="${P.y(v)}" width="${P.x(5)-P.x(0)-2}" height="${P.y0-P.y(v)}" fill="${C.tealL}" stroke="${C.teal}" stroke-width=".8"/>`;});
+    s+=`<line x1="${P.x(md)}" x2="${P.x(md)}" y1="${P.y1-24}" y2="${P.y0}" stroke="${C.teal}" stroke-width="2.5"/><text x="${P.x(md)+5}" y="${P.y1-14}" class="al" style="fill:${C.teal};font-weight:700">中位數 ${fx(md)}</text>`;
+    s+=`<line x1="${P.x(m)}" x2="${P.x(m)}" y1="${P.y1-10}" y2="${P.y0}" stroke="${C.sat}" stroke-width="2.5" stroke-dasharray="6 3"/><text x="${P.x(m)+5}" y="${P.y1}" class="al" style="fill:${C.sat};font-weight:700">平均數 ${fx(m)}</text>`;
+    put(el,w,H,s,'住院天數直方圖');
+    const eb=$('w4box'),B=new Plot(w,74,{l:48,r:16,t:14,b:26},[0,hi],[0,1]),iqr=q3-q1,lw=Math.min(...d.filter(v=>v>=q1-1.5*iqr)),uw=Math.max(...d.filter(v=>v<=q3+1.5*iqr)),yc=B.y(.5);
+    let b=`<text x="${B.x0-6}" y="${yc+4}" class="tk" text-anchor="end">盒鬚圖</text><line x1="${B.x(lw)}" x2="${B.x(q1)}" y1="${yc}" y2="${yc}" stroke="${C.ink}"/><line x1="${B.x(q3)}" x2="${B.x(uw)}" y1="${yc}" y2="${yc}" stroke="${C.ink}"/><line x1="${B.x(uw)}" x2="${B.x(uw)}" y1="${yc-8}" y2="${yc+8}" stroke="${C.ink}"/><line x1="${B.x(lw)}" x2="${B.x(lw)}" y1="${yc-8}" y2="${yc+8}" stroke="${C.ink}"/>`;
+    b+=`<rect x="${B.x(q1)}" y="${yc-14}" width="${Math.max(1,B.x(q3)-B.x(q1))}" height="28" fill="${C.tealL}" stroke="${C.teal}"/><line x1="${B.x(md)}" x2="${B.x(md)}" y1="${yc-14}" y2="${yc+14}" stroke="${C.teal}" stroke-width="3"/>`;
+    d.filter(v=>v>uw).forEach(v=>{b+=`<circle cx="${B.x(v)}" cy="${yc}" r="4" fill="#fff" stroke="${C.red}" stroke-width="1.5"/>`;});
+    b+=`<line x1="${B.x0}" x2="${B.x1}" y1="${B.y0}" y2="${B.y0}" class="ax"/>`;ticks(0,hi,6).forEach(v=>{b+=`<text x="${B.x(v)}" y="${B.y0+16}" class="tk" text-anchor="middle">${v}</text>`;});
+    put(eb,w,74,b,'盒鬚圖');
+    $('w4read').innerHTML=`<div><small>人數</small><strong>${d.length}</strong></div><div><small>平均數 ± 標準差</small><strong>${fx(m)} ± ${fx(sd(d))}</strong></div><div><small>中位數（四分位距）</small><strong>${fx(md)}（${fx(q1)}–${fx(q3)}）</strong></div>`;};
+})();
+
+/* ---------- W5 機率 ---------- */
+(function(){
+  const sl=['w5p','w5se','w5sp'];sl.forEach(id=>$(id).oninput=()=>Draw[5]());
+  document.querySelectorAll('#lab5 [data-pre]').forEach(b=>b.onclick=()=>{$('w5p').value=b.dataset.pre;Draw[5]();});
+  Draw[5]=function(){const pv=+$('w5p').value/100,se=+$('w5se').value/100,sp=+$('w5sp').value/100;$('w5pv').textContent=Math.round(pv*100)+'%';$('w5sev').textContent=Math.round(se*100)+'%';$('w5spv').textContent=Math.round(sp*100)+'%';
+    const D=Math.round(1000*pv),TP=Math.round(D*se),FN=D-TP,H=1000-D,FP=Math.round(H*(1-sp)),TN=H-FP,ppv=TP/(TP+FP||1),npv=TN/(TN+FN||1);
+    const el=$('w5grid'),w=W(el),cols=w<520?25:50,rows=1000/cols,cell=Math.min(15,(w-4)/cols),Hh=rows*cell+4,ox=(w-cols*cell)/2;let s='';
+    const seq=[[TP,C.red,C.red],[FN,C.redL,C.red],[FP,C.sat,C.sat],[TN,C.grid,C.grid]];let i=0;
+    seq.forEach(([n,f,st])=>{for(let k=0;k<n;k++,i++){const x=ox+(i%cols)*cell,y=2+Math.floor(i/cols)*cell;s+=`<rect x="${x+1}" y="${y+1}" width="${cell-2}" height="${cell-2}" rx="1.5" fill="${f}" stroke="${st}" stroke-width=".8"/>`;}});
+    put(el,w,Hh,s,'1000 人的篩檢結果');
+    $('w5tbl').innerHTML=`<tr><th></th><th>真的感染</th><th>沒有感染</th><th>合計</th></tr><tr><th class="l">快篩陽性</th><td style="background:${C.redL}">真陽性 <b>${TP}</b></td><td style="background:${C.satL}">偽陽性 <b>${FP}</b></td><td>${TP+FP}</td></tr><tr><th class="l">快篩陰性</th><td>偽陰性 <b>${FN}</b></td><td>真陰性 <b>${TN}</b></td><td>${FN+TN}</td></tr><tr><th class="l">合計</th><td>${D}</td><td>${H}</td><td>1000</td></tr>`;
+    $('w5read').innerHTML=`<div><small>陽性人數</small><strong>${TP+FP}</strong></div><div><small>陽性預測值 PPV</small><strong>${fx(ppv*100)}%</strong></div><div><small>陰性預測值 NPV</small><strong>${fx(npv*100)}%</strong></div><div><small>漏掉的感染者</small><strong>${FN}</strong></div>`;
+    const ratio=TP+FP?FP/(TP+FP):0;
+    $('w5say').innerHTML=`盛行率 ${Math.round(pv*100)}% 時，快篩陽性的 ${TP+FP} 人中，真的感染只有 ${TP} 人（PPV ${fx(ppv*100,0)}%）。`+(ratio>0.5?`<b>陽性結果裡誤報比真的還多</b>，需要搭配臨床症狀或 PCR 確認。`:ratio>0.2?`陽性結果大多可信，但仍有一部分是誤報。`:`陽性結果的可信度很高，可以更快啟動隔離與群聚處置。`);};
+})();
+
+/* ---------- W6 抽樣分配 ---------- */
+(function(){
+  const r=rng(21),pop=Array.from({length:5000},()=>1-7*Math.log(r()));const mu=mean(pop),sig=Math.sqrt(mean(pop.map(v=>(v-mu)**2)));
+  const sr=rng(99);let n=30,means=[],lastS=[],cis=[];const tc={2:12.706,5:2.776,10:2.262,30:2.045,100:1.984};
+  const draw1=()=>{const s=[];for(let i=0;i<n;i++)s.push(pop[Math.floor(sr()*5000)]);return s;};
+  const segN=$('w6n');segN.querySelectorAll('.btn').forEach(b=>{b.onclick=()=>{n=+b.dataset.n;means=[];lastS=[];cis=[];pressOne(segN,b);Draw[6]();};if(+b.dataset.n===n)b.setAttribute('aria-pressed','true');});
+  document.querySelectorAll('#lab6 [data-k]').forEach(b=>b.onclick=()=>{for(let k=0;k<+b.dataset.k;k++){lastS=draw1();means.push(mean(lastS));}Draw[6]();});
+  $('w6clr').onclick=()=>{means=[];lastS=[];Draw[6]();};
+  $('w6ci').onclick=()=>{cis=[];for(let k=0;k<20;k++){const s=draw1(),m=mean(s),h=tc[n]*sd(s)/Math.sqrt(n);cis.push([m-h,m,m+h]);}drawCI();};
+  function drawPop(){const el=$('w6pop'),w=W(el),H=170,c=hist(pop,0,50,2),P=new Plot(w,H,{l:48,r:16,t:16,b:38},[0,50],[0,Math.max(...c)*1.08]);
+    let s=P.axes({xt:ticks(0,50,5),yt:ticks(0,Math.max(...c),3),xl:'住院天數',xf:v=>v===50?'50+':v});
+    c.forEach((v,i)=>{s+=`<rect x="${P.x(i*2)+.5}" y="${P.y(v)}" width="${P.x(2)-P.x(0)-1}" height="${P.y0-P.y(v)}" fill="#E4EBE8" stroke="${C.line}" stroke-width=".6"/>`;});
+    lastS.slice(0,100).forEach(v=>{const x=P.x(Math.min(v,49.9));s+=`<line x1="${x}" x2="${x}" y1="${P.y0-14}" y2="${P.y0}" stroke="${C.sat}" stroke-width="2"/>`;});
+    s+=`<line x1="${P.x(mu)}" x2="${P.x(mu)}" y1="${P.y1}" y2="${P.y0}" stroke="${C.ink}" stroke-dasharray="4 3"/><text x="${P.x(mu)+5}" y="${P.y1+10}" class="al">母體平均 μ ＝ ${fx(mu)}</text>`;
+    if(lastS.length){const m=mean(lastS),x=P.x(Math.min(m,49));s+=`<path d="M${x} ${P.y0-16}l-7 -12h14z" fill="${C.sat}"/><text x="${x+10}" y="${P.y0-22}" class="al" style="fill:${C.sat};font-weight:700">這次樣本的平均 ${fx(m)}</text>`;}
+    put(el,w,H,s,'母體分布');}
+  function drawSamp(){const el=$('w6samp'),w=W(el),H=210,bw=0.5,lo=0,hi=24,c=hist(means,lo,hi,bw),se=sig/Math.sqrt(n),peak=Math.max(Math.max(...c),means.length*bw*dnorm(mu,mu,se),1);
+    const P=new Plot(w,H,{l:48,r:16,t:16,b:38},[lo,hi],[0,peak*1.1]);let s=P.axes({xt:ticks(lo,hi,6),yt:ticks(0,peak,3),xl:'樣本平均天數'});
+    c.forEach((v,i)=>{if(!v)return;s+=`<rect x="${P.x(lo+i*bw)+.5}" y="${P.y(v)}" width="${P.x(bw)-P.x(0)-1}" height="${P.y0-P.y(v)}" fill="${C.tealL}" stroke="${C.teal}" stroke-width=".6"/>`;});
+    if(means.length>=50){let d='';for(let x=lo;x<=hi;x+=0.1){const y=P.y(means.length*bw*dnorm(x,mu,se));d+=(d?'L':'M')+P.x(x).toFixed(1)+' '+y.toFixed(1);}s+=`<path d="${d}" fill="none" stroke="${C.ink}" stroke-width="1.5"/>`;}
+    s+=`<line x1="${P.x(mu)}" x2="${P.x(mu)}" y1="${P.y1}" y2="${P.y0}" stroke="${C.ink}" stroke-dasharray="4 3"/>`;
+    if(!means.length)s+=`<text x="${(P.x0+P.x1)/2}" y="${(P.y0+P.y1)/2}" class="al" text-anchor="middle">按「抽 100 次」開始</text>`;
+    if(means.length){const m=means[means.length-1],x=P.x(Math.max(lo,Math.min(hi,m)));s+=`<path d="M${x} ${P.y0-2}l-7 -12h14z" fill="${C.sat}"/><text x="${x+10}" y="${P.y0-8}" class="al" style="fill:${C.sat};font-weight:700">最新一次</text>`;}
+    put(el,w,H,s,'抽樣分配');
+    $('w6read').innerHTML=`<div><small>已抽樣次數</small><strong>${means.length.toLocaleString()}</strong></div><div><small>平均數的平均</small><strong>${means.length?fx(mean(means),2):'—'}</strong></div><div><small>實測標準誤（平均數的標準差）</small><strong>${means.length>1?fx(sd(means),2):'—'}</strong></div><div><small>理論標準誤 σ ÷ √n</small><strong>${fx(se,2)}</strong></div>`+(means.length>=50?`<div><small>黑色曲線</small><strong style="font-size:15px">常態分配理論值</strong></div>`:'');}
+  function drawCI(){const el=$('w6cifig'),w=W(el),H=20*13+46,P=new Plot(w,H,{l:48,r:16,t:10,b:36},[0,24],[0,20]);let s=P.axes({xt:ticks(0,24,6),xl:'住院天數'}),hit=0;
+    cis.forEach(([a,m,b],i)=>{const ok=a<=mu&&mu<=b;if(ok)hit++;const y=P.y(19.5-i),col=ok?C.teal:C.red;s+=`<line x1="${P.x(Math.max(0,a))}" x2="${P.x(Math.min(24,b))}" y1="${y}" y2="${y}" stroke="${col}" stroke-width="2.2"/><circle cx="${P.x(Math.min(24,Math.max(0,m)))}" cy="${y}" r="3" fill="${col}"/>`;});
+    s+=`<line x1="${P.x(mu)}" x2="${P.x(mu)}" y1="${P.y1}" y2="${P.y0}" stroke="${C.ink}" stroke-width="1.5"/>`;
+    if(!cis.length)s+=`<text x="${(P.x0+P.x1)/2}" y="${(P.y0+P.y1)/2}" class="al" text-anchor="middle">按上方按鈕產生 20 個信賴區間</text>`;
+    put(el,w,H,s,'20 個信賴區間');
+    $('w6ciread').innerHTML=cis.length?`<div><small>樣本人數</small><strong>${n}</strong></div><div><small>蓋到真值的區間</small><strong>${hit} ／ 20</strong></div><div><small>區間平均寬度</small><strong>${fx(mean(cis.map(c=>c[2]-c[0])))} 天</strong></div>`:'';}
+  Draw[6]=()=>{drawPop();drawSamp();drawCI();};
+})();
+</script>
+<script>
+/* ---------- W7 假設檢定 ---------- */
+(function(){
+  let a=0.05;const zc={0.01:2.576,0.05:1.96,0.1:1.645},SD=15;
+  ['w7d','w7n'].forEach(id=>$(id).oninput=()=>Draw[7]());
+  const seg=$('w7a');seg.querySelectorAll('.btn').forEach(b=>b.onclick=()=>{a=+b.dataset.a;pressOne(seg,b);Draw[7]();});
+  $('w7obs').oninput=()=>Draw[7]();
+  function drawP(){const obs=+$('w7obs').value,se=15*Math.sqrt(2/20),p=obs>0?2*(1-phi(obs/se)):1,c=1.96*se;$('w7obsv').textContent=obs+' 分';
+    const el=$('w7pfig'),w=W(el),H=250,lo=-16,hi=16,P=new Plot(w,H,{l:20,r:16,t:40,b:40},[lo,hi],[0,dnorm(0,0,se)*1.12]);
+    let s=P.axes({xt:w<430?[-15,-10,-5,0,5,10,15]:ticks(lo,hi,8),xl:'兩組平均差（分）'});
+    const area=(x0,x1)=>{if(x1<=x0)return'';let q=`M${P.x(x0)} ${P.y0}`;for(let x=x0;x<=x1+1e-9;x+=(x1-x0)/60)q+=`L${P.x(x).toFixed(1)} ${P.y(dnorm(x,0,se)).toFixed(1)}`;return `<path d="${q}L${P.x(x1)} ${P.y0}Z" fill="${C.redL}" stroke="none"/>`;};
+    s+=obs>0?area(Math.min(obs,hi),hi)+area(lo,Math.max(-obs,lo)):area(lo,hi);
+    let d='';for(let x=lo;x<=hi;x+=0.2)d+=(d?'L':'M')+P.x(x).toFixed(1)+' '+P.y(dnorm(x,0,se)).toFixed(1);s+=`<path d="${d}" fill="none" stroke="${C.mute}" stroke-width="2"/>`;
+    [c,-c].forEach(v=>{s+=`<line x1="${P.x(v)}" x2="${P.x(v)}" y1="${P.y1-22}" y2="${P.y0}" stroke="${C.mute}" stroke-dasharray="3 4"/>`;});
+    s+=`<text x="${P.x(c)+4}" y="${P.y1-24}" class="tk">p ＝ 0.05 的界線</text>`;
+    if(obs>0){s+=`<line x1="${P.x(obs)}" x2="${P.x(obs)}" y1="${P.y1-6}" y2="${P.y0}" stroke="${C.red}" stroke-width="2.5"/><line x1="${P.x(-obs)}" x2="${P.x(-obs)}" y1="${P.y1-6}" y2="${P.y0}" stroke="${C.red}" stroke-width="1.8" stroke-dasharray="5 3"/><text x="${P.x(obs)+5}" y="${P.y1-6}" class="al" style="fill:${C.red};font-weight:700">你的結果 ${obs} 分</text>`;}
+    if(w>=430)s+=`<text x="${P.x(0)}" y="${P.y(dnorm(0,0,se))-8}" class="tk" text-anchor="middle">方案無效時的差距分布</text>`;
+    put(el,w,H,s,'p 值示意圖');
+    const pct=p<0.001?'不到 0.1%':fx(p*100)+'%';
+    $('w7psay').innerHTML=`如果方案其實無效，光靠巧合看到差距 ${obs} 分以上（往任一方向）的機率是 <b>${pct}</b>，這就是 p 值。`+(p<0.05?`p 小於 0.05：這麼大的差距很難用巧合解釋，所以推翻「方案無效」的假設，判定<b>統計上顯著</b>。`:`p 沒有小於 0.05：這種差距光靠巧合就常出現，<b>還不能說方案有效</b>。`);
+    $('w7pread').innerHTML=`<div><small>標準誤</small><strong>${fx(se,2)} 分</strong></div><div><small>差距是標準誤的幾倍（z）</small><strong>${fx(obs/se,2)}</strong></div><div><small>p 值</small><strong style="color:${p<0.05?C.teal:C.ink}">${fp(p)}</strong></div>`;}
+  const drawPow=function(){const d=+$('w7d').value,n=+$('w7n').value,se=SD*Math.sqrt(2/n),z=zc[a],c=z*se;$('w7dv').textContent=d;$('w7nv').textContent=n;$('w7dtxt').textContent=d;
+    const pw=1-phi((c-d)/se)+phi((-c-d)/se);
+    const el=$('w7fig'),w=W(el),H=250,lo=-20,hi=30,P=new Plot(w,H,{l:20,r:16,t:30,b:40},[lo,hi],[0,dnorm(0,0,se)*1.15]);
+    let s=P.axes({xt:w<430?[-20,-10,0,10,20,30]:ticks(lo,hi,10),xl:'兩組平均差（分）'});
+    const area=(m,x0,x1,fill,op)=>{if(x1<=x0)return'';let p=`M${P.x(x0)} ${P.y0}`;for(let x=x0;x<=x1+1e-9;x+=(x1-x0)/80)p+=`L${P.x(x).toFixed(1)} ${P.y(dnorm(x,m,se)).toFixed(1)}`;return `<path d="${p}L${P.x(x1)} ${P.y0}Z" fill="${fill}" fill-opacity="${op}"/>`;};
+    const cl=Math.max(lo,Math.min(hi,c)),ncl=Math.max(lo,-c);
+    s+=area(d,ncl,cl,C.satL,1)+area(d,cl,hi,C.tealM,.85)+area(d,lo,ncl,C.tealM,.85)+area(0,cl,hi,C.redL,.9)+area(0,lo,ncl,C.redL,.9);
+    const curve=(m,col,wd)=>{let p='';for(let x=lo;x<=hi;x+=0.25)p+=(p?'L':'M')+P.x(x).toFixed(1)+' '+P.y(dnorm(x,m,se)).toFixed(1);return `<path d="${p}" fill="none" stroke="${col}" stroke-width="${wd}"/>`;};
+    s+=curve(0,C.mute,1.8)+curve(d,C.teal,2.2);
+    [c,-c].forEach(v=>{if(v>lo&&v<hi)s+=`<line x1="${P.x(v)}" x2="${P.x(v)}" y1="${P.y1-8}" y2="${P.y0}" stroke="${C.red}" stroke-dasharray="4 3"/>`;});
+    if(c<hi)s+=`<text x="${P.x(c)+4}" y="${P.y1-12}" class="al" style="fill:${C.red}">臨界值 ${fx(c)} 分</text>`;
+    const pk=P.y(dnorm(0,0,se))-8,far=d>=7;s+=`<text x="${far||d===0?P.x(0):P.x(0)-4}" y="${pk}" class="al" text-anchor="${far||d===0?'middle':'end'}">方案無效</text>`;if(d>0)s+=`<text x="${far?P.x(d):P.x(d)+4}" y="${pk}" class="al" text-anchor="${far?'middle':'start'}" style="fill:${C.teal};font-weight:700">方案有效</text>`;
+    put(el,w,H,s,'檢定力示意圖');
+    const need=d>0?Math.ceil(2*((z+0.8416)**2)*SD*SD/(d*d)):null;
+    $('w7read').innerHTML=`<div><small>標準誤</small><strong>${fx(se,2)} 分</strong></div><div><small>要觀察到的差距才會顯著</small><strong>≥ ${fx(c)} 分</strong></div><div><small>檢定力 1−β</small><strong style="color:${C.teal}">${fx(pw*100,0)}%</strong></div><div><small>型二錯誤 β</small><strong>${d>0?fx((1-pw)*100,0)+'%':'—'}</strong></div>`+(need?`<div><small>達 80% 檢定力每組需要</small><strong>${need} 人</strong></div>`:'');
+    let t;if(d===0)t=`真實效果為 0 時，綠色和灰色曲線重疊。這時研究得到的任何「顯著」都是型一錯誤，發生機率就是 α ＝ ${a}。`;
+    else if(pw<0.5)t=`檢定力只有 <b>${fx(pw*100,0)}%</b>：方案真的讓分數多 ${d} 分，但同樣的研究做 10 次，大約只有 ${Math.round(pw*10)} 次會得到 p &lt; ${a}。人數不足時，「沒有顯著差異」不能解讀成「方案無效」。`;
+    else if(pw<0.8)t=`檢定力 ${fx(pw*100,0)}%，還沒達到常見的 80% 標準，每組增加到約 ${need} 人會比較穩。`;
+    else t=`檢定力 ${fx(pw*100,0)}%，已達 80% 標準。只要觀察到的差距超過 ${fx(c)} 分，就會判定顯著。`;
+    $('w7say').innerHTML=t;};
+  Draw[7]=()=>{drawP();drawPow();};
+})();
+
+/* ---------- W10 ANOVA ---------- */
+(function(){
+  const r=rng(31),k=3,n=15,eff=[-1,0,1],names=['一般照護區','失智專區','重度失能區'];
+  const Z=eff.map(()=>{const z=Array.from({length:n},()=>randn(r)),m=mean(z),s=sd(z);return z.map(v=>(v-m)/s);});
+  ['w10g','w10s'].forEach(id=>$(id).oninput=()=>Draw[10]());
+  function fwer(){const el=$('w10fwer'),w=W(el),rows=[[3,3],[4,6],[5,10],[6,15]],H=rows.length*30+62,P=new Plot(w,H,{l:150,r:60,t:24,b:38},[0,60],[0,rows.length]);
+    let s=P.axes({xt:[0,10,20,30,40,50,60],xf:v=>v+'%',xl:'至少誤判一次的機率'});
+    rows.forEach(([g,m],i)=>{const v=(1-0.95**m)*100,y=P.y(rows.length-i-0.5);s+=`<text x="${P.x0-8}" y="${y+4}" class="al" text-anchor="end">${g} 組（兩兩比 ${m} 次）</text><rect x="${P.x0}" y="${y-9}" width="${P.x(v)-P.x0}" height="18" fill="${C.redL}" stroke="${C.red}" stroke-width=".8"/><text x="${P.x(v)+6}" y="${y+4}" class="al">${fx(v)}%</text>`;});
+    s+=`<line x1="${P.x(5)}" x2="${P.x(5)}" y1="${P.y1}" y2="${P.y0}" stroke="${C.teal}" stroke-width="2"/><line x1="${P.x(5)}" x2="${P.x(5)}" y1="${P.y1-14}" y2="${P.y1}" stroke="${C.teal}" stroke-width="2"/><text x="${P.x(5)+5}" y="${P.y1-6}" class="tk" style="fill:${C.teal}">ANOVA 控制在 5%</text>`;
+    put(el,w,H,s,'多重比較誤判率');}
+  Draw[10]=function(){fwer();const g=+$('w10g').value,sg=+$('w10s').value;$('w10gv').textContent=g+' 分鐘';$('w10sv').textContent=sg+' 分鐘';
+    const V=Z.map((z,j)=>z.map(v=>180+eff[j]*g+sg*v)),gm=eff.map(e=>180+e*g),grand=180;
+    const SSB=n*sum(gm.map(m=>(m-grand)**2)),SSW=k*(n-1)*sg*sg,dfB=k-1,dfW=k*n-k,MSB=SSB/dfB,MSW=SSW/dfW,F=MSB/MSW,p=fP(F,dfB,dfW);
+    const el=$('w10fig'),w=W(el),H=280,P=new Plot(w,H,{l:48,r:16,t:22,b:40},[0,3],[0,400]);let s=P.axes({yt:[0,100,200,300,400],yl:'每日照護時數（分鐘）'});
+    s+=`<line x1="${P.x0}" x2="${P.x1}" y1="${P.y(grand)}" y2="${P.y(grand)}" stroke="${C.ink}" stroke-dasharray="5 4"/><text x="${P.x0+4}" y="${P.y(grand)-6}" class="tk">總平均</text>`;
+    V.forEach((vals,j)=>{const cx=P.x(j+0.5);s+=`<text x="${cx}" y="${P.y0+18}" class="al" text-anchor="middle">${names[j]}</text>`;
+      vals.forEach((v,i)=>{const jx=((i*53)%15-7)*Math.min(4,(P.x(1)-P.x(0))/40);s+=`<circle cx="${cx+jx}" cy="${P.y(Math.max(0,Math.min(400,v)))}" r="4.2" fill="${C.ink}" fill-opacity=".5"/>`;});
+      const hw=(P.x(1)-P.x(0))*0.32;s+=`<line x1="${cx-hw}" x2="${cx+hw}" y1="${P.y(gm[j])}" y2="${P.y(gm[j])}" stroke="${C.teal}" stroke-width="3.5"/><text x="${cx+hw+4}" y="${P.y(gm[j])+4}" class="tk" style="fill:${C.teal};font-weight:700">${Math.round(gm[j])}</text>`;});
+    put(el,w,H,s,'三組照護時數點圖');
+    const between=Math.sqrt(sum(gm.map(m=>(m-grand)**2))/(k-1)),eb=$('w10bar'),B=new Plot(w,108,{l:150,r:60,t:6,b:40},[0,70],[0,2]);
+    let b=B.axes({xt:w<440?[0,20,40,60]:[0,10,20,30,40,50,60,70],xl:'標準差（分鐘）'});
+    [[between,'組平均之間的差異',C.teal,C.tealL],[sg,'組內個人之間的差異',C.mute,'#E4EBE8']].forEach(([v,l,st,f],i)=>{const y=B.y(1.5-i);b+=`<text x="${B.x0-8}" y="${y+4}" class="al" text-anchor="end">${l}</text><rect x="${B.x0}" y="${y-10}" width="${Math.max(0,B.x(v)-B.x0)}" height="20" fill="${f}" stroke="${st}" stroke-width=".8"/><text x="${B.x(v)+6}" y="${y+4}" class="al">${fx(v)}</text>`;});
+    put(eb,w,108,b,'組間與組內差異');
+    $('w10read').innerHTML=`<div><small>組間均方 MSB</small><strong>${Math.round(MSB).toLocaleString()}</strong></div><div><small>組內均方 MSW</small><strong>${Math.round(MSW).toLocaleString()}</strong></div><div><small>F(${dfB}, ${dfW})</small><strong>${fx(F,2)}</strong></div><div><small>p 值</small><strong style="color:${p<0.05?C.teal:C.ink}">${fp(p)}</strong></div>`;
+    let t=`F ＝ 組間均方 ÷ 組內均方 ＝ ${fx(F,2)}。`;
+    if(p<0.05){const pairs=[[0,1],[0,2],[1,2]].map(([i,j])=>{const tt=Math.abs(gm[i]-gm[j])/Math.sqrt(MSW*2/n),pp=Math.min(1,3*tP(tt,dfW));return `${names[i]} vs ${names[j]}：${pp<0.05?'<b>有差異</b>':'無顯著差異'}（校正後 p ${fpe(pp)}）`;});
+      t+=`p ${fpe(p)}，小於 0.05，至少有一組不同。<br>Bonferroni 事後比較：<br>${pairs.join('<br>')}`;}
+    else t+=`p ${fpe(p)}，未達顯著。組內差異太大，三組的平均差可能只是抽樣誤差造成的。`;
+    $('w10say').innerHTML=t;};
+})();
+
+/* ---------- W11 卡方 ---------- */
+(function(){
+  const pre={a:[9,21,6,54],b:[4,6,1,9],c:[9,31,12,48]},ids=['w11a','w11b','w11c','w11d'];
+  const set=v=>ids.forEach((id,i)=>$(id).value=v[i]);set(pre.a);
+  ids.forEach(id=>$(id).oninput=()=>Draw[11]());
+  document.querySelectorAll('#lab11 [data-pre]').forEach(b=>b.onclick=()=>{set(pre[b.dataset.pre]);Draw[11]();});
+  Draw[11]=function(){const v=ids.map(id=>$(id).value.trim()),err=$('w11err');
+    if(v.some(x=>x===''||!/^\d+$/.test(x))){err.hidden=false;err.textContent='每一格請填 0 以上的整數人數。';return;}
+    const[a,b,c,d]=v.map(Number),r1=a+b,r2=c+d,c1=a+c,c2=b+d,N=r1+r2;
+    if(!r1||!r2||!c1||!c2){err.hidden=false;err.textContent='每一列、每一欄的合計都至少要有 1 人，才能計算期望人數。';return;}
+    err.hidden=true;const E=[r1*c1/N,r1*c2/N,r2*c1/N,r2*c2/N],O=[a,b,c,d];
+    ['w11ea','w11eb','w11ec','w11ed'].forEach((id,i)=>{$(id).innerHTML=`期望 ${fx(E[i])}`;$(id).style.color=E[i]<5?C.red:'';});
+    $('w11r1').textContent=r1;$('w11r2').textContent=r2;$('w11c1').textContent=c1;$('w11c2').textContent=c2;$('w11n').textContent=N;
+    const chi=sum(O.map((o,i)=>(o-E[i])**2/E[i])),p=chiP(chi,1),fpv=fisher(a,b,c,d),small=E.filter(e=>e<5).length;
+    const h=(a*b*c*d===0)?0.5:0,OR=((a+h)*(d+h))/((b+h)*(c+h)),seL=Math.sqrt(1/(a+h)+1/(b+h)+1/(c+h)+1/(d+h)),lo=Math.exp(Math.log(OR)-1.96*seL),hi=Math.exp(Math.log(OR)+1.96*seL);
+    const p1=a/r1,p2=c/r2,pAll=c1/N;
+    const el=$('w11fig'),w=W(el),H=150,P=new Plot(w,H,{l:110,r:16,t:22,b:36},[0,1],[0,2]);let s=P.axes({xt:[0,.2,.4,.6,.8,1],xf:x=>Math.round(x*100)+'%',xl:'泌尿道感染比例'});
+    [[p1,'有導尿管',a,r1],[p2,'無導尿管',c,r2]].forEach(([q,l,k,t],i)=>{const y=P.y(1.5-i);s+=`<text x="${P.x0-8}" y="${y+4}" class="al" text-anchor="end">${l}</text><rect x="${P.x0}" y="${y-13}" width="${P.x1-P.x0}" height="26" fill="#E4EBE8"/><rect x="${P.x0}" y="${y-13}" width="${P.x(q)-P.x0}" height="26" fill="${C.red}" fill-opacity=".8"/><text x="${P.x(q)+6}" y="${y+4}" class="al" style="font-weight:700">${fx(q*100)}%（${k}/${t}）</text>`;});
+    s+=`<line x1="${P.x(pAll)}" x2="${P.x(pAll)}" y1="${P.y1-12}" y2="${P.y0}" stroke="${C.ink}" stroke-dasharray="4 3" stroke-width="1.5"/><text x="${P.x(pAll)+4}" y="${P.y1-8}" class="tk">若無關，兩組都應是 ${fx(pAll*100)}%</text>`;
+    put(el,w,H,s,'兩組感染比例');
+    $('w11read').innerHTML=`<div><small>卡方值 χ²（df ＝ 1）</small><strong>${fx(chi,2)}</strong></div><div><small>卡方 p 值</small><strong>${fp(p)}</strong></div><div><small>Fisher 精確檢定 p 值</small><strong>${fp(fpv)}</strong></div><div><small>勝算比 OR（95% CI）</small><strong>${fx(OR,2)}（${fx(lo,2)}–${fx(hi,2)}）</strong></div>`;
+    const useP=small?fpv:p,sig=useP<0.05;
+    let t=small?`<b>有 ${small} 格期望人數小於 5</b>，卡方近似不準，應改看 Fisher 精確檢定（p ${fpe(fpv)}）。`:`所有格期望人數都 ≥ 5，可以使用卡方檢定（p ${fpe(p)}）。`;
+    t+=sig?`結果顯著：有導尿管的住民泌尿道感染比例 ${fx(p1*100)}%，無導尿管 ${fx(p2*100)}%，兩者有關聯；感染的勝算約為 ${fx(OR,1)} 倍。`:`結果不顯著：兩組比例 ${fx(p1*100)}% 與 ${fx(p2*100)}% 的差距，可能只是抽樣誤差。`+((hi/lo>8)?'信賴區間非常寬，代表人數太少、估計很不穩定。':'');
+    $('w11say').innerHTML=t;};
+})();
+
+/* ---------- W12 線性迴歸 ---------- */
+(function(){
+  const r=rng(5),X=Array.from({length:30},()=>5+r()*95),Zs=Array.from({length:30},()=>randn(r));let added=[],showRes=false,P=null,svg=null,baseFit=null;
+  ['w12b','w12e'].forEach(id=>$(id).oninput=()=>Draw[12]());
+  $('w12res').onclick=()=>{showRes=!showRes;$('w12res').setAttribute('aria-pressed',showRes);Draw[12]();};
+  $('w12rst').onclick=()=>{added=[];Draw[12]();};
+  function fit(pts){const n=pts.length,mx=mean(pts.map(p=>p[0])),my=mean(pts.map(p=>p[1]));let sxx=0,sxy=0,syy=0;pts.forEach(([x,y])=>{sxx+=(x-mx)**2;sxy+=(x-mx)*(y-my);syy+=(y-my)**2;});
+    const b1=sxy/sxx,b0=my-b1*mx,sse=sum(pts.map(([x,y])=>(y-b0-b1*x)**2)),r2=1-sse/syy,se=Math.sqrt(sse/(n-2)/sxx),t=b1/se;return{b0,b1,r2,p:tP(Math.abs(t),n-2),n};}
+  $('w12fig').addEventListener('click',e=>{if(!P)return;const sv=$('w12fig').querySelector('svg'),rc=sv.getBoundingClientRect(),sx=(e.clientX-rc.left)*(P.w/rc.width),sy=(e.clientY-rc.top)*(P.h/rc.height);
+    if(sx<P.x0||sx>P.x1||sy<P.y1||sy>P.y0)return;const xv=P.xd[0]+(sx-P.x0)/(P.x1-P.x0)*(P.xd[1]-P.xd[0]),yv=P.yd[0]+(P.y0-sy)/(P.y0-P.y1)*(P.yd[1]-P.yd[0]);added.push([xv,yv]);Draw[12]();});
+  Draw[12]=function(){const b=+$('w12b').value/10,e=+$('w12e').value;$('w12bv').textContent=b.toFixed(1);$('w12ev').textContent=e;
+    const base=X.map((x,i)=>[x,320-b*x+e*Zs[i]]),all=base.concat(added),f0=fit(base),f=fit(all);
+    const el=$('w12fig'),w=W(el),H=300;P=new Plot(w,H,{l:52,r:16,t:26,b:42},[0,100],[0,420]);let s=P.axes({xt:ticks(0,100,5),yt:[0,100,200,300,400],xl:'Barthel 分數（越高越獨立）',yl:'每日照護時數（分鐘）'});
+    const cy=v=>P.y(Math.max(0,Math.min(420,v)));
+    if(showRes)all.forEach(([x,y])=>{s+=`<line x1="${P.x(x)}" x2="${P.x(x)}" y1="${cy(y)}" y2="${cy(f.b0+f.b1*x)}" stroke="${C.red}" stroke-width="1"/>`;});
+    if(added.length)s+=`<line x1="${P.x(0)}" x2="${P.x(100)}" y1="${cy(f0.b0)}" y2="${cy(f0.b0+f0.b1*100)}" stroke="${C.teal}" stroke-width="1.5" stroke-dasharray="5 4" opacity=".6"/>`;
+    s+=`<line x1="${P.x(0)}" x2="${P.x(100)}" y1="${cy(f.b0)}" y2="${cy(f.b0+f.b1*100)}" stroke="${C.teal}" stroke-width="3"/>`;
+    base.forEach(([x,y])=>{s+=`<circle cx="${P.x(x)}" cy="${cy(y)}" r="4.5" fill="${C.ink}" fill-opacity=".6"/>`;});
+    added.forEach(([x,y])=>{s+=`<circle cx="${P.x(x)}" cy="${cy(y)}" r="6" fill="${C.sat}" stroke="#fff" stroke-width="1.5"/>`;});
+    put(el,w,H,s,'Barthel 與照護時數散佈圖');
+    const sign=f.b1<0?'−':'＋';
+    $('w12read').innerHTML=`<div><small>迴歸方程式</small><strong>ŷ ＝ ${fx(f.b0)} ${sign} ${fx(Math.abs(f.b1),2)} × Barthel</strong></div><div><small>斜率 p 值</small><strong>${fp(f.p)}</strong></div><div><small>R²</small><strong>${fx(f.r2,2)}</strong></div><div><small>住民數</small><strong>${f.n}</strong></div>`;
+    let t=`Barthel 每增加 10 分，每日照護時數平均${f.b1<0?'減少':'增加'} <b>${fx(Math.abs(f.b1*10))} 分鐘</b>（p ${fpe(f.p)}）；Barthel 可以解釋照護時數差異的 <b>${fx(f.r2*100,0)}%</b>，其餘 ${fx(100-f.r2*100,0)}% 來自其他因素。`;
+    if(added.length)t+=`<br>你新增了 ${added.length} 位住民，斜率從 ${fx(f0.b1,2)} 變成 ${fx(f.b1,2)}（虛線是原本的迴歸線）。${Math.abs(f.b1-f0.b1)>0.3?'少數極端值就能明顯拉動迴歸線，分析前要先檢查離群值。':''}`;
+    else t+=`<br>試著在圖的右上角點一下，新增一位「很獨立卻需要大量照護」的住民。`;
+    $('w12say').innerHTML=t;};
+})();
+</script>
+<script>
+/* ---------- W13 邏輯斯迴歸 ---------- */
+(function(){
+  const b0=Math.log(0.15/0.85),b1=Math.log(1.35)/5;
+  const pr=(age,lor)=>1/(1+Math.exp(-(b0+b1*(age-80)+lor)));
+  ['w13or','w13age'].forEach(id=>$(id).oninput=()=>Draw[13]());
+  const rows=[['使用鎮靜安眠藥',2.3,1.4,3.8],['認知功能障礙',1.8,1.1,2.9],['年齡每增加 10 歲',1.3,0.9,1.9],['使用助行器',0.9,0.5,1.6],['規律參加復健',0.6,0.4,0.9]];let pick=-1;
+  function explain(i){const[n,o,l,h]=rows[i];if(l>1)return `<b>${n}</b>：aOR ${o}（95% CI ${l}–${h}）。控制其他因素後，跌倒的勝算是對照者的 ${o} 倍；整條信賴區間都在 1 的右邊，是<b>顯著的危險因子</b>。`;
+    if(h<1)return `<b>${n}</b>：aOR ${o}（95% CI ${l}–${h}）。OR 小於 1 且信賴區間不含 1，是<b>顯著的保護因子</b>，跌倒勝算約減少 ${Math.round((1-o)*100)}%。`;
+    return `<b>${n}</b>：aOR ${o}（95% CI ${l}–${h}）。信賴區間<b>跨過 1</b>，代表可能增加也可能減少跌倒，資料不足以下結論，屬於不顯著。`;}
+  function forest(){const el=$('w13forest'),w=W(el),lw=Math.min(150,w*0.38),H=rows.length*38+52,lx=v=>Math.log(v),P=new Plot(w,H,{l:lw,r:20,t:10,b:40},[lx(0.25),lx(5)],[0,rows.length]);
+    let s='';[0.25,0.5,1,2,4].forEach(v=>{s+=`<line x1="${P.x(lx(v))}" x2="${P.x(lx(v))}" y1="${P.y1}" y2="${P.y0}" class="gl"/><text x="${P.x(lx(v))}" y="${P.y0+16}" class="tk" text-anchor="middle">${v}</text>`;});
+    s+=`<text x="${P.x(0)-8}" y="${H-4}" class="tk" text-anchor="end">← 保護因子</text><text x="${P.x(0)+8}" y="${H-4}" class="tk">危險因子 →</text><line x1="${P.x0}" x2="${P.x1}" y1="${P.y0}" y2="${P.y0}" class="ax"/>`;
+    s+=`<line x1="${P.x(0)}" x2="${P.x(0)}" y1="${P.y1}" y2="${P.y0}" stroke="${C.ink}" stroke-width="1.5"/>`;
+    rows.forEach(([n,o,l,h],i)=>{const y=P.y(rows.length-i-0.5),col=l>1?C.red:h<1?C.teal:C.mute,on=i===pick;
+      s+=`<g data-i="${i}" tabindex="0" role="button" aria-label="${n}" style="cursor:pointer"><rect x="0" y="${y-17}" width="${w}" height="34" fill="${on?C.satL:'transparent'}" fill-opacity="${on?.6:0}"/><text x="${6}" y="${y+4}" class="al" style="font-size:13px">${n}</text><line x1="${P.x(lx(l))}" x2="${P.x(lx(h))}" y1="${y}" y2="${y}" stroke="${col}" stroke-width="2.2"/><rect x="${P.x(lx(o))-6}" y="${y-6}" width="12" height="12" fill="${col}"/></g>`;});
+    const svg=put(el,w,H,s,'森林圖');svg.querySelectorAll('g[data-i]').forEach(g=>{const go=()=>{pick=+g.dataset.i;$('w13fsay').innerHTML=explain(pick);forest();};g.onclick=go;g.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}};});}
+  Draw[13]=function(){const OR=+$('w13or').value/10,age=+$('w13age').value,lor=Math.log(OR);$('w13orv').textContent=OR.toFixed(1);$('w13agev').textContent=age+' 歲';
+    const el=$('w13fig'),w=W(el),H=270,P=new Plot(w,H,{l:48,r:16,t:22,b:40},[65,100],[0,1]);let s=P.axes({xt:[65,70,75,80,85,90,95,100],yt:[0,.2,.4,.6,.8,1],yf:v=>Math.round(v*100)+'%',xl:'年齡',yl:'一年內跌倒機率'});
+    [[lor,C.red],[0,C.teal]].forEach(([L,col])=>{let d='';for(let a=65;a<=100;a+=0.5)d+=(d?'L':'M')+P.x(a).toFixed(1)+' '+P.y(pr(a,L)).toFixed(1);s+=`<path d="${d}" fill="none" stroke="${col}" stroke-width="2.6"/>`;});
+    const p1=pr(age,lor),p0=pr(age,0),o1=p1/(1-p1),o0=p0/(1-p0);
+    s+=`<line x1="${P.x(age)}" x2="${P.x(age)}" y1="${P.y1}" y2="${P.y0}" stroke="${C.ink}" stroke-dasharray="4 3"/>`;
+    [[p1,C.red],[p0,C.teal]].forEach(([q,col],i)=>{const right=age<88;s+=`<circle cx="${P.x(age)}" cy="${P.y(q)}" r="5.5" fill="${col}" stroke="#fff" stroke-width="1.5"/><text x="${P.x(age)+(right?9:-9)}" y="${P.y(q)+(i?14:-6)}" class="al" text-anchor="${right?'start':'end'}" style="fill:${col};font-weight:700">${fx(q*100)}%</text>`;});
+    put(el,w,H,s,'邏輯斯迴歸 S 形曲線');
+    $('w13read').innerHTML=`<div><small>${age} 歲未使用</small><strong>${fx(p0*100)}%</strong></div><div><small>${age} 歲有使用</small><strong>${fx(p1*100)}%</strong></div><div><small>機率差</small><strong>${fx((p1-p0)*100)} 個百分點</strong></div><div><small>勝算比 OR</small><strong style="color:${C.red}">${fx(o1/o0,2)}</strong></div><div><small>相對風險 RR</small><strong>${fx(p1/p0,2)}</strong></div>`;
+    $('w13say').innerHTML=`${age} 歲住民的跌倒勝算：未使用 ${fx(o0,2)}、有使用 ${fx(o1,2)}，相除得到 OR ＝ ${fx(o1/o0,2)}，不論年齡都相同。但機率不是直接乘以 OR：${fx(p0*100)}% × ${OR.toFixed(1)} ＝ ${fx(p0*OR*100)}%，實際卻是 ${fx(p1*100)}%。`+(p0>0.1&&OR>1.3?`基準機率越高，OR 和 RR（${fx(p1/p0,2)}）差距越大，所以常見事件不能把 OR 講成「風險是幾倍」。`:'');
+    forest();};
+})();
+
+/* ---------- W14 存活分析 ---------- */
+(function(){
+  const D=[['A1',1,1.5,1],['A2',1,2,1],['A3',1,3,0],['A4',1,4,1],['A5',1,5,1],['A6',1,6.5,1],['A7',1,8,0],['A8',1,12,0],
+           ['B1',0,3,1],['B2',0,5,0],['B3',0,7,1],['B4',0,9,0],['B5',0,10,1],['B6',0,12,0],['B7',0,12,0],['B8',0,12,0]];
+  const D0=D.map(r=>r.slice());$('w14rst').onclick=()=>{D.forEach((r,i)=>r[3]=D0[i][3]);Draw[14]();};
+  const km=g=>{const r=D.filter(d=>d[1]===g).sort((a,b)=>a[2]-b[2]);let S=1,atRisk=r.length;const steps=[[0,1]],cens=[];let i=0;
+    while(i<r.length){const t=r[i][2];let d=0,c=0;while(i<r.length&&r[i][2]===t){r[i][3]?d++:c++;i++;}if(d){steps.push([t,S]);S*=1-d/atRisk;steps.push([t,S]);}if(c)cens.push([t,S]);atRisk-=d+c;}
+    steps.push([12,S]);return{steps,cens,S};};
+  const median=st=>{for(const[t,s]of st)if(s<=0.5)return t;return null;};
+  function logrank(){const times=[...new Set(D.filter(d=>d[3]).map(d=>d[2]))].sort((a,b)=>a-b);let O1=0,E1=0,V=0,O0=0;
+    times.forEach(t=>{const risk=D.filter(d=>d[2]>=t),n=risk.length,n1=risk.filter(d=>d[1]===1).length,dd=D.filter(d=>d[2]===t&&d[3]),dn=dd.length,d1=dd.filter(d=>d[1]===1).length;O1+=d1;O0+=dn-d1;E1+=dn*n1/n;if(n>1)V+=dn*(n1/n)*(1-n1/n)*(n-dn)/(n-1);});
+    const E0=O1+O0-E1,chi=V>0?(O1-E1)**2/V:0;return{chi,p:chiP(chi,1),hr:(O1/E1)/(O0/E0),O1,O0};}
+  Draw[14]=function(){const el=$('w14sw'),w=W(el),rowH=20,H=D.length*rowH+44,P=new Plot(w,H,{l:52,r:20,t:8,b:36},[0,12],[0,D.length]);
+    let s=P.axes({xt:[0,2,4,6,8,10,12],xl:'入住後月數'});
+    D.forEach((d,i)=>{const y=P.y(D.length-i-0.5),col=d[1]?C.red:C.teal,x=P.x(d[2]);
+      s+=`<text x="${P.x0-8}" y="${y+4}" class="tk" text-anchor="end">${d[0]}</text><line x1="${P.x0}" x2="${x}" y1="${y}" y2="${y}" stroke="${col}" stroke-width="3" stroke-opacity=".45"/>`;
+      s+=`<g data-i="${i}" tabindex="0" role="button" aria-label="切換 ${d[0]} 的結局" style="cursor:pointer"><rect x="${x-14}" y="${y-9}" width="28" height="18" fill="transparent"/>`+(d[3]?`<path d="M${x-5} ${y-5}L${x+5} ${y+5}M${x+5} ${y-5}L${x-5} ${y+5}" stroke="${col}" stroke-width="2.6"/>`:`<circle cx="${x}" cy="${y}" r="5" fill="#fff" stroke="${col}" stroke-width="2"/>`)+`</g>`;});
+    const sv=put(el,w,H,s,'住民追蹤圖');sv.querySelectorAll('g[data-i]').forEach(g=>{const go=()=>{const d=D[+g.dataset.i];d[3]=d[3]?0:1;Draw[14]();};g.onclick=go;g.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}};});
+    const k1=km(1),k0=km(0),ek=$('w14km'),K=new Plot(w,240,{l:52,r:20,t:24,b:40},[0,12],[0,1]);let q=K.axes({xt:[0,2,4,6,8,10,12],yt:[0,.25,.5,.75,1],yf:v=>Math.round(v*100)+'%',xl:'入住後月數',yl:'尚未跌倒的比例'});
+    q+=`<line x1="${K.x0}" x2="${K.x1}" y1="${K.y(.5)}" y2="${K.y(.5)}" stroke="${C.mute}" stroke-dasharray="3 3"/>`;
+    [[k1,C.red],[k0,C.teal]].forEach(([k,col])=>{q+=`<path d="${k.steps.map((p,i)=>(i?'L':'M')+K.x(p[0]).toFixed(1)+' '+K.y(p[1]).toFixed(1)).join('')}" fill="none" stroke="${col}" stroke-width="2.6"/>`;k.cens.forEach(([t,S])=>{q+=`<line x1="${K.x(t)}" x2="${K.x(t)}" y1="${K.y(S)-6}" y2="${K.y(S)+6}" stroke="${col}" stroke-width="2"/>`;});});
+    put(ek,w,240,q,'Kaplan-Meier 曲線');
+    const lr=logrank(),m1=median(k1.steps),m0=median(k0.steps);
+    $('w14read').innerHTML=`<div><small>有跌倒史：跌倒人數</small><strong>${lr.O1} ／ 8</strong></div><div><small>無跌倒史：跌倒人數</small><strong>${lr.O0} ／ 8</strong></div><div><small>中位跌倒時間</small><strong>${m1!==null?m1+' 月':'未達'} vs ${m0!==null?m0+' 月':'未達'}</strong></div><div><small>log-rank χ²</small><strong>${fx(lr.chi,2)}</strong></div><div><small>p 值</small><strong>${fp(lr.p)}</strong></div><div><small>風險比 HR（近似）</small><strong>${isFinite(lr.hr)?fx(lr.hr,2):'—'}</strong></div>`;
+    $('w14say').innerHTML=`12 個月時，有跌倒史組還有 ${fx(k1.S*100,0)}% 沒跌倒，無跌倒史組還有 ${fx(k0.S*100,0)}%。`+(lr.p<0.05?`log-rank 檢定 p ${fpe(lr.p)}，兩條曲線有顯著差異，有跌倒史者較快發生跌倒（HR 約 ${fx(lr.hr,1)}）。`:`log-rank 檢定 p ${fpe(lr.p)}，未達顯著。每組只有 8 人，就算曲線看起來分得開，證據仍不夠強。`)+`<br>曲線上的短直線是設限的住民。`;};
+})();
+
+/* ---------- W17 實證醫學 ---------- */
+(function(){
+  const L=[['系統性回顧','系統性回顧與統合分析：整合多篇研究的結果，例如整合 20 篇機構防跌運動的隨機對照試驗。證據最強，但前提是納入的研究本身品質好。'],
+    ['隨機對照試驗','隨機對照試驗（RCT）：隨機分派住民到介入組與對照組，能排除大部分干擾因素，最能推論因果。例：隨機分派住民參加平衡訓練或常規活動，比較一年跌倒率。'],
+    ['世代研究','世代研究：追蹤有、無某項暴露的人，看之後誰發生事件。例：追蹤使用與未使用鎮靜安眠藥的住民一年，比較跌倒率。存活分析和邏輯斯迴歸最常用在這一層。'],
+    ['病例對照研究','病例對照研究：從已發生事件的人回推過去的暴露。例：比較有壓傷與無壓傷住民過去三個月的營養狀況。適合罕見事件，但容易有回憶偏差。'],
+    ['橫斷面研究','橫斷面研究與病例系列：在一個時間點調查或整理個案。例：調查各院區住民目前的約束率。只能看關聯，無法確定誰先誰後。'],
+    ['專家意見','專家意見：臨床經驗與共識，在缺乏研究時仍有參考價值，但證據等級最低。']];let pk=-1;
+  const shade=['#0F6E66','#2F8278','#52978E','#7AADA5','#A5C6C0','#CFE0DC'];
+  function pyr(){const el=$('w17pyr'),w=W(el),mw=Math.min(w-10,600),step=(mw-110)/6,lh=40,H=6*lh+8,cx=w/2;let s='';
+    L.forEach(([n],i)=>{const t=110+i*step,b=110+(i+1)*step,y=4+i*lh,on=i===pk,tc=i<3?'#fff':C.ink;
+      s+=`<g data-i="${i}" tabindex="0" role="button" aria-label="${n}" style="cursor:pointer"><path d="M${cx-t/2} ${y}L${cx+t/2} ${y}L${cx+b/2} ${y+lh-3}L${cx-b/2} ${y+lh-3}Z" fill="${shade[i]}" stroke="${on?C.sat:'#fff'}" stroke-width="${on?3:1}"/><text x="${cx}" y="${y+lh/2+3}" text-anchor="middle" style="font-size:13px;fill:${tc};font-weight:700">${n}</text></g>`;});
+    const sv=put(el,w,H,s,'證據等級金字塔');sv.querySelectorAll('g[data-i]').forEach(g=>{const go=()=>{pk=+g.dataset.i;$('w17psay').innerHTML=L[pk][1];pyr();};g.onclick=go;g.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}};});}
+  ['w17c','w17t'].forEach(id=>$(id).oninput=()=>Draw[17]());
+  Draw[17]=function(){pyr();const c=+$('w17c').value,t=+$('w17t').value;$('w17cv').textContent=c+'%';$('w17tv').textContent=t+'%';
+    const el=$('w17fig'),w=W(el),gap=30,cell=Math.min(18,(w-gap-10)/20),gw=cell*10,H=gw+30,ox=(w-(gw*2+gap))/2;let s='';
+    [['對照組 100 人',c,0],['介入組 100 人',Math.min(t,c),Math.max(0,c-t)]].forEach(([lab,red,sat],g)=>{const x0=ox+g*(gw+gap);s+=`<text x="${x0}" y="14" class="al">${lab}</text>`;
+      for(let i=0;i<100;i++){const f=i<red?C.red:i<red+sat?C.sat:C.grid;s+=`<circle cx="${x0+(i%10+.5)*cell}" cy="${24+(Math.floor(i/10)+.5)*cell}" r="${cell*.38}" fill="${f}"/>`;}
+      if(g===1&&t>c)for(let i=c;i<t;i++)s+=`<circle cx="${x0+(i%10+.5)*cell}" cy="${24+(Math.floor(i/10)+.5)*cell}" r="${cell*.38}" fill="${C.red}"/>`;});
+    put(el,w,H,s,'NNT 圖示');
+    const arr=c-t,rrr=arr/c,nnt=arr>0?Math.ceil(100/arr):null;
+    $('w17read').innerHTML=`<div><small>絕對風險減少 ARR</small><strong>${arr} 個百分點</strong></div><div><small>相對風險減少 RRR</small><strong>${fx(rrr*100,0)}%</strong></div><div><small>相對風險 RR</small><strong>${fx(t/c,2)}</strong></div><div><small>需治療人數 NNT</small><strong style="color:${C.sat}">${nnt??'—'}</strong></div>`;
+    $('w17say').innerHTML=arr>0?`每 100 位住民中，介入讓跌倒人數從 ${c} 人降到 ${t} 人，少掉的 ${arr} 人就是黃點。換算 NNT ＝ 100 ÷ ${arr} ≈ <b>${nnt}</b>：大約每 ${nnt} 位住民參加，就能多避免 1 位跌倒。`+(rrr>=0.3&&arr<=5?`注意：相對減少 ${fx(rrr*100,0)}% 聽起來很大，但絕對只少了 ${arr} 個百分點。`:''):`介入組跌倒率沒有比對照組低，這個介入沒有效益，不需要計算 NNT。`;};
+})();
+
+/* ---------- W18 雙樣本 ---------- */
+(function(){
+  const st={};const info={'cont-ind-yes':['獨立樣本 t 檢定','例：A、B 兩樓層住民的每日照護時數。結果以平均數 ± 標準差描述。'],
+    'cont-ind-no':['Mann-Whitney U 檢定','例：兩樓層住民的年度住院天數（右偏）。結果以中位數（四分位距）描述。'],
+    'cont-pair-yes':['成對樣本 t 檢定','例：同一批住民復健前後的 Barthel 分數。分析的是每個人的「前後差值」。'],
+    'cont-pair-no':['Wilcoxon 符號等級檢定','例：同一批住民介入前後的疼痛分數（0–10 分），人數少或偏態時使用。'],
+    'cat-ind':['卡方檢定（期望人數 &lt; 5 改用 Fisher 精確檢定）','例：兩樓層住民一年內是否跌倒。'],
+    'cat-pair':['McNemar 檢定','例：同一批住民介入前後「是否使用約束」。']};
+  document.querySelectorAll('#lab18q [data-q]').forEach(g=>g.querySelectorAll('.btn').forEach(b=>b.onclick=()=>{st[g.dataset.q]=b.dataset.v;pressOne(g,b);ans();}));
+  function ans(){$('w18q3').style.display=st.type==='cat'?'none':'';let k=null;
+    if(st.type==='cat'&&st.pair)k='cat-'+st.pair;else if(st.type==='cont'&&st.pair&&st.norm)k=`cont-${st.pair}-${st.norm}`;
+    document.querySelectorAll('#w18mat td').forEach(td=>{td.style.background=td.dataset.k===k?C.tealL:'';td.style.fontWeight=td.dataset.k===k?'700':'';});
+    $('w18ans').innerHTML=k?`建議方法：<b>${info[k][0]}</b><br>${info[k][1]}`:'依序回答上面的問題。';}
+  const pre=[25,40,55,30,70,45,60,35,80,50],dif=[6,3,5,4,7,2,5,4,6,3],post=pre.map((v,i)=>v+dif[i]);let mode='pair';
+  const seg=$('w18mode');seg.querySelectorAll('.btn').forEach(b=>b.onclick=()=>{mode=b.dataset.m;pressOne(seg,b);Draw[18]();});
+  Draw[18]=function(){ans();const el=$('w18fig'),w=W(el),H=300,P=new Plot(w,H,{l:48,r:16,t:22,b:40},[0,2],[0,100]);let s=P.axes({yt:[0,20,40,60,80,100],yl:'Barthel 分數'});
+    const xa=P.x(0.6),xb=P.x(1.4);s+=`<text x="${xa}" y="${P.y0+18}" class="al" text-anchor="middle">介入前</text><text x="${xb}" y="${P.y0+18}" class="al" text-anchor="middle">介入後</text>`;
+    if(mode==='pair'){pre.forEach((v,i)=>{s+=`<line x1="${xa}" x2="${xb}" y1="${P.y(v)}" y2="${P.y(post[i])}" stroke="${C.teal}" stroke-width="1.8"/>`;});}
+    else{[[pre,xa],[post,xb]].forEach(([a,x])=>{const m=mean(a),d=sd(a);s+=`<line x1="${x+28}" x2="${x+28}" y1="${P.y(m-d)}" y2="${P.y(m+d)}" stroke="${C.sat}" stroke-width="2.5"/><line x1="${x+18}" x2="${x+38}" y1="${P.y(m)}" y2="${P.y(m)}" stroke="${C.sat}" stroke-width="3"/><text x="${x+44}" y="${P.y(m)+4}" class="tk" style="fill:${C.sat};font-weight:700">${fx(m)}±${fx(d)}</text>`;});}
+    pre.forEach((v,i)=>{s+=`<circle cx="${xa}" cy="${P.y(v)}" r="5" fill="${C.ink}"/><circle cx="${xb}" cy="${P.y(post[i])}" r="5" fill="${C.ink}"/>`;});
+    put(el,w,H,s,'前後測點圖');
+    let t,df,p,txt;if(mode==='pair'){const md=mean(dif),sdd=sd(dif);t=md/(sdd/Math.sqrt(10));df=9;p=tP(Math.abs(t),df);
+      txt=`成對分析看每個人的差值：平均進步 ${fx(md)} 分、差值標準差只有 ${fx(sdd,2)}。10 條線幾乎都一樣往上，t(${df}) ＝ ${fx(t,2)}，p ${fpe(p)}，<b>進步非常顯著</b>。`;}
+    else{const m1=mean(pre),m2=mean(post),v1=sd(pre)**2/10,v2=sd(post)**2/10;t=(m2-m1)/Math.sqrt(v1+v2);df=(v1+v2)**2/(v1*v1/9+v2*v2/9);p=tP(Math.abs(t),df);
+      txt=`當成兩群不同的人：平均差一樣是 ${fx(m2-m1)} 分，但每組內的標準差高達 ${fx(sd(pre))} 分，個別差異把效果淹沒了。t ＝ ${fx(t,2)}，p ${fpe(p)}，<b>錯誤地判定為沒有差異</b>。`;}
+    $('w18read').innerHTML=`<div><small>分析方式</small><strong>${mode==='pair'?'成對樣本 t 檢定':'獨立樣本 t 檢定'}</strong></div><div><small>t 值</small><strong>${fx(t,2)}</strong></div><div><small>自由度</small><strong>${fx(df,mode==='pair'?0:1)}</strong></div><div><small>p 值</small><strong style="color:${p<0.05?C.teal:C.red}">${fp(p)}</strong></div>`;
+    $('w18say').innerHTML=txt;};
+})();
+
+</script>
+<script>
+const GROUPS=[['desc','描述資料'],['prob','機率與篩檢'],['inf','推論與檢定'],['out','讀懂各方法的結果'],['ebm','實證醫學']];
+const KEYS=['pvalue','ci','or','hr'];
+const TERMS=[
+{id:'population',g:'desc',n:'母體',en:'Population',a:['母體'],w:[3],
+ d:'研究想了解的全部對象。',e:'一整鍋湯。',x:'「北市聯醫所有長照機構的住民」。'},
+{id:'sample',g:'desc',n:'樣本',en:'Sample',a:['樣本'],w:[3],
+ d:'實際收集資料的那一部分對象，人數記作 n。',e:'舀一匙湯試味道；只要湯有攪勻（隨機抽樣），一匙就能代表整鍋。',x:'被抽出來查紀錄的 80 位住民。'},
+{id:'param',g:'desc',n:'參數與統計量',en:'Parameter / Statistic',a:['參數','統計量'],w:[3],
+ d:'描述母體的數字叫參數（μ、σ、p），通常無法得知；從樣本算出的數字叫統計量（x̄、s、p̂），用來估計參數。',e:'參數是整鍋湯真正的鹹度，統計量是你那一匙嚐到的鹹度。',x:'全部住民真正的跌倒率是參數；抽 80 人算出的 23% 是統計量。',r:'符號慣例：希臘字母多指母體，英文字母多指樣本。'},
+{id:'sampling',g:'desc',n:'抽樣方法',en:'Sampling methods',a:['簡單隨機抽樣','分層抽樣','便利抽樣','簡單隨機'],w:[3],
+ d:'簡單隨機抽樣是每個人被抽中的機會都相同；分層抽樣是先依特性分組，再在各組內隨機抽；便利抽樣是抽最方便取得的人。',x:'依院區分層，各院區按住民人數比例隨機抽樣，比只抽自己單位更有代表性。',r:'便利抽樣最省事，但最容易產生偏差。'},
+{id:'bias',g:'desc',n:'抽樣偏差',en:'Sampling bias',a:['偏差'],w:[3],
+ d:'樣本系統性地不像母體，使估計值固定偏向某一邊。',e:'只舀浮在上面的油，怎麼試都覺得太油。',x:'只調查失智專區，會高估全部住民的跌倒率。',r:'偏差不會因為人數變多而消失；會隨人數變多而縮小的是隨機誤差。'},
+{id:'vartype',g:'desc',n:'變項類型',en:'Types of variables',a:['類別變項','連續變項','名目尺度','順序尺度'],w:[4],
+ d:'名目尺度是分組、沒有高低順序；順序尺度有等級但間距不一定相等；連續變項是可以量測、可以加減的數值。',x:'性別是名目、失能等級是順序、Barthel 分數是連續。',r:'變項類型決定描述方式、圖表和統計方法，是選方法的第一步。'},
+{id:'mean',g:'desc',n:'平均數',en:'Mean',a:['平均數'],w:[4],
+ d:'全部數值加總後除以人數。',e:'把所有人的數值重新平均分配後，每人分到的量。',r:'容易被極端值拉動，資料左右對稱時最適合。常寫成「平均數 ± 標準差」。'},
+{id:'median',g:'desc',n:'中位數',en:'Median',a:['中位數'],w:[4],
+ d:'所有數值由小到大排好後，正中間的那個數。',e:'全班依身高排隊，站在正中間那位的身高。',x:'住院天數中位數 5 天：一半住民住不到 5 天，一半超過。',r:'不受極端值影響，偏態資料用它。常寫成「中位數（四分位距）」。'},
+{id:'sd',g:'desc',n:'標準差',en:'Standard deviation, SD',a:['標準差','SD'],w:[4,6],
+ d:'每個數值平均離平均數有多遠，描述個體之間的差異大小。',e:'班上同學身高參差不齊的程度。',x:'年齡 82.4 ± 7.9 歲，7.9 就是標準差。',r:'資料近似常態時，平均數 ± 1 個標準差約含 68% 的人，± 2 個標準差約含 95%。'},
+{id:'iqr',g:'desc',n:'四分位距',en:'Interquartile range, IQR',a:['四分位距','IQR'],w:[4],
+ d:'第 75 百分位數（Q3）減第 25 百分位數（Q1），也就是中間 50% 的人所占的範圍。',x:'住院天數 5（0–13）天：中間一半的住民住 0 到 13 天。',r:'搭配中位數使用，適合偏態資料；盒鬚圖的箱子就是它。'},
+{id:'skew',g:'desc',n:'偏態',en:'Skewness',a:['右偏','偏態'],w:[4,6],
+ d:'分布左右不對稱。右偏是少數很大的數值在右邊拖出長尾巴。',x:'住院天數、約束天數、住院費用通常都是右偏。',r:'右偏時平均數大於中位數，描述時改用中位數；檢定時考慮無母數方法。'},
+{id:'outlier',g:'desc',n:'離群值',en:'Outlier',a:['離群值','極端值'],w:[4,12],
+ d:'明顯遠離其他資料的數值，盒鬚圖中畫在鬍鬚外的點。',r:'先確認是登打錯誤還是真實的特殊個案，不能因為結果不好看就刪掉。'},
+{id:'normal',g:'desc',n:'常態分配',en:'Normal distribution',a:['常態分配','常態'],w:[5,6],
+ d:'左右對稱、中間高兩側低的鐘形分布。',r:'平均數 ± 1.96 個標準差涵蓋 95% 的數值，這個 1.96 也是信賴區間公式的來源。t 檢定、ANOVA、線性迴歸都假設資料（或誤差）近似常態。'},
+{id:'condp',g:'prob',n:'條件機率',en:'Conditional probability',a:['條件機率'],w:[5],
+ d:'在某個條件成立的前提下，另一件事發生的機率。',x:'「在快篩陽性的住民中」真正感染的機率。',r:'條件放在前面還是後面，意思完全不同：「感染者中快篩陽性的比例」是敏感度，「快篩陽性者中感染的比例」是 PPV。'},
+{id:'prev',g:'prob',n:'盛行率',en:'Prevalence',a:['盛行率'],w:[5],
+ d:'某個時間點，族群中有這個狀況的人所占的比例。',r:'盛行率高低會大幅改變陽性預測值，同一支快篩在群聚期和平時的可信度差很多。'},
+{id:'sens',g:'prob',n:'敏感度',en:'Sensitivity',a:['敏感度'],w:[5],
+ d:'真的有病的人當中，檢驗結果為陽性的比例（真陽性 ÷ 有病的人）。',e:'抓得到壞人的能力。',r:'敏感度高的檢驗，結果陰性時比較能放心排除。'},
+{id:'spec',g:'prob',n:'特異度',en:'Specificity',a:['特異度'],w:[5],
+ d:'真的沒病的人當中，檢驗結果為陰性的比例（真陰性 ÷ 沒病的人）。',e:'不冤枉好人的能力。',r:'特異度高的檢驗，結果陽性時比較能確認。'},
+{id:'ppv',g:'prob',n:'陽性／陰性預測值',en:'PPV / NPV',a:['陽性預測值','陰性預測值','PPV','NPV'],w:[5],
+ d:'PPV 是檢驗陽性的人當中真的有病的比例；NPV 是檢驗陰性的人當中真的沒病的比例。',x:'盛行率 2% 時流感快篩 PPV 約 22%，陽性的人裡將近八成是誤報。',r:'這兩個才是臨床上拿到結果時真正想知道的機率，而且會隨盛行率改變。'},
+{id:'fpfn',g:'prob',n:'偽陽性與偽陰性',en:'False positive / False negative',a:['偽陽性','偽陰性','真陽性','真陰性'],w:[5],
+ d:'偽陽性是沒病卻驗出陽性（誤報）；偽陰性是有病卻驗出陰性（漏掉）。真陽性、真陰性則是判斷正確。',x:'群聚期間快篩陰性但症狀明顯的住民，可能是偽陰性，仍應先採取防護。'},
+{id:'sampdist',g:'inf',n:'抽樣分配',en:'Sampling distribution',a:['抽樣分配'],w:[6],
+ d:'重複抽樣很多次，把每次算出的統計量（例如平均數）收集起來形成的分布。',e:'請 100 個人各舀一匙湯試鹹度，大家的答案會形成一個分布。',r:'這個分布的寬度就是標準誤，決定估計有多準。'},
+{id:'clt',g:'inf',n:'中央極限定理',en:'Central limit theorem',a:['中央極限定理'],w:[6],
+ d:'樣本數夠大時（常見說法是 30 人以上），不論母體長什麼樣子，樣本平均數的分布都會接近常態。',r:'講的是「平均數」的分布，不是原始資料。住院天數本身永遠是偏的。'},
+{id:'se',g:'inf',n:'標準誤',en:'Standard error, SE',a:['標準誤','SE'],w:[6,7],
+ d:'樣本平均數的標準差，描述估計值有多不準；SE ＝ 標準差 ÷ √n。',e:'標準差回答「住民之間差多少」，標準誤回答「我算出來的平均數估得準不準」。',x:'36 位住民，標準差 42 分鐘 → 標準誤 7 分鐘。',r:'人數變 4 倍，標準誤減半。'},
+{id:'ci',g:'inf',n:'信賴區間',en:'Confidence interval, 95% CI',a:['95% 信賴區間','信賴區間','95% CI','CI'],w:[6,13,17],
+ d:'依樣本算出、合理包含母體真值的範圍。95% CI 約等於估計值 ± 1.96 × 標準誤。',e:'撒網捕魚：用同樣的方法撒 100 次網，大約 95 次會網到那條魚（真值）。',x:'平均照護時數 190 分鐘（95% CI 176–204）：真正的平均合理地落在 176 到 204 分鐘之間。',r:'區間越窄，估計越精準。差值（平均差、率差）的區間包含 0 → 不顯著；比值（OR、RR、HR）的區間包含 1 → 不顯著。它不是「真值有 95% 機率在這個區間裡」，而是這個方法做很多次，約 95% 的區間會抓到真值。'},
+{id:'hyp',g:'inf',n:'虛無假設與對立假設',en:'Null / Alternative hypothesis, H0 / H1',a:['虛無假設','對立假設','H0','H1'],w:[7],
+ d:'虛無假設 H0 主張「沒有差異或沒有關聯」；對立假設 H1 是研究者想證明的「有差異或有關聯」。',e:'法庭的無罪推定：先假設被告無罪（H0），證據夠強才判有罪（接受 H1）。',r:'檢定的結論只有「拒絕 H0」或「無法拒絕 H0」，不會「證明 H0」。'},
+{id:'pvalue',g:'inf',n:'p 值',en:'p-value',a:['p 值','p值'],w:[7],
+ d:'假設 H0 為真（其實沒有差異），觀察到目前這麼極端、或更極端結果的機率。',e:'如果硬幣是公平的，連丟 10 次都是正面的機率只有約 0.001。真的發生了，你就會懷疑這枚硬幣有問題。',x:'p ＝ 0.003：如果新方案其實無效，只有 0.3% 的機會看到這麼大的差距，所以不太像是巧合。',r:'p < 0.05 通常判定為統計上顯著。p 值小代表「用巧合解釋很牽強」，不代表效果大，也不是「H0 為真的機率」。p > 0.05 也不等於證明沒差異，可能只是人數不夠。'},
+{id:'alpha',g:'inf',n:'顯著水準 α',en:'Significance level',a:['顯著水準','α'],w:[7],
+ d:'事先訂好的判斷門檻，通常是 0.05，也就是願意承擔 5% 誤判「有差異」的風險。',r:'p 值小於 α 就拒絕 H0。'},
+{id:'errors',g:'inf',n:'型一錯誤與型二錯誤',en:'Type I / Type II error',a:['型一錯誤','型二錯誤'],w:[7],
+ d:'型一錯誤：其實沒差，卻判定有差（偽陽性），機率是 α。型二錯誤：其實有差，卻沒有測出來（偽陰性），機率是 β。',e:'型一錯誤是冤枉好人，型二錯誤是放走壞人。',r:'人數太少時最容易犯型二錯誤。'},
+{id:'power',g:'inf',n:'檢定力',en:'Statistical power',a:['檢定力'],w:[7],
+ d:'效果真的存在時，研究能正確測出來的機率，等於 1 − β。',x:'檢定力 40%：方案真的有效，但這樣的研究做 10 次只有 4 次會顯著。',r:'一般要求至少 80%。人數越多、效果越大、資料越整齊，檢定力越高；研究開始前會先估算需要的人數。'},
+{id:'effect',g:'inf',n:'效果大小與臨床意義',en:'Effect size / Clinical significance',a:['效果大小','臨床意義','臨床上有意義'],w:[7],
+ d:'差異或關聯實際上有多大，例如平均差幾分、OR 多少。臨床意義是指這個大小在照護上值不值得重視。',x:'人數很多時，Barthel 只差 1 分也可能 p < 0.05，但對照護幾乎沒有影響。',r:'報告要同時寫效果大小、信賴區間和 p 值。'},
+{id:'df',g:'inf',n:'自由度',en:'Degrees of freedom, df',a:['自由度','df'],w:[7,10],
+ d:'計算統計量時可以自由變動的數值個數，決定要對照哪一條分布來算 p 值。',r:'寫在統計量後面的括號裡，例如 t(9)、F(2, 42)、χ²(1)。實務上知道它和人數、組數有關即可。'},
+{id:'ttest',g:'inf',n:'t 檢定與 t 值',en:'t-test / t statistic',a:['t 檢定','t 值'],w:[7,18],
+ d:'比較平均數的檢定，分為單一樣本、獨立樣本、成對樣本三種。t 值是「差距 ÷ 標準誤」，代表差距是誤差的幾倍。',r:'t 的絕對值越大越可能顯著；人數夠多時，|t| 大約超過 2 就會 p < 0.05。'},
+{id:'paired',g:'inf',n:'獨立樣本與成對樣本',en:'Independent / Paired samples',a:['獨立樣本','成對樣本','成對分析'],w:[7,18],
+ d:'獨立樣本是兩組不同的人；成對樣本是同一群人測兩次，或刻意一對一配對的人。',x:'A、B 兩樓層比較是獨立樣本；同一批住民介入前後比較是成對樣本。',r:'前後測資料誤用獨立樣本 t 檢定，會嚴重低估效果。'},
+{id:'nonpar',g:'inf',n:'無母數檢定',en:'Nonparametric tests',a:['無母數檢定','無母數方法','無母數','Mann-Whitney U','Wilcoxon'],w:[18],
+ d:'不假設資料呈常態的檢定，改用數值的排序（等級）來計算，例如 Mann-Whitney U 檢定、Wilcoxon 符號等級檢定。',r:'適合偏態、人數很少或順序尺度的資料，結果用中位數描述。'},
+{id:'fval',g:'out',n:'F 值',en:'F statistic',a:['F 值','組間均方','組內均方','MSB','MSW'],w:[10],
+ d:'ANOVA 的統計量：組間均方（MSB）÷ 組內均方（MSW）。',e:'訊號 ÷ 雜訊。組和組之間的差異，是組內個人差異的幾倍。',x:'F(2, 42) ＝ 6.8，p ＝ 0.003：三組照護時數有顯著差異。',r:'F 接近 1 表示組間差異和隨機誤差差不多；F 越大越可能顯著。'},
+{id:'posthoc',g:'out',n:'事後檢定',en:'Post hoc test',a:['事後檢定','事後比較'],w:[10],
+ d:'ANOVA 顯著後，兩兩比較找出是哪幾組不同，並校正多次比較造成的誤判率上升。',x:'Tukey、Bonferroni、Scheffé 都是常見的事後檢定。',r:'ANOVA 本身只告訴你「至少一組不同」，要靠事後檢定才知道是哪一組。'},
+{id:'expected',g:'out',n:'期望次數',en:'Expected count',a:['期望人數','期望次數'],w:[11],
+ d:'假設兩個類別變項完全無關時，交叉表每一格理論上應出現的人數：列合計 × 欄合計 ÷ 總人數。',r:'有格子的期望次數小於 5 時，卡方檢定不準，要改用 Fisher 精確檢定。'},
+{id:'chisq',g:'out',n:'卡方值',en:'Chi-square, χ²',a:['卡方值','χ²'],w:[11],
+ d:'每一格（觀察次數 − 期望次數）² ÷ 期望次數的總和，衡量實際結果和「兩者無關」的情況差多遠。',r:'2×2 表的卡方值大於 3.84，p 值就會小於 0.05。卡方只說明有沒有關聯，關聯多強要看 OR 或 RR。'},
+{id:'fisher',g:'out',n:'Fisher 精確檢定',en:"Fisher's exact test",a:['Fisher 精確檢定',"Fisher's exact test",'Fisher'],w:[11,18],
+ d:'直接計算交叉表出現的精確機率，不依賴近似公式，適合人數少的資料。',r:'長照機構樣本常常很小，這個檢定很常用到。'},
+{id:'mcnemar',g:'out',n:'McNemar 檢定',en:"McNemar's test",a:['McNemar'],w:[11,18],
+ d:'比較同一群人前後兩次的類別結果（有／無）是否改變。',x:'同一批住民介入前後「是否使用約束」。'},
+{id:'coef',g:'out',n:'迴歸係數與截距',en:'Regression coefficient / Intercept',a:['迴歸係數','截距','係數'],w:[12],
+ d:'迴歸係數 b：其他變項不變時，X 每增加 1 單位，Y 平均改變多少。截距 b₀：所有 X 都是 0 時 Y 的預測值。',x:'b ＝ −1.8：Barthel 每多 1 分，每日照護時數平均少 1.8 分鐘。',r:'正號代表同方向變化，負號代表反方向。解讀時一定要帶著單位。'},
+{id:'r2',g:'out',n:'R²（決定係數）',en:'Coefficient of determination',a:['決定係數','R²'],w:[12],
+ d:'迴歸模型能解釋依變項差異的比例，介於 0 到 1。',x:'R² ＝ 0.61：照護時數的差異有六成可以用模型中的變項解釋。',r:'R² 低不代表關係不顯著，只代表還有很多其他因素在影響結果。'},
+{id:'resid',g:'out',n:'殘差',en:'Residual',a:['殘差'],w:[12],
+ d:'實際值減去模型預測值，也就是點到迴歸線的垂直距離。',r:'殘差應該隨機散佈、沒有特定型態；若呈彎曲或漏斗狀，代表模型可能不適合。'},
+{id:'confound',g:'out',n:'干擾因子與校正',en:'Confounder / Adjustment',a:['干擾因子','多變項'],w:[12,13],
+ d:'同時和自變項、依變項都有關，會扭曲兩者關係的第三個因素。把它一起放進多變項模型分析，稱為控制或校正。',x:'導尿管和感染的關係，可能被「住民本身較衰弱」干擾。',r:'論文寫「控制年齡後」或「adjusted」，就是做了校正。'},
+{id:'odds',g:'out',n:'勝算',en:'Odds',a:['~勝算(?!比)'],w:[13],
+ d:'發生的機率 ÷ 沒發生的機率。',e:'賭盤上的「一賠四」概念。',x:'跌倒機率 20% → 勝算 ＝ 0.2 ÷ 0.8 ＝ 0.25，也就是 1 比 4。',r:'事件很少見時勝算和機率很接近；事件常見時兩者差很多。'},
+{id:'or',g:'out',n:'勝算比',en:'Odds ratio, OR',a:['勝算比','aOR','adjusted OR','OR'],w:[11,13],
+ d:'兩組勝算的比值：暴露組的勝算 ÷ 對照組的勝算。邏輯斯迴歸和病例對照研究的主要結果。',e:'有吃藥的人「跌倒對不跌倒」的比，是沒吃藥的人的幾倍。',x:'aOR 2.3（95% CI 1.4–3.8）：控制其他因素後，用藥者跌倒的勝算是未用藥者的 2.3 倍。',r:'OR ＝ 1 表示沒有關聯；大於 1 是危險因子；小於 1 是保護因子。一定要看 95% CI，不包含 1 才顯著。adjusted OR（aOR）是校正其他變項後的結果。事件常見時，OR 會比相對風險誇大，不宜直接說成「風險是幾倍」。'},
+{id:'rr',g:'out',n:'相對風險',en:'Relative risk, RR',a:['相對風險','RR'],w:[13,17],
+ d:'兩組發生率的比值：暴露組的發生率 ÷ 對照組的發生率。',x:'介入組跌倒率 20%、對照組 30%，RR ＝ 0.67，跌倒風險是對照組的三分之二。',r:'比 OR 直觀，可以直接說「風險是幾倍」，常用在世代研究和隨機對照試驗。判讀規則同 OR：看是否大於、小於 1，CI 是否包含 1。'},
+{id:'censor',g:'out',n:'設限',en:'Censoring',a:['設限'],w:[14],
+ d:'追蹤結束時還沒發生事件，或中途轉院、失聯，只知道他「至少撐了多久」，不知道真正發生的時間。',x:'追蹤 12 個月都沒跌倒的住民，或第 3 個月就轉院的住民。',r:'存活分析會保留這些人被追蹤期間的資訊，不能直接刪掉或當成「沒發生」。圖上常用小直線或 + 號標示。'},
+{id:'km',g:'out',n:'Kaplan-Meier 曲線',en:'Kaplan-Meier curve',a:['Kaplan-Meier'],w:[14],
+ d:'描述隨時間「尚未發生事件者比例」的階梯狀曲線，能正確處理設限資料。',r:'每往下掉一階就是有人發生事件；曲線越早越陡往下，事件發生越快。'},
+{id:'medsurv',g:'out',n:'中位存活時間',en:'Median survival time',a:['中位存活時間','中位跌倒時間','中位時間'],w:[14],
+ d:'Kaplan-Meier 曲線降到 50% 時對應的時間，也就是一半的人發生事件的時間點。',r:'曲線沒有降到 50% 時寫「未達」，不能自己推算。'},
+{id:'logrank',g:'out',n:'log-rank 檢定',en:'Log-rank test',a:['log-rank'],w:[14],
+ d:'比較兩條以上存活曲線是否不同的檢定。',r:'p < 0.05 代表曲線有顯著差異；差多少要看 HR。'},
+{id:'hr',g:'out',n:'風險比',en:'Hazard ratio, HR',a:['風險比','HR','Cox 迴歸','Cox'],w:[14],
+ d:'兩組在任一時間點「發生事件的瞬間速率」的比值，主要由 Cox 迴歸估計。',e:'兩群人一起往前走，有跌倒史的那群「掉下去的速度」是另一群的幾倍。',x:'HR 2.8（95% CI 1.3–6.0）：有跌倒史者在追蹤期間任一時刻跌倒的速率約為 2.8 倍。',r:'HR ＝ 1 沒有差異；大於 1 事件發生較快（風險較高）；小於 1 較慢（保護）。看 95% CI 是否包含 1。HR 2 不代表時間縮短一半，也不是機率加倍。Cox 迴歸前提是比例風險假設：兩組的風險比在整段期間大致固定，若兩條曲線交叉就要小心。'},
+{id:'pico',g:'ebm',n:'PICO',en:'Population, Intervention, Comparison, Outcome',a:['PICO'],w:[17],
+ d:'把臨床問題拆成 P 對象、I 介入、C 對照、O 結果四個元素，方便檢索文獻。',x:'P 住宿式機構長者、I 平衡與肌力訓練、C 常規活動、O 跌倒發生率。'},
+{id:'level',g:'ebm',n:'證據等級',en:'Levels of evidence',a:['證據等級','統合分析','系統性回顧','隨機對照試驗','RCT','世代研究','病例對照研究'],w:[17],
+ d:'依研究設計排列證據強度：系統性回顧與統合分析 > 隨機對照試驗 > 世代研究 > 病例對照研究 > 橫斷面研究 > 專家意見。',r:'等級高不代表一定適用，還要看研究對象和情境是否像你的住民。'},
+{id:'arr',g:'ebm',n:'絕對與相對風險減少',en:'ARR / RRR',a:['絕對風險減少','相對風險減少','ARR','RRR'],w:[17],
+ d:'ARR ＝ 對照組事件率 − 介入組事件率；RRR ＝ ARR ÷ 對照組事件率。',x:'跌倒率從 30% 降到 20%：ARR ＝ 10 個百分點，RRR ＝ 33%。',r:'RRR 常讓效果看起來很大，一定要搭配 ARR 或 NNT 看。'},
+{id:'nnt',g:'ebm',n:'需治療人數',en:'Number needed to treat, NNT',a:['需治療人數','NNT'],w:[17],
+ d:'需要讓幾個人接受介入，才能多避免一件事件；NNT ＝ 1 ÷ ARR。',x:'ARR 10% → NNT ＝ 10：每 10 位住民參加防跌運動，約可少 1 位跌倒。',r:'數字越小越有效，最適合向主管或家屬說明效益。'}
+];
+const TMAP=Object.fromEntries(TERMS.map(t=>[t.id,t]));
+const esc=s=>s.replace(/[.*+?^${}()|[\]\\]/g,'\\$&');
+const TPAT=[];TERMS.forEach(t=>t.a.forEach(a=>{let src;if(a[0]==='~')src=a.slice(1);else if(/^[A-Za-z]/.test(a))src='(?<![A-Za-z])'+esc(a)+'(?![A-Za-z])';else src=esc(a);TPAT.push({id:t.id,re:new RegExp(src)});}));
+const wkName=n=>n===7?'第 7–8 週':`第 ${n} 週`;
+const EXCL='button,a,input,label,h1,h2,h3,h4,h5,svg,script,style,summary,.legend,.ctl,.chips,.map,.tree,#pop,.wkbtn,.tools,.term,.ent h4,.sent';
+function termify(root,seen){if(!root)return;seen=seen||new Set();
+  const tw=document.createTreeWalker(root,NodeFilter.SHOW_TEXT,{acceptNode:n=>{const p=n.parentElement;if(!p||!n.nodeValue.trim())return NodeFilter.FILTER_REJECT;return p.closest(EXCL)?NodeFilter.FILTER_REJECT:NodeFilter.FILTER_ACCEPT;}});
+  const nodes=[];while(tw.nextNode())nodes.push(tw.currentNode);
+  nodes.forEach(node=>{let cur=node;for(let guard=0;guard<20&&cur;guard++){const txt=cur.nodeValue;let best=null;
+      TPAT.forEach(p=>{if(seen.has(p.id))return;const m=p.re.exec(txt);if(m&&(!best||m.index<best.i||(m.index===best.i&&m[0].length>best.l)))best={i:m.index,l:m[0].length,id:p.id};});
+      if(!best)break;seen.add(best.id);const after=cur.splitText(best.i);const rest=after.splitText(best.l);
+      const b=document.createElement('button');b.className='term';b.type='button';b.dataset.term=best.id;b.setAttribute('aria-haspopup','dialog');b.textContent=after.nodeValue;after.replaceWith(b);cur=rest;}});}
+const pop=document.createElement('div');pop.id='pop';pop.hidden=true;pop.setAttribute('role','dialog');pop.tabIndex=-1;document.body.appendChild(pop);let popFrom=null;
+function openPop(btn){const t=TMAP[btn.dataset.term];if(!t)return;popFrom=btn;
+  pop.innerHTML=`<button class="x" aria-label="關閉">×</button><h5>${t.n}<small>${t.en}</small></h5><p>${t.d}</p>${t.e?`<p style="color:${C.mute}">白話：${t.e}</p>`:''}<button class="more" data-term-go="${t.id}">看完整解釋</button>`;
+  pop.hidden=false;const r=btn.getBoundingClientRect(),pw=pop.offsetWidth,vw=document.documentElement.clientWidth;let left=r.left+window.scrollX;left=Math.max(8+window.scrollX,Math.min(left,window.scrollX+vw-pw-8));
+  let top=r.bottom+window.scrollY+6;const ph=pop.offsetHeight;if(r.bottom+ph+12>window.innerHeight&&r.top>ph+80)top=r.top+window.scrollY-ph-6;pop.style.left=left+'px';pop.style.top=top+'px';pop.focus({preventScroll:true});}
+function closePop(){if(pop.hidden)return;pop.hidden=true;if(popFrom)popFrom.focus({preventScroll:true});popFrom=null;}
+document.addEventListener('click',e=>{const tb=e.target.closest('.term');if(tb){e.preventDefault();openPop(tb);return;}
+  if(e.target.closest('#pop .x')){closePop();return;}const go=e.target.closest('[data-term-go]');if(go){pop.hidden=true;popFrom=null;goTerm(go.dataset.termGo);return;}
+  if(!pop.hidden&&!e.target.closest('#pop'))closePop();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closePop();});
+let gcat='all';
+function renderGlossary(){const q=($('gq').value||'').trim().toLowerCase(),box=$('glist');let html='',count=0;
+  GROUPS.forEach(([g,gn])=>{if(gcat!=='all'&&gcat!==g)return;const list=TERMS.filter(t=>t.g===g&&(!q||[t.n,t.en,t.d,...t.a].join(' ').toLowerCase().includes(q)));if(!list.length)return;count+=list.length;
+    html+=`<h4 style="margin-top:26px;color:${C.mute}">${gn}</h4>`+list.map(t=>`<article class="ent${KEYS.includes(t.id)?' key':''}" id="term-${t.id}"><h4>${t.n}<span class="en">${t.en}</span></h4><dl><dt>定義</dt><dd>${t.d}</dd>${t.e?`<dt>白話</dt><dd>${t.e}</dd>`:''}${t.x?`<dt>例子</dt><dd>${t.x}</dd>`:''}${t.r?`<dt>怎麼判讀</dt><dd>${t.r}</dd>`:''}</dl><p class="wks">出現在${t.w.map(n=>`<button data-go="${n}">${wkName(n)}</button>`).join('')}</p></article>`).join('');});
+  box.innerHTML=html;$('gempty').hidden=count>0;}
+$('gcat').innerHTML=[['all','全部'],...GROUPS].map(([k,n])=>`<button class="chip" data-cat="${k}" aria-pressed="${k==='all'}">${n}</button>`).join('');
+$('gcat').querySelectorAll('.chip').forEach(c=>c.onclick=()=>{gcat=c.dataset.cat;$('gcat').querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',x===c));renderGlossary();});
+$('gq').addEventListener('input',renderGlossary);
+renderGlossary();
+</script>
+<script>
+/* ---------- 新手學習層：問題卡、路線、跟著做、小測驗 ---------- */
+const HERO={
+ 3:['只調查一部分住民，結果能代表全部嗎？',['母體和樣本的差別','為什麼「怎麼抽」比「抽多少」重要','什麼是偏差']],
+ 4:['拿到一堆數字，要怎麼整理成一句話？',['分辨三種資料類型','平均數和中位數各在什麼時候用','直方圖和盒鬚圖怎麼看']],
+ 5:['快篩陽性，就一定是感染了嗎？',['敏感度、特異度是什麼','為什麼盛行率會改變陽性的可信度','用四格表整理篩檢結果']],
+ 6:['只抽一次樣本，估計大概會差多少？',['抽樣分配是什麼','標準誤和標準差的不同','95% 信賴區間的真正意思']],
+ 7:['看到兩組有差，怎麼知道不是巧合？',['假設檢定的步驟','p 值到底在算什麼','為什麼人數太少會看不到效果']],
+ 10:['三組以上的平均數，要怎麼一次比較？',['為什麼不能做很多次 t 檢定','F 值就是「訊號 ÷ 雜訊」','顯著之後還要做事後檢定']],
+ 11:['兩件「有／無」的事，彼此有沒有關係？',['交叉表與期望人數','卡方檢定怎麼判斷','人數太少時改用 Fisher']],
+ 12:['一個因素增加，另一個數值會跟著變多少？',['散佈圖和迴歸線','係數 b 和 R² 的意思','一個離群值能造成多大影響']],
+ 13:['哪些因素會讓「跌倒」這種事更容易發生？',['機率、勝算、勝算比的差別','邏輯斯迴歸的 S 形曲線','怎麼讀森林圖']],
+ 14:['除了會不會發生，還想知道多快發生？',['什麼是設限','Kaplan-Meier 曲線怎麼看','風險比 HR 的意思']],
+ 17:['看到一篇研究，怎麼判斷能不能拿來用？',['5A 流程與 PICO','證據等級金字塔','NNT 怎麼算、怎麼說']],
+ 18:['兩組比較，到底該用哪一個檢定？',['用三個問題選出方法','成對和獨立的差別','什麼時候用無母數檢定']]};
+
+const setv=(id,v)=>{$(id).value=v;};
+const TOURS={
+ 3:[{t:'上面這張圖有 400 個圓點，每一點是一位住民，分屬 4 家機構。<b>紅色</b>代表今年曾經跌倒。全部 400 人中有 88 人跌倒，所以真正的跌倒率是 22%，這就是我們想知道的「真相」。',el:'#w3pop',pre:()=>{$('w3clr').click();setv('w3n',40);$('w3nv').textContent='40';}},
+  {t:'現實中沒辦法調查所有人。假設人力只夠調查 40 人，請按「<b>簡單隨機抽樣</b>」。',el:'#lab3 [data-m="srs"]',wait:{sel:'#lab3 [data-m="srs"]'},after:'抽中的 40 人會出現黃色框，平均散在四家機構。下方的說明框算出這 40 人裡有幾人跌倒。'},
+  {t:'看下面這張「每次抽樣得到的跌倒率」圖。剛剛那一次的結果就是黃圈標出來的點，垂直虛線是真相 22%。',el:'#w3strip'},
+  {t:'一次不準沒關係。按「<b>用上一個方法連抽 20 次</b>」，等於模擬 20 個團隊各自做調查。',el:'#w3rep',wait:{sel:'#w3rep'},after:'綠點散在虛線兩側：每次都有一點誤差，但不會固定偏向同一邊。這種誤差叫「隨機誤差」。'},
+  {t:'換一種偷懶的方法：只抽最近的 D 家（失智專區）。按「<b>便利抽樣</b>」。',el:'#lab3 [data-m="conv"]',wait:{sel:'#lab3 [data-m="conv"]'},after:'黃框全部擠在右下角的 D 家。'},
+  {t:'再按一次「<b>用上一個方法連抽 20 次</b>」。',el:'#w3rep',wait:{sel:'#w3rep'},after:'便利抽樣的點全擠在 40% 附近，離虛線很遠。這就是<b>偏差</b>：方法本身錯了，抽再多次也不會變準。'},
+  {t:'<b>重點：</b>好的樣本關鍵在「怎麼抽」，不是「抽多少」。接下來可以自己調整人數多玩幾次，或往下看整理好的流程。',el:'#w3strip'}],
+ 4:[{t:'這是直方圖。橫軸是住院天數，每根柱子涵蓋 5 天；柱子越高，代表越多住民落在這個範圍。',el:'#w4hist',pre:()=>{if($('w4out').getAttribute('aria-pressed')==='true')$('w4out').click();}},
+  {t:'最左邊的柱子特別高，有 14 位住民整年都沒住院；越往右越矮，拖出一條長尾巴。這種形狀叫<b>右偏</b>。',el:'#w4hist'},
+  {t:'綠色實線是<b>中位數</b>（全部排好後正中間那位），黃色虛線是<b>平均數</b>。現在平均數被右邊少數住很久的人拉到比較右邊。',el:'#w4hist'},
+  {t:'按「<b>加入一位住院 120 天的住民</b>」，看看兩條線怎麼動。',el:'#w4out',wait:{sel:'#w4out'},after:'平均數往右跳了將近 3 天，中位數完全沒動。只多一個人就能拉動平均數。'},
+  {t:'看下面的盒鬚圖：最右邊多了一個紅色圓圈，那就是<b>離群值</b>。箱子中間的粗線是中位數。',el:'#w4box'},
+  {t:'<b>重點：</b>資料偏向一邊時，用中位數描述「一般住民」才公平。往上捲可以點變項按鈕，練習判斷資料類型。',el:'#w4read'}],
+ 5:[{t:'這裡有 1,000 位住民做流感快篩，每一小格代表一個人。',el:'#w5grid',pre:()=>{setv('w5p',2);setv('w5se',70);setv('w5sp',95);Draw[5]();}},
+  {t:'現在是平時，盛行率 2%，也就是只有 20 人真的感染。<b>深紅</b>是驗得出來的（真陽性），<b>淺紅框</b>是驗不出來、被漏掉的（偽陰性）。',el:'#w5grid'},
+  {t:'<b>黃色</b>是沒有感染、卻驗出陽性的人（偽陽性）。數數看，黃色格子比深紅還多。',el:'#w5grid'},
+  {t:'所以快篩陽性的人裡面，真的感染的比例（陽性預測值 PPV）只有約 22%。',el:'#w5read'},
+  {t:'換成流感群聚期。按「<b>群聚期（盛行率 30%）</b>」。',el:'#lab5 [data-pre="30"]',wait:{sel:'#lab5 [data-pre="30"]'},after:()=>`深紅格一下子變很多，黃格反而變少。現在陽性預測值是 <b>${$('w5read').querySelectorAll('strong')[1].textContent}</b>，陽性結果可信多了。`},
+  {t:'<b>重點：</b>同一支快篩，陽性可不可信要看當下有多少人真的感染。可以自己拉動三個滑桿試試。',el:'#w5say'}],
+ 6:[{t:'上面這張圖是「母體」：5,000 次住院的天數。大多數只住幾天，少數住很久，形狀是歪的（右偏）。',el:'#w6pop'},
+  {t:'我們要反覆抽樣，看「每次樣本的平均」會落在哪裡。先選「<b>每次抽 2 人</b>」。',el:'#w6n [data-n="2"]',wait:{sel:'#w6n [data-n="2"]'}},
+  {t:'按「<b>抽 1,000 次</b>」，電腦會抽 1,000 次、每次 2 人，並把 1,000 個平均數畫在下圖。',el:'#lab6 [data-k="1000"]',wait:{sel:'#lab6 [data-k="1000"]'},after:'下圖的平均數分布還是歪的，而且很寬：只抽 2 人，平均數會差很多。'},
+  {t:'改選「<b>每次抽 30 人</b>」。',el:'#w6n [data-n="30"]',wait:{sel:'#w6n [data-n="30"]'}},
+  {t:'再按一次「<b>抽 1,000 次</b>」。',el:'#lab6 [data-k="1000"]',wait:{sel:'#lab6 [data-k="1000"]'},after:'平均數的分布變成左右對稱的鐘形，而且窄很多。這就是<b>中央極限定理</b>；分布的寬度叫<b>標準誤</b>，越窄代表估計越準。'},
+  {t:'看數字細節裡的「實測標準誤」和「理論標準誤」，兩個幾乎一樣，公式 σ ÷ √n 算得很準。',el:'#w6read'},
+  {t:'往下是信賴區間。按「<b>用目前的樣本人數抽 20 次</b>」。',el:'#w6ci',wait:{sel:'#w6ci'},after:'每條線是一次抽樣算出的 95% 信賴區間。大多數是綠色（有蓋到真值），偶爾出現紅色沒蓋到，這就是「95%」的意思。'}],
+ 7:[{t:'先看第一張圖。灰色曲線表示：如果新方案<b>完全無效</b>，重做很多次研究，兩組的差距會落在哪裡。大多數在 0 附近，偶爾因為巧合差比較多。',el:'#w7pfig',pre:()=>{setv('w7obs',0);setv('w7n',20);setv('w7d',8);Draw[7]();}},
+  {t:'假設你的研究只觀察到兩組差 3 分。把滑桿拖到 <b>3 分左右</b>。',el:'#w7obs',wait:{sel:'#w7obs',ev:'input',cond:e=>Math.abs(+e.target.value-3)<=1},after:()=>`紅色面積很大，p 值約 ${$('w7pread').querySelectorAll('strong')[2].textContent}：就算方案無效，也常常看到這種差距，所以<b>不能說方案有效</b>。`},
+  {t:'再把滑桿拖到 <b>12 分以上</b>。',el:'#w7obs',wait:{sel:'#w7obs',ev:'input',cond:e=>+e.target.value>=12},after:'紅色幾乎看不到了，p 值很小：如果方案無效，幾乎不可能看到這麼大的差距，所以推翻「無效」，判定<b>顯著</b>。'},
+  {t:'<b>記住：</b>p 值 ＝ 假設沒效時，還會看到這種結果的機率。越小，越不像巧合。',el:'#w7psay'},
+  {t:'往下是第二張圖：假設方案真的有效（綠色曲線）。把「<b>每組人數</b>」拉到 5 人。',el:'#w7n',wait:{sel:'#w7n',ev:'input',cond:e=>+e.target.value<=5},after:'兩條曲線又胖又重疊，綠色實心（檢定力）只剩一成多：方案明明有效，大部分研究卻測不出來。'},
+  {t:'再把每組人數拉到 <b>60 人以上</b>。',el:'#w7n',wait:{sel:'#w7n',ev:'input',cond:e=>+e.target.value>=60},after:'曲線變瘦、分得很開，檢定力超過 80%。人數夠，真正的效果才看得出來。'},
+  {t:'<b>重點：</b>p ≥ 0.05 不等於「沒效」，可能只是人數太少。',el:'#w7say'}],
+ 10:[{t:'每個灰點是一位住民，分成三個照護區。綠色粗線是各區的平均，灰色虛線是三區合起來的平均。',el:'#w10fig',pre:()=>{setv('w10g',20);setv('w10s',35);Draw[10]();}},
+  {t:'把「<b>組內分散</b>」拉到最小（最左邊）。',el:'#w10s',wait:{sel:'#w10s',ev:'input',cond:e=>+e.target.value<=15},after:'每區的點變整齊，三區明顯分開。F 值變很大、p 值很小：差異很清楚。'},
+  {t:'再把「<b>組內分散</b>」拉到最大（最右邊）。',el:'#w10s',wait:{sel:'#w10s',ev:'input',cond:e=>+e.target.value>=55},after:'三區的平均沒變，但點互相重疊，F 值變小，可能就不顯著了。雜訊太大會把訊號蓋掉。'},
+  {t:'看下面兩條長條：上面是「組跟組之間差多少」（訊號），下面是「組內每個人差多少」（雜訊）。F 值就是在比這兩者，上面相對越長，越可能顯著。',el:'#w10bar'},
+  {t:'最後把「<b>組間差距</b>」拉到 0。',el:'#w10g',wait:{sel:'#w10g',ev:'input',cond:e=>+e.target.value<=1},after:'三條綠線一樣高，F 值接近 0：三區沒有差別。'},
+  {t:'<b>重點：</b>ANOVA 顯著只代表「至少一組不同」，要看事後檢定才知道是哪幾組。',el:'#w10say'}],
+ 11:[{t:'這是交叉表：有導尿管的 30 人中 9 人感染，沒有導尿管的 60 人中 6 人感染。',el:'#w11tbl',pre:()=>{document.querySelector('#lab11 [data-pre="a"]').click();}},
+  {t:'每格下面的小字「期望」是：如果導尿管和感染完全無關，這格應該有幾人。有導尿管的感染者實際 9 人、期望只有 5 人，多出不少。',el:'#w11tbl'},
+  {t:'長條圖比較兩組的感染比例。虛線是「兩者無關時」兩組都應該接近的比例。一條偏右、一條偏左，代表可能有關聯。',el:'#w11fig'},
+  {t:'按「<b>兩組差不多</b>」。',el:'#lab11 [data-pre="c"]',wait:{sel:'#lab11 [data-pre="c"]'},after:'兩條紅色都貼近虛線，p 值很大：沒有關聯。'},
+  {t:'按「<b>人數太少</b>」。',el:'#lab11 [data-pre="b"]',wait:{sel:'#lab11 [data-pre="b"]'},after:'比例看起來差很多（40% 對 10%），但總共只有 20 人。有些「期望」變成紅字（小於 5），要改看 Fisher 精確檢定，結果不顯著。'},
+  {t:'<b>重點：</b>只看比例高低不夠，還要看人數，並用檢定判斷是不是巧合。你也可以直接改表格裡的數字。',el:'#w11say'}],
+ 12:[{t:'每個點是一位住民：越往右越獨立（Barthel 越高），越往上每日照護時數越多。',el:'#w12fig',pre:()=>{$('w12rst').click();setv('w12b',18);setv('w12e',35);if($('w12res').getAttribute('aria-pressed')==='true')$('w12res').click();Draw[12]();}},
+  {t:'綠線是最貼近所有點的直線，往右下斜：越獨立的住民照護時數越少。方程式裡的負數就是斜率，代表 Barthel 每多 1 分，照護時數平均少幾分鐘。',el:'#w12read'},
+  {t:'把「<b>雜訊</b>」拉到最大。',el:'#w12e',wait:{sel:'#w12e',ev:'input',cond:e=>+e.target.value>=70},after:()=>`點散開了，R² 降到 ${$('w12read').querySelectorAll('strong')[2].textContent}：Barthel 還是有關係，但能解釋的比例變少了。`},
+  {t:'把雜訊拉回中間（<b>30 到 40</b>）。',el:'#w12e',wait:{sel:'#w12e',ev:'input',cond:e=>+e.target.value>=30&&+e.target.value<=40}},
+  {t:'在圖的<b>右上角</b>點一下，新增一位「很獨立卻需要很多照護」的住民。',el:'#w12fig',wait:{sel:'#w12fig',cond:e=>!!e.target.closest('svg')},after:'黃點把線拉平了（虛線是原本的線）。一個極端值就能改變結論，分析前一定要檢查。'},
+  {t:'按「<b>顯示殘差</b>」。',el:'#w12res',wait:{sel:'#w12res'},after:'每條紅色短線是一位住民「實際值和預測值的差距」，也就是殘差。紅線越短，模型越準。'}],
+ 13:[{t:'橫軸是年齡，縱軸是一年內跌倒的機率。紅線是有使用鎮靜安眠藥的住民，綠線是沒有使用的。',el:'#w13fig',pre:()=>{setv('w13or',25);setv('w13age',80);Draw[13]();}},
+  {t:'把「<b>看幾歲的住民</b>」拉到 70 歲以下。',el:'#w13age',wait:{sel:'#w13age',ev:'input',cond:e=>+e.target.value<=70},after:()=>`兩組機率差約 ${$('w13read').querySelectorAll('strong')[2].textContent}，勝算比 OR 是 ${$('w13read').querySelectorAll('strong')[3].textContent}。`},
+  {t:'再拉到 95 歲以上。',el:'#w13age',wait:{sel:'#w13age',ev:'input',cond:e=>+e.target.value>=95},after:()=>`機率差變大到 ${$('w13read').querySelectorAll('strong')[2].textContent}，但 OR 還是 ${$('w13read').querySelectorAll('strong')[3].textContent}。OR 不隨年齡改變，所以適合用來報告結果。`},
+  {t:'把「<b>鎮靜安眠藥的 OR</b>」拉到 1.0 左右。',el:'#w13or',wait:{sel:'#w13or',ev:'input',cond:e=>+e.target.value>=9&&+e.target.value<=11},after:'兩條線幾乎重疊：OR 接近 1，就是有沒有用藥都差不多，沒有關聯。'},
+  {t:'往下看森林圖，點「<b>規律參加復健</b>」這一列。',el:'#w13forest',wait:{sel:'#w13forest',cond:e=>!!e.target.closest('g[data-i="4"]')},after:'整條橫線都在 1 的左邊，是保護因子：有規律復健的住民跌倒勝算較低。'},
+  {t:'再點「<b>年齡每增加 10 歲</b>」。',el:'#w13forest',wait:{sel:'#w13forest',cond:e=>!!e.target.closest('g[data-i="2"]')},after:'橫線跨過了 1，代表可能增加也可能減少，不顯著。判斷規則：<b>看信賴區間有沒有碰到 1</b>。'}],
+ 14:[{t:'上圖每一條橫線是一位住民，從入住（0 月）開始追蹤。線尾的 <b>✕</b> 表示在那個月跌倒；<b>○</b> 表示還沒跌倒就結束追蹤，稱為「設限」。',el:'#w14sw',pre:()=>{$('w14rst').click();}},
+  {t:'下圖是 Kaplan-Meier 曲線，縱軸是「還沒跌倒的比例」，從 100% 開始。每往下掉一階，就是有人跌倒。',el:'#w14km'},
+  {t:'紅線（有跌倒史）比綠線掉得更早、更多：有跌倒史的住民比較快發生跌倒。',el:'#w14km'},
+  {t:'點上圖 <b>B3</b> 這一列尾端的 ✕，把它改成 ○（假設他其實是轉院，不是跌倒）。',el:'#w14sw',wait:{sel:'#w14sw',cond:e=>!!e.target.closest('g[data-i="10"]')},after:'綠線原本在第 7 個月的那一階消失了。設限不會讓曲線往下掉，但這個人之後就不再算入追蹤人數。'},
+  {t:'看數字細節裡的「中位跌倒時間」：紅線降到 50% 的時間點。綠線沒掉到 50%，所以寫「未達」。',el:'#w14read'},
+  {t:'<b>重點：</b>存活分析同時看「有沒有發生」和「多快發生」，而且不會浪費只追蹤到一半的人。',el:'#w14say'}],
+ 17:[{t:'這是證據等級金字塔。點最上面一層「<b>系統性回顧</b>」。',el:'#w17pyr',wait:{sel:'#w17pyr',cond:e=>!!e.target.closest('g[data-i="0"]')},after:'越上層的研究設計偏差越少、證據越強。可以再點其他層看說明。'},
+  {t:'往下是 NNT。左右各 100 位住民，紅點是跌倒的人，黃點是「因為介入而沒跌倒」的人。',el:'#w17fig',pre:()=>{setv('w17c',30);setv('w17t',20);Draw[17]();}},
+  {t:'把「<b>介入組跌倒率</b>」拉到 25% 左右。',el:'#w17t',wait:{sel:'#w17t',ev:'input',cond:e=>+e.target.value>=24&&+e.target.value<=26},after:()=>`黃點剩 ${30-+$('w17t').value} 個，NNT 變成 ${$('w17read').querySelectorAll('strong')[3].textContent}：要更多住民參加，才能多避免 1 位跌倒，效益比剛剛小。`},
+  {t:'<b>重點：</b>「相對減少 17%」聽起來不小，換成 NNT 才看得出實際效益。',el:'#w17read'}],
+ 18:[{t:'先用三個問題選方法。第 1 題：結果是什麼資料？選「<b>連續數值</b>」。',el:'#lab18q [data-q="type"]',wait:{sel:'#lab18q [data-q="type"]',cond:e=>!!e.target.closest('[data-v="cont"]')}},
+  {t:'第 2 題：選「<b>同一群人前後測</b>」。',el:'#lab18q [data-q="pair"]',wait:{sel:'#lab18q [data-q="pair"]',cond:e=>!!e.target.closest('[data-v="pair"]')}},
+  {t:'第 3 題：選「<b>是</b>」。',el:'#lab18q [data-q="norm"]',wait:{sel:'#lab18q [data-q="norm"]',cond:e=>!!e.target.closest('[data-v="yes"]')},after:'建議方法是<b>成對樣本 t 檢定</b>，下面表格對應的格子也亮起來了。'},
+  {t:'往下看這張圖：每條線連接同一位住民介入前後的分數，10 條線幾乎都一樣往上。',el:'#w18fig',pre:()=>{document.querySelector('#w18mode [data-m="pair"]').click();}},
+  {t:'按「<b>當成兩群不同的人（錯誤）</b>」。',el:'#w18mode [data-m="ind"]',wait:{sel:'#w18mode [data-m="ind"]'},after:'p 值從小於 0.001 變成 0.58。同一份資料，分析方法選錯，結論就完全相反。'}]
+};
+
+const QUIZ={
+ 3:[{q:'想知道「全台長照住民的平均年齡」，於是抽了 200 位住民調查。「全台長照住民」是？',o:['母體','樣本','統計量'],a:0,why:'想知道答案的全部對象是母體；實際調查的 200 位是樣本。'},
+    {q:'只在失智專區調查跌倒率，想代表整個院區。最大的問題是？',o:['人數不夠多','抽樣偏差：失智專區的住民本來就比較容易跌倒','計算方法錯誤'],a:1,why:'樣本系統性地不像母體，就是偏差；多抽幾個失智專區的住民也無法解決。'},
+    {q:'下列哪一種做法最能減少偏差？',o:['用同樣的方法多抽一些人','改用隨機或分層抽樣','只挑紀錄完整的住民'],a:1,why:'偏差來自抽樣方法，只有改變抽法才能改善；只挑紀錄完整的住民反而可能造成新的偏差。'}],
+ 4:[{q:'「失能等級：輕度、中度、重度」屬於哪一種資料？',o:['名目尺度','順序尺度','連續變項'],a:1,why:'有高低順序，但輕到中、中到重的差距不一定相等，所以是順序尺度。'},
+    {q:'大部分住民一年住院 0–5 天，少數住 60 天以上。要描述「一般住民」住幾天，最好用？',o:['平均數','中位數','最大值'],a:1,why:'資料右偏時，平均數會被少數住很久的人拉高，中位數才代表一般狀況。'},
+    {q:'盒鬚圖中，箱子中間那條線代表？',o:['平均數','中位數','標準差'],a:1,why:'箱中線是中位數；箱子上下緣是 Q1 和 Q3。'}],
+ 5:[{q:'「敏感度 90%」的意思是？',o:['快篩陽性的人，有 90% 真的感染','真的感染的人，有 90% 會驗出陽性','沒感染的人，有 90% 驗出陰性'],a:1,why:'敏感度是從「真的有病的人」出發；第一個選項是陽性預測值，第三個是特異度。'},
+    {q:'同一支快篩，盛行率從 2% 升到 30%，陽性預測值會？',o:['變高','變低','不變'],a:0,why:'真的感染的人變多，陽性結果中真陽性的比例就提高了。'},
+    {q:'「偽陰性」指的是？',o:['沒感染卻驗出陽性','有感染卻驗出陰性','沒感染也驗出陰性'],a:1,why:'偽陰性就是被漏掉的感染者。'}],
+ 6:[{q:'標準誤描述的是？',o:['住民彼此之間差多少','樣本平均數估計得有多準','資料是不是常態分配'],a:1,why:'住民彼此的差異是標準差；估計的精準度是標準誤。'},
+    {q:'想讓信賴區間的寬度縮小一半，樣本人數大約要變成原來的？',o:['2 倍','4 倍','一半'],a:1,why:'標準誤 ＝ 標準差 ÷ √n，n 變 4 倍，√n 變 2 倍，標準誤減半。'},
+    {q:'「平均照護時數 190 分鐘（95% CI 176–204）」的正確解讀是？',o:['95% 的住民照護時數在 176–204 分鐘之間','真正的平均照護時數，合理地落在 176–204 分鐘之間','平均照護時數有 95% 機率是 190 分鐘'],a:1,why:'信賴區間描述的是「平均數」的估計範圍，不是個別住民的範圍。'}],
+ 7:[{q:'研究結果 p ＝ 0.03，意思是？',o:['方案有效的機率是 97%','如果方案其實無效，看到這麼大差距的機率只有 3%','方案讓分數提高 3%'],a:1,why:'p 值是在「假設無效」的前提下算出來的機率，不是「有效的機率」，也不是效果大小。'},
+    {q:'每組只有 8 人，結果 p ＝ 0.30。最適當的結論是？',o:['證明方案無效','證據不足，可能是人數太少','方案有害'],a:1,why:'人數少時檢定力低，p ≥ 0.05 只代表證據不夠，不代表證明無效。'},
+    {q:'同一批住民介入前後的分數比較，應該用？',o:['獨立樣本 t 檢定','成對樣本 t 檢定','單一樣本 t 檢定'],a:1,why:'同一群人測兩次，要分析每個人的前後差值，所以用成對樣本 t 檢定。'}],
+ 10:[{q:'要比較 4 個樓層的平均照護時數，應該用？',o:['兩兩做 6 次 t 檢定','ANOVA','卡方檢定'],a:1,why:'多次 t 檢定會讓誤判率累積到約 26%；ANOVA 一次檢定就能控制在 5%。'},
+    {q:'ANOVA 結果 p ＝ 0.01，可以說？',o:['四個樓層都不一樣','至少有一個樓層不同，要做事後檢定才知道是哪幾個','第一個樓層最高'],a:1,why:'ANOVA 只說明「至少一組不同」。'},
+    {q:'F 值很大，代表？',o:['組跟組之間的差異，遠大於組內個人的差異','組內個人差異很大','人數很多'],a:0,why:'F ＝ 組間差異 ÷ 組內差異，就是訊號除以雜訊。'}],
+ 11:[{q:'卡方檢定適合哪一種資料？',o:['兩個類別變項，例如有無導尿管 × 有無感染','兩個連續變項','一組連續數值'],a:0,why:'卡方比較的是交叉表裡的人數。'},
+    {q:'2×2 交叉表中有一格期望人數是 2.5，應該？',o:['照常用卡方檢定','改用 Fisher 精確檢定','把那一格刪掉'],a:1,why:'期望人數小於 5 時卡方近似不準，改用 Fisher 精確檢定。'},
+    {q:'卡方檢定顯著，代表導尿管「造成」感染嗎？',o:['是','不一定，只代表兩者有關聯'],a:1,why:'可能還有其他因素，例如放導尿管的住民本來就比較衰弱。'}],
+ 12:[{q:'X 是 Barthel 分數、Y 是每日照護時數（分鐘），迴歸係數 b ＝ −1.8 的意思是？',o:['Barthel 每多 1 分，照護時數平均少 1.8 分鐘','照護時數每多 1 分鐘，Barthel 少 1.8 分','兩者相關程度是 −1.8'],a:0,why:'係數是「X 每增加 1 單位，Y 平均改變多少」，負號代表反方向。'},
+    {q:'R² ＝ 0.30 代表？',o:['模型可以解釋照護時數 30% 的差異','30% 的住民符合這條線','關係不顯著'],a:0,why:'R² 是解釋比例；R² 低不代表不顯著。'},
+    {q:'散佈圖中有一個點遠離其他所有點，應該？',o:['直接刪掉','先確認是登打錯誤還是特殊個案','不用理會'],a:1,why:'離群值可能大幅改變迴歸線，要先查明原因，不能因為結果不好看就刪。'}],
+ 13:[{q:'哪一種依變項適合用邏輯斯迴歸？',o:['一年內是否跌倒（有／無）','Barthel 分數','入住到跌倒的天數'],a:0,why:'邏輯斯迴歸處理二分類結果；Barthel 用線性迴歸，天數加上設限用存活分析。'},
+    {q:'aOR ＝ 0.6（95% CI 0.4–0.9）代表？',o:['顯著的危險因子','顯著的保護因子','不顯著'],a:1,why:'OR 小於 1，而且整個信賴區間都小於 1。'},
+    {q:'OR ＝ 1.3（95% CI 0.9–1.9）代表？',o:['顯著的危險因子','不顯著，因為信賴區間包含 1','保護因子'],a:1,why:'比值的信賴區間碰到 1，就不能排除「沒有關聯」。'}],
+ 14:[{q:'追蹤到第 3 個月就轉院、當時還沒跌倒的住民，分析時應該？',o:['直接刪除','當作整年都沒跌倒','當作在第 3 個月設限'],a:2,why:'只知道他至少 3 個月沒跌倒，這就是設限。'},
+    {q:'Kaplan-Meier 曲線往下掉一階，代表？',o:['有人設限','有人發生事件','追蹤結束'],a:1,why:'設限不會讓曲線下降，只有發生事件才會。'},
+    {q:'HR ＝ 2.0 的意思是？',o:['任何時間點發生事件的速率是 2 倍','發生事件的時間縮短一半','一年內發生事件的機率加倍'],a:0,why:'HR 是速率的比值，不是時間或機率的比值。'}],
+ 17:[{q:'PICO 裡的 C 指的是？',o:['對照（Comparison）','結果（Outcome）','對象（Population）'],a:0,why:'P 對象、I 介入、C 對照、O 結果。'},
+    {q:'對照組跌倒率 20%，介入組 10%，NNT 是多少？',o:['5','10','20'],a:1,why:'ARR ＝ 20% − 10% ＝ 10%，NNT ＝ 1 ÷ 0.10 ＝ 10。'},
+    {q:'證據等級最高的是？',o:['隨機對照試驗','系統性回顧與統合分析','專家意見'],a:1,why:'系統性回顧整合了多篇研究的結果，位在金字塔頂端。'}],
+ 18:[{q:'比較 A、B 兩樓層住民的疼痛分數（0–10 分，各 8 人，分布偏一邊），應該用？',o:['獨立樣本 t 檢定','Mann-Whitney U 檢定','成對樣本 t 檢定'],a:1,why:'兩群不同的人、人數少又偏態，改用無母數的 Mann-Whitney U。'},
+    {q:'同一批住民介入前後「是否使用約束」，應該用？',o:['卡方檢定','McNemar 檢定','成對樣本 t 檢定'],a:1,why:'同一群人、結果是有／無，用 McNemar 檢定。'},
+    {q:'前後測資料誤用獨立樣本 t 檢定，通常會？',o:['高估效果','讓效果更難顯著','沒有影響'],a:1,why:'住民之間的起點差異會變成雜訊，把一致的進步淹沒。'}]
+};
+
+/* 看懂一張圖 */
+(function(){let ap=0;const pts=[[12,300],[20,280],[30,260],[38,250],[45,215],[52,220],[60,190],[68,175],[75,160],[82,150],[90,120],[96,110]];
+  const TXT=['<b>橫軸</b>是水平的那條線，告訴你「往右代表什麼」。這張圖是 Barthel 分數，越往右代表住民越能自己完成日常生活。看圖的第一步永遠是讀橫軸的名稱和單位。',
+    '<b>縱軸</b>是垂直的那條線，告訴你「往上代表什麼」。這張圖是每日照護時數，越往上代表需要越多照護時間。',
+    '<b>一個點就是一位住民。</b>從黃色的點往下對到橫軸，是 Barthel 30 分；往左對到縱軸，是每日照護 260 分鐘。所有的點都可以這樣讀。',
+    '<b>最後退一步看整體。</b>點大致從左上往右下排列：越獨立的住民，照護時數越少。統計做的事，就是把這種整體趨勢說清楚，並判斷它是不是巧合。'];
+  const btns=document.querySelectorAll('#anaBtns .btn');btns.forEach(b=>b.onclick=()=>{ap=+b.dataset.p;Draw.intro();});
+  Draw.intro=function(){btns.forEach(b=>b.setAttribute('aria-pressed',+b.dataset.p===ap));const el=$('anaFig'),w=W(el),H=270,P=new Plot(w,H,{l:56,r:20,t:30,b:46},[0,100],[0,350]);
+    const hi=(k)=>k===ap;let s='';
+    [0,100,200,300].forEach(v=>{s+=`<line x1="${P.x0}" x2="${P.x1}" y1="${P.y(v)}" y2="${P.y(v)}" class="gl"/><text x="${P.x0-6}" y="${P.y(v)+4}" class="tk" text-anchor="end">${v}</text>`;});
+    [0,20,40,60,80,100].forEach(v=>{s+=`<text x="${P.x(v)}" y="${P.y0+16}" class="tk" text-anchor="middle">${v}</text>`;});
+    s+=`<line x1="${P.x0}" x2="${P.x1}" y1="${P.y0}" y2="${P.y0}" stroke="${hi(0)?C.sat:C.ink}" stroke-width="${hi(0)?4:1}"/><text x="${(P.x0+P.x1)/2}" y="${H-6}" class="al" text-anchor="middle" style="${hi(0)?`fill:${C.sat};font-weight:700`:''}">Barthel 分數（越右越獨立）</text>`;
+    s+=`<line x1="${P.x0}" x2="${P.x0}" y1="${P.y1}" y2="${P.y0}" stroke="${hi(1)?C.sat:C.ink}" stroke-width="${hi(1)?4:1}"/><text x="4" y="${P.y1-12}" class="al" style="${hi(1)?`fill:${C.sat};font-weight:700`:''}">每日照護時數（分鐘）</text>`;
+    if(hi(3))s+=`<line x1="${P.x(5)}" x2="${P.x(100)}" y1="${P.y(318)}" y2="${P.y(98)}" stroke="${C.sat}" stroke-width="4" stroke-opacity=".7"/>`;
+    const hp=pts[2];if(hi(2))s+=`<line x1="${P.x(hp[0])}" x2="${P.x(hp[0])}" y1="${P.y(hp[1])}" y2="${P.y0}" stroke="${C.sat}" stroke-dasharray="4 3" stroke-width="2"/><line x1="${P.x0}" x2="${P.x(hp[0])}" y1="${P.y(hp[1])}" y2="${P.y(hp[1])}" stroke="${C.sat}" stroke-dasharray="4 3" stroke-width="2"/><text x="${P.x(hp[0])+12}" y="${P.y(hp[1])-10}" class="al" style="fill:${C.sat};font-weight:700">這位住民：30 分、260 分鐘</text>`;
+    pts.forEach((p,i)=>{const on=hi(2)&&i===2;s+=`<circle cx="${P.x(p[0])}" cy="${P.y(p[1])}" r="${on?8:5}" fill="${on?C.sat:C.ink}" fill-opacity="${on?1:(ap===3?.35:.7)}"/>`;});
+    const cos=[[(P.x0+P.x1)/2-120,H-10],[P.x0+18,P.y1+6],[P.x(pts[2][0])-18,P.y(pts[2][1])+16],[P.x(80),P.y(210)]];
+    cos.forEach(([x,y],i)=>{s+=`<g data-p="${i}" tabindex="0" role="button" aria-label="第 ${i+1} 部分" style="cursor:pointer"><circle cx="${x}" cy="${y}" r="12" fill="${hi(i)?C.sat:'#fff'}" stroke="${C.sat}" stroke-width="2"/><text x="${x}" y="${y+4}" text-anchor="middle" style="font-size:12px;font-weight:700;fill:${hi(i)?'#fff':C.sat}">${i+1}</text></g>`;});
+    const sv=put(el,w,H,s,'一張圖的四個部分');sv.querySelectorAll('g[data-p]').forEach(g=>{const go=()=>{ap=+g.dataset.p;Draw.intro();};g.onclick=go;g.onkeydown=e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();go();}};});
+    $('anaSay').innerHTML=TXT[ap]+(ap<3?` <button class="btn" id="anaNext" style="margin-left:6px">下一個</button>`:'');const nb=$('anaNext');if(nb)nb.onclick=()=>{ap++;Draw.intro();};};
+})();
+
+/* 跟著做引擎 */
+const gd=document.createElement('div');gd.id='guide';gd.hidden=true;gd.setAttribute('role','region');gd.setAttribute('aria-label','跟著做');
+gd.innerHTML=`<div class="gtop"><b>跟著做</b><span id="gstep"></span><button id="gmin" class="gmin" aria-label="收合說明">收合</button><button id="gx" aria-label="結束跟著做">結束</button></div><div class="gbar"><i id="gbarI"></i></div><p id="gtext"></p><p id="gwait">照上面的說明操作，完成後這裡會出現解說。</p><p id="gafter" hidden></p><div class="gbtns"><button class="btn" id="gprev">上一步</button><button class="btn pri" id="gnext">下一步</button></div>`;
+document.body.appendChild(gd);
+let TS=null,gOff=null;const RM=matchMedia('(prefers-reduced-motion: reduce)').matches;window.RM=RM;
+function clearSpot(){document.querySelectorAll('.spot').forEach(e=>e.classList.remove('spot'));if(gOff){gOff();gOff=null;}}
+function spotEl(sel){const els=[...document.querySelectorAll(sel)].map(e=>e.tagName==='INPUT'?(e.closest('label')||e):e);els.forEach(e=>e.classList.add('spot'));return els[0];}
+function stepRender(){clearSpot();const steps=TOURS[TS.w],st=steps[TS.i];if(st.pre&&!TS.pred[TS.i]){st.pre();TS.pred[TS.i]=1;}
+  const tg=st.el?spotEl(st.el):null;
+  $('gstep').textContent=`第 ${TS.i+1} 步／共 ${steps.length} 步`;$('gbarI').style.width=((TS.i+1)/steps.length*100)+'%';$('gtext').innerHTML=st.t;
+  const done=!st.wait||TS.done[TS.i],aft=()=>typeof st.after==='function'?st.after():st.after;
+  $('gwait').hidden=done;$('gafter').hidden=!(done&&st.after);if(done&&st.after)$('gafter').innerHTML=aft();
+  $('gnext').disabled=!done;$('gnext').textContent=TS.i===steps.length-1?'完成':'下一步';$('gprev').disabled=TS.i===0;
+  if(tg)requestAnimationFrame(()=>{const ph=gd.hidden?0:gd.offsetHeight+16,r=tg.getBoundingClientRect(),vis=window.innerHeight-ph;
+    const top=window.scrollY+r.top-Math.max(12,(vis-Math.min(r.height,vis))/2);window.scrollTo({top:Math.max(0,top),behavior:RM?'auto':'smooth'});});
+  if(st.wait&&!done){const w=st.wait,host=document.querySelector(w.sel),ev=w.ev||'click';const h=e=>{if(w.cond&&!w.cond(e))return;TS.done[TS.i]=1;if(gOff){gOff();gOff=null;}
+      setTimeout(()=>{if(!TS)return;$('gwait').hidden=true;if(st.after){$('gafter').innerHTML=aft();$('gafter').hidden=false;}$('gnext').disabled=false;},80);};
+    host.addEventListener(ev,h);gOff=()=>host.removeEventListener(ev,h);}}
+function startTour(w){if(!TOURS[w])return;TS={w,i:0,done:[],pred:[]};gd.hidden=false;gd.classList.remove('min');document.body.classList.add('touring');stepRender();}
+function endTour(){if(!TS)return;clearSpot();TS=null;gd.hidden=true;document.body.classList.remove('touring');}
+$('gnext').onclick=()=>{if(!TS)return;if(TS.i===TOURS[TS.w].length-1){const w=TS.w;endTour();const q=$('quiz-'+w);if(q)q.scrollIntoView({block:'start',behavior:RM?'auto':'smooth'});return;}TS.i++;stepRender();};
+$('gprev').onclick=()=>{if(TS&&TS.i>0){TS.i--;stepRender();}};
+$('gx').onclick=endTour;
+$('gmin').onclick=()=>{const m=gd.classList.toggle('min');$('gmin').textContent=m?'展開':'收合';if(!m&&TS)stepRender();};
+
+/* 小測驗 */
+function renderQuiz(w,box){const qs=QUIZ[w];
+  box.innerHTML=qs.map((q,i)=>`<fieldset class="qz" data-i="${i}"><legend>${i+1}. ${q.q}</legend>${q.o.map((o,j)=>`<label class="opt"><input type="radio" name="q${w}_${i}" value="${j}"><span>${o}</span></label>`).join('')}<div class="qact"><button type="button" class="btn pri qchk">檢查答案</button></div><p class="qfb" hidden></p></fieldset>`).join('')+`<div class="qsum"><span class="qscore"></span><button type="button" class="btn qreset">全部重做</button></div>`;
+  const upd=()=>{const done=box.querySelectorAll('.qz.answered').length,ok=box.querySelectorAll('.qz.ok').length;box.querySelector('.qscore').textContent=done?`已作答 ${done}／${qs.length} 題，答對 ${ok} 題`+(done===qs.length?(ok===qs.length?'。全對，這週的重點你都掌握了。':'。可以回頭看看答錯題目的說明，再做一次。'):''):'';};
+  box.querySelectorAll('.qz').forEach(fs=>{const i=+fs.dataset.i,q=qs[i],fb=fs.querySelector('.qfb');
+    fs.querySelectorAll('input').forEach(r=>r.onchange=()=>{if(fb.classList.contains('bad')&&!fs.classList.contains('answered')){fb.hidden=true;fb.classList.remove('bad');}});
+    fs.querySelector('.qchk').onclick=()=>{const sel=fs.querySelector('input:checked');if(!sel){fb.hidden=false;fb.className='qfb bad';fb.textContent='請先選一個答案。';return;}
+      const v=+sel.value,ok=v===q.a;fs.classList.add('answered',ok?'ok':'no');fs.querySelectorAll('input').forEach(r=>r.disabled=true);fs.querySelector('.qchk').disabled=true;
+      fs.querySelectorAll('.opt').forEach((l,j)=>{if(j===q.a)l.classList.add('right');else if(j===v)l.classList.add('wrong');});
+      fb.hidden=false;fb.className='qfb '+(ok?'good':'miss');fb.innerHTML=(ok?'<b>答對了。</b>':`<b>再想想：</b>正確答案是「${q.o[q.a]}」。`)+q.why;upd();};});
+  box.querySelector('.qreset').onclick=()=>renderQuiz(w,box);upd();}
+
+/* 組裝每一週 */
+document.querySelectorAll('.topic[id^="t-"]').forEach(sec=>{const w=+sec.id.slice(2);if(!w)return;
+  const h2=sec.querySelector('h2'),lede=sec.querySelector('.lede');
+  if(HERO[w]&&h2){const [q,learn]=HERO[w];const hero=document.createElement('div');hero.className='hero';
+    hero.innerHTML=`<p class="hlab">先想一個問題</p><p class="hq">${q}</p><div class="ha"><p class="hlab">答案先說</p></div><p class="learn"><b>讀完你會知道：</b>${learn.join('、')}。</p>`+(TOURS[w]?`<button class="btn pri" data-tour="${w}">開始跟著做（${TOURS[w].length} 步）</button><span class="hint" style="margin-left:10px">一步一步帶你操作圖表</span>`:'');
+    h2.after(hero);if(lede)hero.querySelector('.ha').appendChild(lede);}
+  const lab0=TOURS[w]?(document.querySelector(TOURS[w][0].el)||{}).closest?.('.lab'):null;
+  if(lab0){const sc=document.createElement('div');sc.className='startc';sc.innerHTML=`<div><b>第一次看這個主題？</b><span>跟著 ${TOURS[w].length} 個步驟操作，每一步都會告訴你該看哪裡。</span></div><button class="btn pri" data-tour="${w}">開始跟著做</button>`;lab0.before(sc);}
+  if(QUIZ[w]){const h=document.createElement('h3');h.textContent='小測驗：確認你懂了';const box=document.createElement('div');box.id='quiz-'+w;box.className='quiz';sec.append(h,box);renderQuiz(w,box);}
+  const hs=[...sec.querySelectorAll('h3')],used=new Set();hs.forEach((h,i)=>{h.id=h.id||`s${w}-${i}`;});
+  const nav=document.createElement('div');nav.className='stages';nav.innerHTML='<span>本週路線</span>'+hs.map((h,i)=>{let l=h.textContent.split('：')[0];if(used.has(l))l=h.textContent.split('：')[1]?.slice(0,8)||l;used.add(l);return `<button data-jump="${h.id}"><i>${i+1}</i>${l}</button>`;}).join('');
+  (sec.querySelector('.hero')||h2).after(nav);
+  sec.querySelectorAll('.lab').forEach(lab=>{const r=lab.querySelector(':scope > .read'),s=lab.querySelector(':scope > .say');if(r&&s&&(r.compareDocumentPosition(s)&Node.DOCUMENT_POSITION_FOLLOWING))r.before(s);});});
+document.addEventListener('click',e=>{const t=e.target.closest('[data-tour]');if(t){startTour(+t.dataset.tour);return;}const j=e.target.closest('[data-jump]');if(j){const h=$(j.dataset.jump);if(h)h.scrollIntoView({block:'start',behavior:RM?'auto':'smooth'});}});
+</script>
+<script>
+/* ---------- 圖表怎麼看 ---------- */
+(function(){
+  const co=(x,y,n)=>`<g><circle cx="${x}" cy="${y}" r="10" fill="${C.sat}" stroke="#fff" stroke-width="1.5"/><text x="${x}" y="${y+4}" text-anchor="middle" style="font-size:12px;fill:#fff;font-weight:700">${n}</text></g>`;
+  function g1(){const el=$('g1'),w=W(el),H=250,d=[...Array(14).fill(0),2,3,3,4,4,5,5,6,6,7,7,8,9,10,11,12,13,14,16,18,21,24,28,35,42,55],c=hist(d,0,60,5);
+    const P=new Plot(w,H,{l:52,r:20,t:30,b:44},[0,60],[0,22]);let s=P.axes({xt:ticks(0,60,6),yt:[0,5,10,15,20],xl:'年度住院天數',yl:'人數'});
+    c.forEach((v,i)=>{if(v)s+=`<rect x="${P.x(i*5)+1}" y="${P.y(v)}" width="${P.x(5)-P.x(0)-2}" height="${P.y0-P.y(v)}" fill="${C.tealL}" stroke="${C.teal}" stroke-width=".8"/>`;});
+    s+=co((P.x0+P.x1)/2-62,H-8,1)+co(44,P.y1-14,2)+co(P.x(2.5),P.y(c[0])-14,3)+co(P.x(47),P.y(1)-22,4);
+    s+=`<path d="M${P.x(22)} ${P.y(3)} Q ${P.x(38)} ${P.y(2.4)} ${P.x(56)} ${P.y(1.4)}" fill="none" stroke="${C.sat}" stroke-width="1.5" stroke-dasharray="4 3"/>`;
+    put(el,w,H,s,'直方圖示意');}
+  function g2(){const el=$('g2'),w=W(el),H=280,P=new Plot(w,H,{l:52,r:20,t:30,b:40},[0,2],[50,350]);let s=P.axes({yt:[100,150,200,250,300,350],yl:'每日照護時數（分鐘）'});
+    const G=[['A 樓層',90,140,170,200,250,[330]],['B 樓層',120,180,215,245,300,[]]],bw=Math.min(80,(P.x(1)-P.x(0))*0.35);
+    G.forEach(([n,lo,q1,md,q3,hi,out],i)=>{const cx=P.x(i+0.5);s+=`<text x="${cx}" y="${P.y0+18}" class="al" text-anchor="middle">${n}</text><line x1="${cx}" x2="${cx}" y1="${P.y(hi)}" y2="${P.y(q3)}" stroke="${C.ink}"/><line x1="${cx}" x2="${cx}" y1="${P.y(q1)}" y2="${P.y(lo)}" stroke="${C.ink}"/><line x1="${cx-bw/4}" x2="${cx+bw/4}" y1="${P.y(hi)}" y2="${P.y(hi)}" stroke="${C.ink}"/><line x1="${cx-bw/4}" x2="${cx+bw/4}" y1="${P.y(lo)}" y2="${P.y(lo)}" stroke="${C.ink}"/><rect x="${cx-bw/2}" y="${P.y(q3)}" width="${bw}" height="${P.y(q1)-P.y(q3)}" fill="${C.tealL}" stroke="${C.teal}"/><line x1="${cx-bw/2}" x2="${cx+bw/2}" y1="${P.y(md)}" y2="${P.y(md)}" stroke="${C.teal}" stroke-width="3"/>`;
+      out.forEach(v=>{s+=`<circle cx="${cx}" cy="${P.y(v)}" r="4.5" fill="#fff" stroke="${C.red}" stroke-width="1.8"/>`;});});
+    const a=P.x(0.5);s+=co(a+bw/2+16,P.y(185),1)+co(a-bw/2-16,P.y(170),2)+co(a+bw/4+16,P.y(250),3)+co(a+18,P.y(330),4)+co(P.x(1),P.y(290),5);
+    put(el,w,H,s,'盒鬚圖示意');}
+  function g3(){const el=$('g3'),w=W(el),H=250,P=new Plot(w,H,{l:52,r:20,t:30,b:48},[0,3],[0,0.5]);let s=P.axes({yt:[0,.1,.2,.3,.4,.5],yf:v=>Math.round(v*100)+'%',yl:'跌倒比例'});
+    const B=[['一樓',6,50],['二樓',9,50],['三樓',2,5]],bw=Math.min(90,(P.x(1)-P.x(0))*0.5);
+    B.forEach(([n,k,t],i)=>{const cx=P.x(i+0.5),v=k/t;s+=`<rect x="${cx-bw/2}" y="${P.y(v)}" width="${bw}" height="${P.y0-P.y(v)}" fill="${i===2?C.redL:C.tealL}" stroke="${i===2?C.red:C.teal}"/><text x="${cx}" y="${P.y(v)-6}" class="al" text-anchor="middle" style="font-weight:700">${Math.round(v*100)}%</text><text x="${cx}" y="${P.y0+17}" class="al" text-anchor="middle">${n}</text><text x="${cx}" y="${P.y0+32}" class="tk" text-anchor="middle">${k}／${t} 人</text>`;});
+    s+=co(P.x(0.5)+bw/2+14,P.y(0.06),1)+co(P.x0+14,P.y0-14,2)+co(P.x(2.5)+bw/2+16,P.y(0.2),3);
+    put(el,w,H,s,'比例長條圖示意');}
+  function g4(){const el=$('g4'),w=W(el),H=280,r=rng(8),pts=Array.from({length:26},()=>{const x=5+r()*90;return[x,300-1.7*x+30*randn(r)];});pts.push([88,330]);
+    const n=pts.length,mx=mean(pts.map(p=>p[0])),my=mean(pts.map(p=>p[1]));let sxx=0,sxy=0;pts.forEach(([x,y])=>{sxx+=(x-mx)**2;sxy+=(x-mx)*(y-my);});const b1=sxy/sxx,b0=my-b1*mx;
+    const P=new Plot(w,H,{l:52,r:20,t:30,b:42},[0,100],[0,400]);let s=P.axes({xt:ticks(0,100,5),yt:[0,100,200,300,400],xl:'Barthel 分數（X）',yl:'照護時數（Y）'});
+    s+=`<line x1="${P.x(0)}" x2="${P.x(100)}" y1="${P.y(b0)}" y2="${P.y(b0+b1*100)}" stroke="${C.teal}" stroke-width="3"/>`;
+    const[px,py]=pts[3];s+=`<line x1="${P.x(px)}" x2="${P.x(px)}" y1="${P.y(py)}" y2="${P.y(b0+b1*px)}" stroke="${C.red}" stroke-width="1.5"/>`;
+    pts.forEach(([x,y],i)=>{s+=`<circle cx="${P.x(x)}" cy="${P.y(y)}" r="4.5" fill="${i===n-1?C.red:C.ink}" fill-opacity="${i===n-1?1:.6}"/>`;});
+    s+=co(P.x(pts[0][0])+14,P.y(pts[0][1])-14,1)+co(P.x(12),P.y(80),2)+co(P.x(60),P.y(b0+b1*60)-18,3)+co(P.x(px)+14,P.y((py+b0+b1*px)/2),4)+co(P.x(88)-18,P.y(330),5);
+    put(el,w,H,s,'散佈圖示意');}
+  function g5(){const el=$('g5'),w=W(el),H=330,lw=Math.min(110,w*0.28);let s='';
+    const rowsA=[['結果 A',2.3,1.1,3.5],['結果 B',1.5,-0.8,3.8],['結果 C',-2.0,-3.5,-0.5]],rowsB=[['結果 D',2.3,1.4,3.8],['結果 E',1.3,0.9,1.9],['結果 F',0.6,0.4,0.9]];
+    const panel=(rows,y0,title,xd,ref,xt,tr,fmt)=>{const P=new Plot(w,140,{l:lw,r:64,t:26,b:30},xd,[0,3]);const X=v=>P.x(tr(v));let q=`<g transform="translate(0,${y0})"><text x="4" y="14" class="al" style="font-weight:700">${title}</text>`;
+      xt.forEach(v=>{q+=`<line x1="${X(v)}" x2="${X(v)}" y1="${P.y1}" y2="${P.y0}" class="gl"/><text x="${X(v)}" y="${P.y0+16}" class="tk" text-anchor="middle">${fmt(v)}</text>`;});
+      q+=`<line x1="${P.x0}" x2="${P.x1}" y1="${P.y0}" y2="${P.y0}" class="ax"/><line x1="${X(ref)}" x2="${X(ref)}" y1="${P.y1-6}" y2="${P.y0}" stroke="${C.ink}" stroke-width="1.8"/>`;
+      rows.forEach(([n,e,l,h],i)=>{const y=P.y(2.5-i),sig=l>ref||h<ref,col=sig?C.teal:C.mute;q+=`<text x="6" y="${y+4}" class="al">${n}</text><line x1="${X(l)}" x2="${X(h)}" y1="${y}" y2="${y}" stroke="${col}" stroke-width="2.4"/><line x1="${X(l)}" x2="${X(l)}" y1="${y-6}" y2="${y+6}" stroke="${col}" stroke-width="2"/><line x1="${X(h)}" x2="${X(h)}" y1="${y-6}" y2="${y+6}" stroke="${col}" stroke-width="2"/><circle cx="${X(e)}" cy="${y}" r="5" fill="${C.ink}"/><text x="${P.x1+8}" y="${y+4}" class="tk" style="fill:${col};font-weight:700">${sig?'顯著':'不顯著'}</text>`;});
+      return{q:q+'</g>',P,X};};
+    const A=panel(rowsA,0,'差值（平均差）：參考線是 0',[-5,5],0,[-4,-2,0,2,4],v=>v,v=>v,v=>v);
+    const L=Math.log,B=panel(rowsB,160,'比值（OR、RR、HR）：參考線是 1',[L(0.25),L(5)],1,[0.25,0.5,1,2,4],L,v=>v);
+    s=A.q+B.q;const y1=A.P.y(2.5);s+=co(A.X(2.3),y1-16,1)+co(A.X(3.5)+16,y1,2)+co(A.X(0)+14,A.P.y1+2,3)+co(A.X(0)-16,A.P.y(1.5)+14,4)+co(B.X(0.6)-20,160+B.P.y(0.5),5);
+    put(el,w,H,s,'信賴區間圖示意');}
+  function g6(){const el=$('g6'),w=W(el),showNum=w>=480,lw=Math.min(90,w*0.24),rw=showNum?130:14,S=[['研究 1',0.62,0.40,0.96,28],['研究 2',0.85,0.55,1.31,16],['研究 3',0.48,0.25,0.92,9],['研究 4',1.05,0.70,1.58,18],['研究 5',0.70,0.52,0.94,29]],sum=[0.74,0.62,0.88];
+    const rows=S.length+1,H=rows*34+74,L=Math.log,P=new Plot(w,H,{l:lw,r:rw,t:24,b:50},[L(0.2),L(2.5)],[0,rows]);const X=v=>P.x(L(v));let s='';
+    if(showNum)s+=`<text x="${P.x1+10}" y="14" class="tk">RR（95% CI）</text>`;
+    [0.25,0.5,1,2].forEach(v=>{s+=`<line x1="${X(v)}" x2="${X(v)}" y1="${P.y1}" y2="${P.y0}" class="gl"/><text x="${X(v)}" y="${P.y0+16}" class="tk" text-anchor="middle">${v}</text>`;});
+    s+=`<line x1="${P.x0}" x2="${P.x1}" y1="${P.y0}" y2="${P.y0}" class="ax"/><line x1="${X(1)}" x2="${X(1)}" y1="${P.y1}" y2="${P.y0}" stroke="${C.ink}" stroke-width="1.8"/><text x="${X(1)-8}" y="${H-6}" class="tk" text-anchor="end">← 有利介入</text><text x="${X(1)+8}" y="${H-6}" class="tk">有利對照 →</text>`;
+    S.forEach(([n,e,l,h,wt],i)=>{const y=P.y(rows-i-0.5),sz=5+wt*0.45;s+=`<text x="6" y="${y+4}" class="al">${n}</text><line x1="${X(l)}" x2="${X(h)}" y1="${y}" y2="${y}" stroke="${C.ink}" stroke-width="1.6"/><rect x="${X(e)-sz/2}" y="${y-sz/2}" width="${sz}" height="${sz}" fill="${C.ink}"/>`+(showNum?`<text x="${P.x1+10}" y="${y+4}" class="tk">${e.toFixed(2)}（${l.toFixed(2)}–${h.toFixed(2)}）</text>`:'');});
+    const yd=P.y(0.5);s+=`<text x="6" y="${yd+4}" class="al" style="font-weight:700">合併結果</text><path d="M${X(sum[1])} ${yd}L${X(sum[0])} ${yd-9}L${X(sum[2])} ${yd}L${X(sum[0])} ${yd+9}Z" fill="${C.teal}"/>`+(showNum?`<text x="${P.x1+10}" y="${yd+4}" class="tk" style="font-weight:700;fill:${C.teal}">0.74（0.62–0.88）</text>`:'');
+    s+=co(66,P.y(rows-0.5),1)+co(X(0.70)+22,P.y(rows-4.5)-12,2)+co(X(0.25)+12,P.y(rows-2.5)-14,3)+co(X(1)+14,P.y1+4,4)+co(X(sum[2])+18,yd,5)+co(X(0.354),P.y0+14,6);
+    put(el,w,H,s,'森林圖示意');}
+  function g7(){const el=$('g7'),w=W(el),H=330,P=new Plot(w,H,{l:78,r:20,t:30,b:100},[0,12],[0,1]);let s=P.axes({xt:[0,3,6,9,12],yt:[0,.25,.5,.75,1],yf:v=>Math.round(v*100)+'%',yl:'尚未跌倒的比例'});
+    s+=`<text x="${(P.x0+P.x1)/2}" y="${P.y0+34}" class="al" text-anchor="middle">入住後月數</text>`;
+    const A=[[0,1],[1,.9],[2,.8],[3,.72],[4,.62],[5,.5],[6,.44],[8,.38],[10,.33],[12,.33]],B=[[0,1],[2,.95],[4,.9],[6,.84],[8,.78],[10,.72],[12,.72]];
+    const step=(pts)=>{let d=`M${P.x(0)} ${P.y(1)}`;for(let i=1;i<pts.length;i++){d+=`L${P.x(pts[i][0])} ${P.y(pts[i-1][1])}L${P.x(pts[i][0])} ${P.y(pts[i][1])}`;}return d;};
+    s+=`<line x1="${P.x0}" x2="${P.x(5)}" y1="${P.y(.5)}" y2="${P.y(.5)}" stroke="${C.mute}" stroke-dasharray="4 3"/><line x1="${P.x(5)}" x2="${P.x(5)}" y1="${P.y(.5)}" y2="${P.y0}" stroke="${C.mute}" stroke-dasharray="4 3"/>`;
+    s+=`<path d="${step(A)}" fill="none" stroke="${C.red}" stroke-width="2.6"/><path d="${step(B)}" fill="none" stroke="${C.teal}" stroke-width="2.6"/>`;
+    [[3.5,.72,C.red],[7,.44,C.red],[11,.33,C.red],[3,.95,C.teal],[5,.9,C.teal],[9,.78,C.teal],[11,.72,C.teal]].forEach(([t,v,c])=>{s+=`<line x1="${P.x(t)}" x2="${P.x(t)}" y1="${P.y(v)-6}" y2="${P.y(v)+6}" stroke="${c}" stroke-width="2"/>`;});
+    if(w>=520)s+=`<text x="${P.x1}" y="${P.y1+4}" class="al" text-anchor="end">HR 2.8；log-rank p ＝ 0.008</text>`;
+    s+=`<text x="${P.x(12)-4}" y="${P.y(.72)-10}" class="tk" text-anchor="end" style="fill:${C.teal};font-weight:700">無跌倒史</text><text x="${P.x(12)-4}" y="${P.y(.33)-10}" class="tk" text-anchor="end" style="fill:${C.red};font-weight:700">有跌倒史</text>`;
+    const ty=P.y0+56;s+=`<text x="4" y="${ty-18}" class="tk" style="font-weight:700">追蹤人數</text>`;
+    [['有跌倒史',[40,29,20,14,11],C.red],['無跌倒史',[40,37,33,28,25],C.teal]].forEach(([n,a,c],j)=>{const y=ty+j*18;s+=`<text x="4" y="${y}" class="tk" style="fill:${c}">${n}</text>`;a.forEach((v,i)=>{s+=`<text x="${P.x(i*3)}" y="${y}" class="tk" text-anchor="middle">${v}</text>`;});});
+    s+=co(22,P.y(.86),1)+co(P.x(2)+14,P.y(.85),2)+co(P.x(5),P.y(.9)-16,3)+co(P.x(5)-16,P.y(.5)-14,4)+co(P.x(10)+14,P.y(.52),5)+co(P.x0-14<12?12:P.x0-14,ty-22,6);
+    put(el,w,H,s,'Kaplan-Meier 示意');}
+  Draw.charts=()=>{g1();g2();g3();g4();g5();g6();g7();};
+})();
+
+/* ---------- 導覽 ---------- */
+(function(){
+  const WK=[[1,'研討會'],[2,'總覽','intro'],[3,'母體樣本','3'],[4,'資料呈現','4'],[5,'機率','5'],[6,'抽樣分配','6'],[7,'檢定（一）','7'],[8,'檢定（二）','7'],[9,'期中'],[10,'ANOVA','10'],[11,'卡方','11'],[12,'線性迴歸','12'],[13,'邏輯斯','13'],[14,'存活分析','14'],[15,'複習'],[16,'期末'],[17,'實證醫學','17'],[18,'雙樣本','18']];
+  const strip=$('strip');let cur='intro';
+  strip.innerHTML=`<span class="phase" style="grid-column:3/9">地基：從樣本推論母體</span><span class="phase" style="grid-column:10/15">工具箱：依資料型態選方法</span><span class="phase" style="grid-column:17/19">應用</span>`+
+    WK.map(([n,s,t])=>`<button class="wkbtn" data-w="${n}" ${t?`data-t="${t}"`:'disabled'} style="grid-column:${n}"><span class="n">${n}</span><span class="s">${s}</span></button>`).join('');
+  const tools=document.querySelectorAll('.tools [data-page]');
+  const LAB={intro:'總覽：這門課在做什麼',3:'第 3 週　母體與樣本',4:'第 4 週　資料的整理與呈現',5:'第 5 週　機率',6:'第 6 週　抽樣分配',7:'第 7–8 週　假設檢定',10:'第 10 週　變異數分析 ANOVA',11:'第 11 週　卡方檢定',12:'第 12 週　線性迴歸',13:'第 13 週　邏輯斯迴歸',14:'第 14 週　存活分析',17:'第 17 週　實證醫學',18:'第 18 週　雙樣本方法'};
+  const seenT=new Set(),LIVE=WK.filter(x=>x[2]&&!seenT.has(x[2])&&seenT.add(x[2]));
+  const sel=$('msel');
+  sel.innerHTML=`<optgroup label="課程週次">`+LIVE.map(([n,s,t])=>`<option value="w${n}">${LAB[t]||('第 '+n+' 週　'+s)}</option>`).join('')+`</optgroup><optgroup label="隨時查"><option value="terms">名詞解釋</option><option value="charts">圖表怎麼看</option></optgroup>`;
+  sel.onchange=()=>{const v=sel.value;if(v==='terms'||v==='charts')showPage(v);else show(+v.slice(1));};
+  function syncM(v){const t=(WK.find(x=>'w'+x[0]===v)||[])[2];const m=t?LIVE.find(x=>x[2]===t):null;sel.value=m?'w'+m[0]:v;const i=LIVE.findIndex(x=>'w'+x[0]===sel.value);$('mprev').disabled=i<=0;$('mnext').disabled=i<0||i>=LIVE.length-1;}
+  $('mprev').onclick=()=>{const i=LIVE.findIndex(x=>'w'+x[0]===sel.value);if(i>0)show(LIVE[i-1][0]);};
+  $('mnext').onclick=()=>{const i=LIVE.findIndex(x=>'w'+x[0]===sel.value);if(i>=0&&i<LIVE.length-1)show(LIVE[i+1][0]);};
+  function activate(t,btn,hash){pop.hidden=true;if(window.endTour)endTour();cur=t;document.querySelectorAll('.topic').forEach(s=>s.classList.toggle('on',s.id==='t-'+t));
+    strip.querySelectorAll('.wkbtn').forEach(x=>x.setAttribute('aria-current',x===btn?'true':'false'));tools.forEach(x=>x.setAttribute('aria-current',x===btn?'true':'false'));
+    if(btn&&btn.classList.contains('wkbtn'))btn.scrollIntoView({block:'nearest',inline:'center'});syncM(hash.slice(1));if(Draw[t])Draw[t]();history.replaceState(null,'',hash);setTimeout(markScroll,0);}
+  window.show=(week,scroll=true)=>{const b=strip.querySelector(`[data-w="${week}"]`);if(!b||b.disabled)return;activate(b.dataset.t,b,'#w'+week);if(scroll)window.scrollTo({top:0});};
+  window.showPage=(p,scroll=true)=>{const b=document.querySelector(`.tools [data-page="${p}"]`);activate(p,b,'#'+p);if(scroll)window.scrollTo({top:0});};
+  window.goTerm=id=>{$('gq').value='';gcat='all';$('gcat').querySelectorAll('.chip').forEach(x=>x.setAttribute('aria-pressed',x.dataset.cat==='all'));renderGlossary();showPage('terms',false);
+    const el=$('term-'+id);if(el){el.scrollIntoView({block:'start'});el.classList.remove('flash');void el.offsetWidth;el.classList.add('flash');}history.replaceState(null,'','#terms-'+id);};
+  strip.querySelectorAll('.wkbtn:not(:disabled)').forEach(b=>b.onclick=()=>show(+b.dataset.w));
+  tools.forEach(b=>b.onclick=()=>showPage(b.dataset.page));
+  document.addEventListener('click',e=>{const g=e.target.closest('[data-go]');if(g){e.preventDefault();show(+g.dataset.go);}});
+  document.querySelectorAll('.tree a[data-go]').forEach(a=>a.href='#w'+a.dataset.go);
+  Object.keys(Draw).forEach(k=>{const f=Draw[k];Draw[k]=function(){f();const sec=$('t-'+k);if(sec)sec.querySelectorAll('.read > div, .say').forEach(el=>termify(el));};});
+  document.querySelectorAll('.topic').forEach(sec=>{if(sec.id!=='t-terms')termify(sec);});
+  const markScroll=()=>document.querySelectorAll('.topic.on .scroll').forEach(e=>{const on=e.scrollWidth>e.clientWidth+2;e.classList.toggle('scrollable',on);
+    let h=e.previousElementSibling;const isH=h&&h.classList.contains('shint');
+    if(on&&!isH){const n=document.createElement('p');n.className='shint';n.textContent='表格較寬，可左右滑動';e.before(n);}else if(!on&&isH)h.remove();});
+  const tt=document.createElement('button');tt.id='totop';tt.type='button';tt.setAttribute('aria-label','回到頂端');tt.textContent='↑';document.body.appendChild(tt);
+  tt.onclick=()=>window.scrollTo({top:0,behavior:RM?'auto':'smooth'});
+  const tog=()=>tt.classList.toggle('on',window.scrollY>500);window.addEventListener('scroll',tog,{passive:true});tog();
+  const setHH=()=>document.documentElement.style.setProperty('--hh',document.querySelector('.top').offsetHeight+'px');setHH();
+  let tm;window.addEventListener('resize',()=>{clearTimeout(tm);tm=setTimeout(()=>{setHH();if(Draw[cur])Draw[cur]();markScroll();},150);});
+  function route(){const h=location.hash;let m;if((m=h.match(/^#w(\d+)$/)))show(+m[1],false);else if((m=h.match(/^#terms-(\w+)$/)))goTerm(m[1]);else if(h==='#terms'||h==='#charts')showPage(h.slice(1),false);else show(2,false);}
+  window.addEventListener('hashchange',route);route();
+})();
+</script>
+</body>
+</html>
